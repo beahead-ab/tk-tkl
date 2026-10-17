@@ -1,0 +1,144 @@
+{
+  "id": "trakvista",
+  "title": "Träkvista",
+  "signature": "Tk",
+  "installation": {
+    "id": "tk-tkl",
+    "name": "Träkvista",
+    "repository": "beahead-ab/Tk-TKL",
+    "docs": [
+      "docs/trakvista.md",
+      "docs/trakvista-tkl.png",
+      "docs/raspberry-pi.md",
+      "docs/loconet-anslutning.md"
+    ]
+  },
+  "source": "Trakvista.xml",
+  "panel": "Träkvista",
+  "format": "logixng",
+  "groups": {
+    "main": "Ställa huvudtågväg",
+    "shunt": "Ställa växeltågväg",
+    "detection": "Spårledningar"
+  },
+  "verticalEastbound": "down",
+  "verticalEastboundNote": "JMRI anger öst och väst även på lodrätt spår. Ändbommen vid 4s (S4s österut, spåret nedåt) och A6 (1/9 österut mot C nedåt) visar att österut är nedåt i Träkvistas ritning.",
+  "buttons": {
+    "htvA": {
+      "label": "A",
+      "block": "SA2"
+    },
+    "htvB": {
+      "label": "B",
+      "block": "SB2"
+    },
+    "htvC": {
+      "label": "C",
+      "block": "SC2"
+    },
+    "htvI": {
+      "label": "Spår I",
+      "block": "SI"
+    },
+    "htvII": {
+      "label": "Spår II",
+      "block": "SII"
+    },
+    "htvIII": {
+      "label": "Spår III",
+      "block": "SIII"
+    },
+    "htvIIIA": {
+      "label": "Spår IIIa",
+      "block": "SIIIa"
+    },
+    "htvIIIC": {
+      "label": "Spår IIIc",
+      "block": "SIIIc"
+    }
+  },
+  "lines": {
+    "A": {
+      "button": "htvA",
+      "label": "Linje A",
+      "side": "left",
+      "neighbour": "Bilbo",
+      "singleTrack": true,
+      "entrySignal": "2/1",
+      "exitSignal": "2/10",
+      "connection": "trainmeet"
+    },
+    "B": {
+      "button": "htvB",
+      "label": "Linje B",
+      "side": "right",
+      "neighbour": "Charlottendal",
+      "singleTrack": true,
+      "entrySignal": "2/2",
+      "exitSignal": "2/9",
+      "connection": "trainmeet"
+    },
+    "C": {
+      "button": "htvC",
+      "label": "Linje C",
+      "side": "right",
+      "neighbour": null,
+      "singleTrack": true,
+      "entrySignal": "1/2",
+      "exitSignal": "1/9",
+      "connection": "trainmeet"
+    }
+  },
+  "linesNote": "Benny 17 oktober, svar 6: konfigurationsservern är ersatt av TrainMeet-servern, och linjerna ska komma därifrån. A, B och C är giltiga anslutningar och är med när de har en anslutning. I filen han skickade hade C ingen anslutning; konfigurationsserverns exempel i TamSignaling.py anger A = Bilbo (BLO) och B = Charlottendal (CDA).",
+  "localTurnouts": {
+    "Vx10": "IT4",
+    "Vx11": "IT3",
+    "Vx12": "IT2",
+    "Vx13": "IT1"
+  },
+  "localNote": "Benny 15 oktober: ofyllda spår är endast lokalt kontrollerbara, övrigt ska kunna fjärrstyras; 22a och 23 ska vara fyllda (LT1 och LT2). Benny 17 oktober, svar 4 och 5: listan över lokala spår stämmer, och lokalt styrda växlar läggs om elektriskt på plats. De har inbyggda givare som panelen kan visa när de är inställda. TKL lägger dem aldrig.",
+  "transport": {
+    "host": "127.0.0.1",
+    "port": 8912
+  },
+  "panelStyle": {
+    "hiddenTracks": "local-outline",
+    "shuntButtons": "visible"
+  },
+  "panelStyleNote": "I Bennys panel är de ofyllda spåren dolda segment och växlar i JMRI (hidden). TKL ritar dem som konturer och märker dem lokala; Charlottendals dolda segment ritas inte, som förut. Växeltågvägarna läggs med Bennys vtv-knappar vid signalerna; i Charlottendal är tvv-knapparna dolda och växling startas från signalen.",
+  "corrections": [
+    {
+      "id": "4v-fore-vaxel-13",
+      "source": "Benny 17 oktober, svar 4: 13 och L2 ska inte vara med i tågvägen, signal 4v ska flyttas till före växel 13.",
+      "signal": "S4v",
+      "sensor": "tvs4v",
+      "from": {
+        "point": "EB4",
+        "direction": "westbound"
+      },
+      "to": {
+        "turnout": "TO9",
+        "leg": "C"
+      },
+      "icons": {
+        "signal": {
+          "mast": "S4v",
+          "x": 375,
+          "y": 307,
+          "deg": 224
+        },
+        "button": {
+          "sensor": "vtv4v",
+          "x": 394,
+          "y": 292,
+          "deg": 315
+        },
+        "label": {
+          "text": "4v",
+          "x": 414,
+          "y": 296
+        }
+      }
+    }
+  ]
+}

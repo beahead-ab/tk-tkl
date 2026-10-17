@@ -1,0 +1,37 @@
+// "Uppdatering X" in the status bar when the public install repository has a newer
+// release than this installed copy. On a Raspberry Pi and on the web deployment the dialog
+// starts the update; on a Mac or PC it shows the line to run. The page itself sends nothing until asked.
+import {confirmAdmin,createAdminDialog} from './admin-ui.js';
+// Raderna pekar på installationens eget förråd (view.repository); Charlottendals är cda-tkl-install.
+export const updateLines=(repository='beahead-ab/cda-tkl-install')=>({
+  mac:{where:'Terminal',line:`curl -fsSL https://raw.githubusercontent.com/${repository}/main/install.sh | sh`},
+  windows:{where:'PowerShell',line:`irm https://raw.githubusercontent.com/${repository}/main/install.ps1 | iex`}
+});
+export const UPDATE_LINES=updateLines();
+export function openUpdateNotice(view,{api,message}){
+  if(!view?.available)return;
+  const title=(view.product||'Charlottendal TKL')+' '+view.latest+' finns';
+  if(view.canStart){
+    confirmAdmin({title,button:'Uppdatera nu',
+      message:view.kind==='render'
+        ?'Webbdriften kör '+view.current+'. Render bygger '+view.latest+' ur cda-tkl och startar om webbdriften när bygget är klart, vanligen inom tio minuter. Panelen är borta en kort stund för alla som är inne. Lagda tågvägar behåller sina lås men måste läggas om för att signalerna ska gå till kör. Inställningar och driftdata ligger kvar på disken; misslyckas bygget fortsätter '+view.current+' att köra.'
+        :(view.kind==='web'?'Webbdriften kör ':'Den här Pi:n kör ')+view.current+'. Uppdateringen hämtar '+view.latest+' från '+(view.repository||'beahead-ab/cda-tkl-install').split('/')[1]+', tar en säkerhetskopia, installerar och startar om TKL, vilket tar ett par minuter. Panelen är borta en kort stund för alla som är inne. Lagda tågvägar behåller sina lås men måste läggas om för att signalerna ska gå till kör. Inställningar och driftdata ligger kvar, och om den nya versionen inte startar återställs den gamla.',
+      action:async()=>{const answer=await api('update/start',{});if(!answer)return false;message('Uppdateringen har startat. Ställverket visar "Ny version · ladda om" när den är klar.',{error:false,duration:8000});}});
+    return;
+  }
+  if(view.kind==='render'){
+    const body=document.createElement('div');body.innerHTML='<p></p>';
+    body.querySelector('p').textContent='Webbdriften kör '+view.current+'. Render bygger om den när main i cda-tkl ändras, om automatisk driftsättning är på. Med tjänstens Deploy Hook i miljövariabeln RENDER_DEPLOY_HOOK_URL kan uppdateringen startas härifrån.';
+    const modal=createAdminDialog({title,body});modal.element.addEventListener('close',()=>modal.element.remove(),{once:true});modal.open();return;
+  }
+  const lines=updateLines(view.repository),how=lines[view.kind]||lines.mac;
+  const body=document.createElement('div');
+  body.innerHTML='<p></p><p></p><pre class="update-line"><code></code></pre><button type="button" class="update-copy">Kopiera raden</button>';
+  body.querySelector('p').textContent='Den här datorn kör '+view.current+'. Inställningar och driftdata ligger kvar vid uppdateringen, och om den nya versionen inte startar återställs den gamla.';
+  body.querySelectorAll('p')[1].textContent='Öppna '+how.where+' och kör:';
+  body.querySelector('code').textContent=how.line;
+  const copy=body.querySelector('.update-copy');
+  copy.onclick=async()=>{try{await navigator.clipboard.writeText(how.line);copy.textContent='Kopierad';}catch{copy.textContent='Markera raden och kopiera';}};
+  const modal=createAdminDialog({title,body});
+  modal.element.addEventListener('close',()=>modal.element.remove(),{once:true});modal.open();
+}

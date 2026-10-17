@@ -1,0 +1,24 @@
+{
+  "name": "tk-tkl",
+  "version": "0.81.0",
+  "private": true,
+  "type": "module",
+  "description": "Charlottendal TKL och en separat LocoNet-anläggningssimulator",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node scripts/start.mjs trakvista",
+    "start:trakvista": "node scripts/start.mjs trakvista",
+    "backend": "node src/server.mjs",
+    "simulator": "node src/simulator.mjs",
+    "test": "node --test test/*.test.mjs",
+    "check": "node scripts/check.mjs",
+    "import:trakvista": "python3 scripts/import-layout.py stations/trakvista/Trakvista.xml --panel Träkvista --station stations/trakvista/station.json --out stations/trakvista/data/panel.json && python3 scripts/import-logixng.py stations/trakvista && node scripts/make-station-profile.mjs stations/trakvista",
+    "verify:trakvista": "python3 scripts/import-layout.py stations/trakvista/Trakvista.xml --panel Träkvista --station stations/trakvista/station.json --out stations/trakvista/data/panel.json --check && python3 scripts/import-logixng.py stations/trakvista --check && node scripts/make-station-profile.mjs stations/trakvista --check"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "0.131.0",
+    "jose": "6.2.12"
+  }
+}

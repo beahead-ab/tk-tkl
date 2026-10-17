@@ -1,0 +1,59 @@
+Train,Track,From,To,Stopping,GoingThru,Type,Days,Arrivel,Departure,Note
+191,2,Charlottendal,Göteborg,TRUE,FALSE,Pt,Dagl,,06:10,Dagl
+94,2,Alvesta,Charlottendal,TRUE,FALSE,Pt,Dagl,06:20,,Dagl
+4061,2,Stockholm,Göteborg,FALSE,TRUE,Gxt,Dagl,(06:37),06:38,Dagl
+92,2,Charlottendal,Stockholm,TRUE,FALSE,Pt,Dagl,,06:40,Dagl
+9092,3,Charlottendal,Vagnsta,TRUE,FALSE,Tjt,Dagl,,06:50,Dagl
+4186,2,Alvesta,Stockholm,FALSE,TRUE,Gxt,Dagl,(07:24),07:25,Dagl
+4231,2,Vagnsta,Göteborg,FALSE,TRUE,Gt,Dagl,(07:29),07:30,Dagl
+60,2,Göteborg,Stockholm,TRUE,TRUE,Snt,Dagl,(07:40),07:42,Dagl
+4601,2,Charlottendal Rbg,Borås Västra,TRUE,FALSE,Lgt,Dagl,,08:10,Dagl
+70,2,Malmö,Stockholm,TRUE,TRUE,Pt,Dagl,(08:15),08:20,Dagl
+4265,2,Charlottendal Rbg,Syltenäs,TRUE,FALSE,Gt,Dagl,,08:20,Dagl
+4042,2,Malmö,Stockholm,FALSE,TRUE,Gxt,Dagl,(08:34),08:35,Dagl
+61,2,Stockholm,Göteborg,TRUE,TRUE,Snt,Dagl,(08:58),09:00,Dagl
+50,2,Göteborg,Stockholm,TRUE,TRUE,Pt,Dagl,(09:08),09:10,Dagl
+71,2,Stockholm,Malmö,TRUE,TRUE,Pt,Dagl,(09:31),09:33,Dagl
+3544,2,Alvesta,Vagnsta,TRUE,TRUE,Pt,Dagl,(10:00),10:02,Dagl
+4047,2,Stockholm,Malmö,FALSE,TRUE,Gxt,Dagl,(10:32),10:33,Dagl
+62,2,Göteborg,Stockholm,TRUE,TRUE,Snt,Dagl,(10:29),10:34,Dagl
+53,2,Stockholm,Göteborg,TRUE,TRUE,Pt,Dagl,(10:49),10:51,Dagl
+4062,2,Göteborg,Stockholm,FALSE,TRUE,Gxt,Dagl,(10:54),10:55,Dagl
+3545,2,Vagnsta,Alvesta,TRUE,TRUE,Pt,Dagl,(11:28),11:30,Dagl
+4232,2,Göteborg,Vagnsta,FALSE,TRUE,Gt,Dagl,(11:29),11:30,Dagl
+4181,2,Stockholm,Alvesta,FALSE,TRUE,Gxt,Dagl,(11:40),11:41,Dagl
+72,2,Malmö,Stockholm,TRUE,TRUE,Pt,Dagl,(11:55),11:57,Dagl
+63,2,Stockholm,Göteborg,TRUE,TRUE,Snt,Dagl,(11:58),12:00,Dagl
+52,2,Göteborg,Stockholm,TRUE,TRUE,Pt,Dagl,(12:18),12:20,Dagl
+4063,2,Stockholm,Charlottendal Rbg,FALSE,TRUE,Gxt,Dagl,(12:34),12:35,Dagl
+4602,2,Borås Västra,Charlottendal Rbg,TRUE,FALSE,Lgt,Dagl,12:50,(13:00),Dagl
+4264,2,Syltenäs,Charlottendal Rbg,TRUE,FALSE,Gt,Dagl,13:18,,Dagl
+4237,2,Vagnsta,Göteborg,FALSE,TRUE,Gt,Dagl,(13:19),13:20,Dagl
+4064,2,Charlottendal Rbg,Stockholm,FALSE,TRUE,Gxt,Dagl,(13:24),13:25,Dagl
+66,2,Göteborg,Stockholm,TRUE,TRUE,Snt,Dagl,(13:31),13:35,Dagl
+77,2,Stockholm,Malmö,TRUE,TRUE,Pt,Dagl,(13:31),13:36,Dagl
+4611,2,Charlottendal Rbg,Borås Västra,TRUE,FALSE,Lgt,Dagl,,13:40,Dagl
+55,2,Stockholm,Göteborg,TRUE,TRUE,Pt,Dagl,(13:49),13:51,Dagl
+3546,2,Alvesta,Vagnsta,TRUE,TRUE,Pt,Dagl,(14:20),14:22,Dagl
+4267,2,Charlottendal Rbg,Göteborg,TRUE,FALSE,Gt,Dagl,,14:30,Dagl
+4067,2,Stockholm,Göteborg,FALSE,TRUE,Gxt,Dagl,(14:42),14:43,Dagl
+67,2,Stockholm,Göteborg,TRUE,TRUE,Snt,Dagl,(14:58),15:00,Dagl
+56,2,Göteborg,Stockholm,TRUE,TRUE,Pt,Dagl,(15:08),15:10,Dagl
+3547,2,Vagnsta,Alvesta,TRUE,TRUE,Pt,Dagl,(15:18),15:20,Dagl
+4044,2,Malmö,Stockholm,FALSE,TRUE,Gxt,Dagl,(15:48),15:49,Dagl
+4182,2,Alvesta,Stockholm,FALSE,TRUE,Gxt,Dagl,(16:02),16:03,Dagl
+78,2,Malmö,Stockholm,TRUE,TRUE,Pt,Dagl,(16:15),16:17,Dagl
+68,2,Göteborg,Stockholm,TRUE,TRUE,Snt,Dagl,(16:31),16:35,Dagl
+4266,2,Göteborg,Charlottendal Rbg,TRUE,FALSE,Gt,Dagl,16:45,,Dagl
+57,2,Stockholm,Göteborg,TRUE,TRUE,Pt,Dagl,(16:49),16:51,Dagl
+79,2,Stockholm,Malmö,TRUE,TRUE,Pt,Dagl,(17:31),17:33,Dagl
+4049,2,Stockholm,Malmö,FALSE,TRUE,Gxt,Dagl,(17:44),17:45,Dagl
+4066,2,Göteborg,Stockholm,FALSE,TRUE,Gxt,Dagl,(17:49),17:50,Dagl
+4187,2,Stockholm,Alvesta,FALSE,TRUE,Gxt,Dagl,(18:12),18:13,Dagl
+69,2,Stockholm,Göteborg,TRUE,TRUE,Snt,Dagl,(18:28),18:30,Dagl
+4238,2,Göteborg,Vagnsta,FALSE,TRUE,Gt,Dagl,(18:29),18:30,Dagl
+9091,2,Vagnsta,Charlottendal,TRUE,FALSE,Tjt,Dagl,19:00,,Dagl
+91,2,Stockholm,Charlottendal,TRUE,FALSE,Pt,Dagl,19:20,,Dagl
+4612,2,Borås Västra,Charlottendal Rbg,TRUE,FALSE,Lgt,Dagl,19:30,,Dagl
+93,2,Charlottendal,Alvesta,TRUE,FALSE,Pt,Dagl,,19:39,Dagl
+192,2,Göteborg,Charlottendal,TRUE,FALSE,Pt,Dagl,19:50,,Dagl

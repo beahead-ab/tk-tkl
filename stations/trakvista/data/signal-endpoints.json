@@ -1,0 +1,105 @@
+{
+  "sourceHash": "3e7b63c95d05e7c152304dd24b27cc3286cb66e9b6e89e9932aba73edff97e79",
+  "endpoints": [
+    {
+      "sensor": "tvs4s",
+      "mast": "S4s"
+    },
+    {
+      "sensor": "tvs3ö",
+      "mast": "S3ö"
+    },
+    {
+      "sensor": "tvs1/8",
+      "mast": "1/8"
+    },
+    {
+      "sensor": "tvs3v",
+      "mast": "S3v"
+    },
+    {
+      "sensor": "tvs2/6",
+      "mast": "2/6"
+    },
+    {
+      "sensor": "tvs2/1",
+      "mast": "2/1"
+    },
+    {
+      "sensor": "tvs2/10",
+      "mast": "2/10"
+    },
+    {
+      "sensor": "tvs2/9",
+      "mast": "2/9"
+    },
+    {
+      "sensor": "tvs2/2",
+      "mast": "2/2"
+    },
+    {
+      "sensor": "tvs1/9",
+      "mast": "1/9"
+    },
+    {
+      "sensor": "tvs1/2",
+      "mast": "1/2"
+    },
+    {
+      "sensor": "tvs4/7",
+      "mast": "4/7"
+    },
+    {
+      "sensor": "tvs2/5",
+      "mast": "2/5"
+    },
+    {
+      "sensor": "tvs4/4",
+      "mast": "4/4"
+    },
+    {
+      "sensor": "tvs3/7",
+      "mast": "3/7"
+    },
+    {
+      "sensor": "tvs3/4",
+      "mast": "3/4"
+    },
+    {
+      "sensor": "tvs2/7",
+      "mast": "2/7"
+    },
+    {
+      "sensor": "tvs2/8",
+      "mast": "2/8"
+    },
+    {
+      "sensor": "tvs3/8",
+      "mast": "3/8"
+    },
+    {
+      "sensor": "tvs3/5",
+      "mast": "3/5"
+    },
+    {
+      "sensor": "tvs2/3",
+      "mast": "2/3"
+    },
+    {
+      "sensor": "tvs1/7",
+      "mast": "1/7"
+    },
+    {
+      "sensor": "tvs1/4",
+      "mast": "1/4"
+    },
+    {
+      "sensor": "tvs2/4",
+      "mast": "2/4"
+    },
+    {
+      "sensor": "tvs4v",
+      "mast": "S4v"
+    }
+  ]
+}

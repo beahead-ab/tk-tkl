@@ -1,0 +1,3 @@
+Block,ShuntingSpeed,NormalSpeed,PermissiveSet,PermissiveClear
+"S32","Restricted","Use Global Normal","set","clear"
+"SII","Restricted","Use Global Normal","set","clear"

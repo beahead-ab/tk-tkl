@@ -1,0 +1,430 @@
+{
+  "sourceHash": "3e7b63c95d05e7c152304dd24b27cc3286cb66e9b6e89e9932aba73edff97e79",
+  "fields": [
+    {
+      "key": "block:SIIIa",
+      "kind": "block",
+      "name": "SIIIa",
+      "label": "SIIIa",
+      "sourceSystem": null,
+      "memorySystem": null,
+      "anchors": [
+        "block-icon-7"
+      ]
+    },
+    {
+      "key": "block:SC1",
+      "kind": "block",
+      "name": "SC1",
+      "label": "SC1",
+      "sourceSystem": null,
+      "memorySystem": null,
+      "anchors": []
+    },
+    {
+      "key": "block:SB2",
+      "kind": "block",
+      "name": "SB2",
+      "label": "SB2",
+      "sourceSystem": null,
+      "memorySystem": null,
+      "anchors": [
+        "block-icon-4"
+      ]
+    },
+    {
+      "key": "block:S22c",
+      "kind": "block",
+      "name": "S22c",
+      "label": "S22c",
+      "sourceSystem": null,
+      "memorySystem": null,
+      "anchors": []
+    },
+    {
+      "key": "block:S22b",
+      "kind": "block",
+      "name": "S22b",
+      "label": "S22b",
+      "sourceSystem": null,
+      "memorySystem": null,
+      "anchors": []
+    },
+    {
+      "key": "block:S32",
+      "kind": "block",
+      "name": "S32",
+      "label": "S32",
+      "sourceSystem": null,
+      "memorySystem": null,
+      "anchors": []
+    },
+    {
+      "key": "block:S34",
+      "kind": "block",
+      "name": "S34",
+      "label": "S34",
+      "sourceSystem": null,
+      "memorySystem": null,
+      "anchors": []
+    },
+    {
+      "key": "block:SI",
+      "kind": "block",
+      "name": "SI",
+      "label": "SI",
+      "sourceSystem": null,
+      "memorySystem": null,
+      "anchors": [
+        "block-icon-1"
+      ]
+    },
+    {
+      "key": "block:SII",
+      "kind": "block",
+      "name": "SII",
+      "label": "SII",
+      "sourceSystem": null,
+      "memorySystem": null,
+      "anchors": [
+        "block-icon-2"
+      ]
+    },
+    {
+      "key": "block:SIII",
+      "kind": "block",
+      "name": "SIII",
+      "label": "SIII",
+      "sourceSystem": null,
+      "memorySystem": null,
+      "anchors": [
+        "block-icon-0"
+      ]
+    },
+    {
+      "key": "block:SA1",
+      "kind": "block",
+      "name": "SA1",
+      "label": "SA1",
+      "sourceSystem": null,
+      "memorySystem": null,
+      "anchors": []
+    },
+    {
+      "key": "block:SIIIc",
+      "kind": "block",
+      "name": "SIIIc",
+      "label": "SIIIc",
+      "sourceSystem": null,
+      "memorySystem": null,
+      "anchors": [
+        "block-icon-8"
+      ]
+    },
+    {
+      "key": "block:S21b",
+      "kind": "block",
+      "name": "S21b",
+      "label": "S21b",
+      "sourceSystem": null,
+      "memorySystem": null,
+      "anchors": []
+    },
+    {
+      "key": "block:S31",
+      "kind": "block",
+      "name": "S31",
+      "label": "S31",
+      "sourceSystem": null,
+      "memorySystem": null,
+      "anchors": []
+    },
+    {
+      "key": "block:S21a",
+      "kind": "block",
+      "name": "S21a",
+      "label": "S21a",
+      "sourceSystem": null,
+      "memorySystem": null,
+      "anchors": []
+    },
+    {
+      "key": "block:line",
+      "kind": "block",
+      "name": "line",
+      "label": "line",
+      "sourceSystem": null,
+      "memorySystem": null,
+      "anchors": []
+    },
+    {
+      "key": "block:SB1",
+      "kind": "block",
+      "name": "SB1",
+      "label": "SB1",
+      "sourceSystem": null,
+      "memorySystem": null,
+      "anchors": []
+    },
+    {
+      "key": "block:S22a",
+      "kind": "block",
+      "name": "S22a",
+      "label": "S22a",
+      "sourceSystem": null,
+      "memorySystem": null,
+      "anchors": []
+    },
+    {
+      "key": "block:Aut",
+      "kind": "block",
+      "name": "Aut",
+      "label": "Aut",
+      "sourceSystem": null,
+      "memorySystem": null,
+      "anchors": []
+    },
+    {
+      "key": "block:L2",
+      "kind": "block",
+      "name": "L2",
+      "label": "L2",
+      "sourceSystem": null,
+      "memorySystem": null,
+      "anchors": []
+    },
+    {
+      "key": "block:S13",
+      "kind": "block",
+      "name": "S13",
+      "label": "S13",
+      "sourceSystem": null,
+      "memorySystem": null,
+      "anchors": []
+    },
+    {
+      "key": "block:S12",
+      "kind": "block",
+      "name": "S12",
+      "label": "S12",
+      "sourceSystem": null,
+      "memorySystem": null,
+      "anchors": []
+    },
+    {
+      "key": "block:S11",
+      "kind": "block",
+      "name": "S11",
+      "label": "S11",
+      "sourceSystem": null,
+      "memorySystem": null,
+      "anchors": []
+    },
+    {
+      "key": "block:S10",
+      "kind": "block",
+      "name": "S10",
+      "label": "S10",
+      "sourceSystem": null,
+      "memorySystem": null,
+      "anchors": []
+    },
+    {
+      "key": "block:L3",
+      "kind": "block",
+      "name": "L3",
+      "label": "L3",
+      "sourceSystem": null,
+      "memorySystem": null,
+      "anchors": []
+    },
+    {
+      "key": "block:TP",
+      "kind": "block",
+      "name": "TP",
+      "label": "TP",
+      "sourceSystem": null,
+      "memorySystem": null,
+      "anchors": []
+    },
+    {
+      "key": "block:LS1",
+      "kind": "block",
+      "name": "LS1",
+      "label": "LS1",
+      "sourceSystem": null,
+      "memorySystem": null,
+      "anchors": []
+    },
+    {
+      "key": "block:LS2",
+      "kind": "block",
+      "name": "LS2",
+      "label": "LS2",
+      "sourceSystem": null,
+      "memorySystem": null,
+      "anchors": []
+    },
+    {
+      "key": "block:But",
+      "kind": "block",
+      "name": "But",
+      "label": "But",
+      "sourceSystem": null,
+      "memorySystem": null,
+      "anchors": []
+    },
+    {
+      "key": "block:SIV",
+      "kind": "block",
+      "name": "SIV",
+      "label": "SIV",
+      "sourceSystem": null,
+      "memorySystem": null,
+      "anchors": [
+        "block-icon-6"
+      ]
+    },
+    {
+      "key": "block:Cut",
+      "kind": "block",
+      "name": "Cut",
+      "label": "Cut",
+      "sourceSystem": null,
+      "memorySystem": null,
+      "anchors": []
+    },
+    {
+      "key": "block:S4/7",
+      "kind": "block",
+      "name": "S4/7",
+      "label": "S4/7",
+      "sourceSystem": null,
+      "memorySystem": null,
+      "anchors": []
+    },
+    {
+      "key": "block:SA2",
+      "kind": "block",
+      "name": "SA2",
+      "label": "SA2",
+      "sourceSystem": null,
+      "memorySystem": null,
+      "anchors": [
+        "block-icon-5"
+      ]
+    },
+    {
+      "key": "block:SC2",
+      "kind": "block",
+      "name": "SC2",
+      "label": "SC2",
+      "sourceSystem": null,
+      "memorySystem": null,
+      "anchors": [
+        "block-icon-3"
+      ]
+    },
+    {
+      "key": "block:SSI",
+      "kind": "block",
+      "name": "SSI",
+      "label": "SSI",
+      "sourceSystem": null,
+      "memorySystem": null,
+      "anchors": []
+    },
+    {
+      "key": "block:SSII",
+      "kind": "block",
+      "name": "SSII",
+      "label": "SSII",
+      "sourceSystem": null,
+      "memorySystem": null,
+      "anchors": []
+    }
+  ],
+  "anchors": [
+    {
+      "id": "block-icon-0",
+      "key": "block:SIII",
+      "block": "SIII",
+      "x": 420,
+      "y": 84,
+      "sourceHidden": false,
+      "duplicate": false
+    },
+    {
+      "id": "block-icon-1",
+      "key": "block:SI",
+      "block": "SI",
+      "x": 420,
+      "y": 174,
+      "sourceHidden": false,
+      "duplicate": false
+    },
+    {
+      "id": "block-icon-2",
+      "key": "block:SII",
+      "block": "SII",
+      "x": 420,
+      "y": 124,
+      "sourceHidden": false,
+      "duplicate": false
+    },
+    {
+      "id": "block-icon-3",
+      "key": "block:SC2",
+      "block": "SC2",
+      "x": 805,
+      "y": 325,
+      "sourceHidden": false,
+      "duplicate": false
+    },
+    {
+      "id": "block-icon-4",
+      "key": "block:SB2",
+      "block": "SB2",
+      "x": 915,
+      "y": 125,
+      "sourceHidden": false,
+      "duplicate": false
+    },
+    {
+      "id": "block-icon-5",
+      "key": "block:SA2",
+      "block": "SA2",
+      "x": 40,
+      "y": 125,
+      "sourceHidden": false,
+      "duplicate": false
+    },
+    {
+      "id": "block-icon-6",
+      "key": "block:SIV",
+      "block": "SIV",
+      "x": 755,
+      "y": 220,
+      "sourceHidden": false,
+      "duplicate": false
+    },
+    {
+      "id": "block-icon-7",
+      "key": "block:SIIIa",
+      "block": "SIIIa",
+      "x": 725,
+      "y": 89,
+      "sourceHidden": false,
+      "duplicate": false
+    },
+    {
+      "id": "block-icon-8",
+      "key": "block:SIIIc",
+      "block": "SIIIc",
+      "x": 105,
+      "y": 89,
+      "sourceHidden": false,
+      "duplicate": false
+    }
+  ]
+}

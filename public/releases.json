@@ -1,0 +1,541 @@
+[
+  {
+    "version": "0.81.0",
+    "date": "2026-10-17",
+    "notes": [
+      "Ett tryck på träffklockan visar eller döljer sekunderna, som i TrainMeet Server och iPhone-appen",
+      "Gäller klockan i tidtabellens rubrik, telefonraden och miniraden i liggande läge; valet sparas i webbläsaren"
+    ]
+  },
+  {
+    "version": "0.80.0",
+    "date": "2026-10-13",
+    "notes": [
+      "Tidtabellens stil väljs under Inställningar → Utseende och ljud, som i TrainMeet-appen för iPhone: Ord, Symboler, Linjebild eller Linjebild + symboler",
+      "Varje stil har en förhandsvisning med samma tåg; valet gäller den här webbläsaren och byter tåglistan direkt",
+      "Linjebilden visar stationen i mitten och grannarna på sin sida av panelen, med linjen in och ut som planerad, begärd, klar, med tåget på linjen eller avklarad",
+      "Spåret står bara i Spår-kolumnen, i en ram när tåget står inne; tecknen förklaras under Teckenförklaring"
+    ]
+  },
+  {
+    "version": "0.79.0",
+    "date": "2026-10-11",
+    "notes": [
+      "Inget simuleringsläge: trafiken kommer från trafikspelet på en TrainMeet-server, och LocoNet är ansluten eller ej ansluten",
+      "LocoNet ej ansluten: TKL svarar själv och kör trafikspelets tåg längs tågvägarna, både tåg på väg hit på linjen och tåg som anmälts uppställda",
+      "Anslut till LocoNet och Koppla från LocoNet i lägesknappen och under Banan (LocoNet); valet gäller efter omstart",
+      "Simulerad trafik är borta; Automat finns kvar när LocoNet inte är ansluten"
+    ]
+  },
+  {
+    "version": "0.78.0",
+    "date": "2026-10-11",
+    "notes": [
+      "Live och offline: live styr banan över LocoNet med en LocoBuffer på USB, offline kör stationen mot den simulerade banan utan LocoNet",
+      "Lägesknappen i statusraden visar alltid läget (LIVE eller OFFLINE) och byter det; bytet kräver att inga tågvägar eller andra lås ligger",
+      "LocoBuffern ställs in under Inställningar → Banan (LocoNet); TKL startar gatewayen själv och startar om den om LocoBuffern försvinner",
+      "Simulerad trafik och Automat finns bara offline; webbdriften kör alltid offline"
+    ]
+  },
+  {
+    "version": "0.77.0",
+    "date": "2026-10-11",
+    "notes": [
+      "Återrapporterna följer MGP-korten, som inte upprepar något: växel- och signalrapporter gäller tills förbindelsen bryts, och TKL frågar av spårledningarnas ingångar vid anslutning och var 15:e sekund",
+      "En ingång som inte svarat på 40 sekunder blir okänd, så att ett tyst kort aldrig betyder fritt",
+      "En växel är okänd tills den får en order; en okänd växel som inte rör sig hindrar varken handmanöver eller återtagning",
+      "Simulatorn rapporterar som korten: vid ändring, order och avfrågning"
+    ]
+  },
+  {
+    "version": "0.76.1",
+    "date": "2026-10-10",
+    "notes": [
+      "Bennys andra LocoNet-trace: JMRI:s avfrågning vid uppstart visas som avfrågning, inte som en order till adress 1017–1020, och TKL kan bygga samma åtta ramar",
+      "Studio känner MGP-korten på deras riktiga identitet (Signal10 SE = produkt 6), och simulatorns kort svarar som de riktiga",
+      "Rättat i genomgången: utgångarna utan rapport satt i en sektion som inte var ansluten, och Bennys omvända signalpolaritet är bänkkortets standardvärden"
+    ]
+  },
+  {
+    "version": "0.76.0",
+    "date": "2026-10-09",
+    "notes": [
+      "Bennys LocoNet-monitorering: MGP-korten rapporterar växlar och signaler med B1 i ingångsformatet, som TKL inte läste; avkodaren rättad och simulatorn sänder samma format",
+      "Signalerna rapporterar som växlar: B1 på signalens adress är nu standard i profilen (SE kvar som val per signal)",
+      "Växelorder pulsar ON och OFF som JMRI; SV21 (adress) och SV178 (ingångarnas belagd-nivå) namngivna"
+    ]
+  },
+  {
+    "version": "0.75.0",
+    "date": "2026-10-08",
+    "notes": [
+      "Automat under Drift: datorn lägger tågvägarna med samma förregling som operatören, genomgående tåg in på spår 1 eller 2 och vidare ut, och lämnar över vid allt oväntat",
+      "Simulera tåg heter Simulerad trafik: trafiken, automaten och banan är tre roller",
+      "Simulatorns egen sida nås från Studio → Driftsättning för felsökning; Inställningar har ingen länk dit och Starta färd är borta",
+      "Tågets nummerskylt står på spåret, i färdriktningen bredvid spårknappen"
+    ]
+  },
+  {
+    "version": "0.74.0",
+    "date": "2026-10-08",
+    "notes": [
+      "Simulera tåg under Drift: grannstationerna släpper in tåg med nummer på linjerna, som anmäls i det inkommande fältet och väntar vid infartssignalen",
+      "Tåget kör när tågvägen är lagd, stannar på målspåret och kör vidare på nästa tågväg; ut på en linje lämnar det anläggningen",
+      "Tågvägen löses upp när tåget står helt på målspåret, utan växel under sig; målspåret förblir belagt",
+      "Simulatorn tänder inte längre andra ingångar på en spårledning som bara delar adress med det belagda blocket"
+    ]
+  },
+  {
+    "version": "0.73.0",
+    "date": "2026-10-08",
+    "notes": [
+      "Tågspårning i simulering: varje tåg visas med nummer och pil vid sin front och följs genom stationen ur spåravkänningen, växellägena och tågvägarna",
+      "Tåg på linjen vid kanterna: på väg in enligt TrainMeet och på väg ut efter att ha lämnat",
+      "Osäkra tåg har ? och streckad ram; ett klick anger eller bekräftar numret. Listan Spårade tåg under Drift → Tågnummer"
+    ]
+  },
+  {
+    "version": "0.72.2",
+    "date": "2026-10-08",
+    "notes": [
+      "S100a läser LS60: regeln i XML:en går via den interna sensorn slS100, och 44 tågvägar väntar inte längre på en rapport som aldrig kommer",
+      "Genomgången har AI-analysen av XML:en: förslag för spårledningarna utan regel, de växelberoende delarna, kryssväxlarna och ändarna av spår 11–13, med mätningarna som avgör"
+    ]
+  },
+  {
+    "version": "0.72.1",
+    "date": "2026-10-08",
+    "notes": [
+      "Klarering är en egen flik först i nederraden: Klarering, Spårbeläggning, Drift och Händelser",
+      "Klarering-fliken visar antalet väntande förfrågningar och blinkar gult tills de är besvarade; Händelser ligger sist med antalet larm kvar på fliken"
+    ]
+  },
+  {
+    "version": "0.72.0",
+    "date": "2026-10-08",
+    "notes": [
+      "Klareringsförfrågan i statusraden: grannstationens förfrågan står bredvid CHARLOTTENDAL med Godkänn och Neka, skylten vid linjens kant blinkar och det ringer med Ljud på tills den är besvarad",
+      "Webbdriften på Render: Uppdatering visar version och senaste version, och med Renders Deploy Hook startar Uppdatera nu ett nytt bygge",
+      "Studio: Visning och Driftbindningar har listan till vänster och det valda objektet till höger, Källa visar registret direkt och Införandestatus en rad per regelgrupp"
+    ]
+  },
+  {
+    "version": "0.71.1",
+    "date": "2026-10-07",
+    "notes": [
+      "Användarnamnet är e-postadressen: Skapa ägaren och inbjudan tar en e-postadress, inloggningen frågar efter e-post",
+      "Konton med ett vanligt namn från tidigare versioner loggar in som förut"
+    ]
+  },
+  {
+    "version": "0.71.0",
+    "date": "2026-10-07",
+    "notes": [
+      "Allt om anläggningen bor i Studio: Källa (XML-registret), Visning, Orter och telefon, Driftbindningar och Införandestatus är sidor i Studio",
+      "Inställningar behåller Träffen och Den här datorn; Anläggningen är en länk till Studio, och Studios knapp Inställningar leder tillbaka",
+      "Gamla adresser (#register…, #advanced/xml, #advanced/migration) och panelens objektlänkar öppnar rätt sida i Studio"
+    ]
+  },
+  {
+    "version": "0.70.0",
+    "date": "2026-10-07",
+    "notes": [
+      "Hjälp i Studio: ?-knappen i sidhuvudet (eller tangenten ?) öppnar en panel med en text per flik i arbetsordningen – vad man gör där, vilka knappar som finns och vad de leder till; den aktiva fliken är utfälld",
+      "Escape stänger, / går till sök"
+    ]
+  },
+  {
+    "version": "0.69.0",
+    "date": "2026-10-07",
+    "notes": [
+      "Studio på bärbar dator: sidhuvud på en rad, nyckeltalen som remsa, en verktygsrad, och stationsplanen fyller höjden som blir över i stället för 70 % av fönstret",
+      "Valt objekt och avvikelserna ligger i en panel till höger om planen som fälls in med Panel; Höjd visar hela stationen i fönstret och är startläget",
+      "På en stor skärm (från 1700×1000) blir nyckeltalen kort igen"
+    ]
+  },
+  {
+    "version": "0.68.0",
+    "date": "2026-10-06",
+    "notes": [
+      "Signalrapport per profil: SE-telegram (E4) med beskedskoder eller växelrapport (B1, CLOSED kör / THROWN stopp, som JMRI läste), för alla signaler under Driftbindningar → Signalrapport och per signal",
+      "Kärna, simulator, diagnostik, mätning och aktivering följer rapportformen; en B1-signal får inte dela adress med en växel"
+    ]
+  },
+  {
+    "version": "0.67.1",
+    "date": "2026-10-06",
+    "notes": [
+      "Konstigheterna i källan med bedömning av vad som är rätt, i genomgången och status",
+      "S170 har detektering: JMRI-regeln SN1B sätter även S170 (LS199); inventeringen läser nu regler som sätter flera spårledningar",
+      "4/2 och L1 räknas som panelbesked: deras utgångar LT307/LT308 är märkta Ej använd och linje D är inte i drift"
+    ]
+  },
+  {
+    "version": "0.67.0",
+    "date": "2026-10-06",
+    "notes": [
+      "Genomgång mot MGP-modulerna: signalerna beställs på sin huvudutgång ur Cda60.xml (LT200–LT325) och spårledningarna läser LS-ingångarna ur källan, flera ingångar där JMRI har det",
+      "Elva virtuella signaler (3/1, 6/5–9/5, 6/6, 6/7, 6/10–9/10) bekräftas av kärnan själv som i JMRI; infarten till Spår VI blir klar mot riktig utrustning",
+      "Driftbindningarna har en rad per fysisk detektor; Studio visar 0 signaler och 38 spårledningar med bänkadress och en ny rad för virtuella signaler",
+      "Allt är fortfarande ej uppmätt: rapportadress, polaritet och koder bekräftas under Mät objekt"
+    ]
+  },
+  {
+    "version": "0.66.2",
+    "date": "2026-10-06",
+    "notes": [
+      "3d slutar vid slutsignalen IIIdo: 172 är TKL:s igen och växelgatan 3d stick är borttagen"
+    ]
+  },
+  {
+    "version": "0.66.1",
+    "date": "2026-10-06",
+    "notes": [
+      "Växelgatan 3d stick via 172 (tillbakadragen i 0.66.2)"
+    ]
+  },
+  {
+    "version": "0.66.0",
+    "date": "2026-10-06",
+    "notes": [
+      "Rangerarens station: en andra Pi eller dator i kioskläge mot ställverkets TKL, med skärm, Stream Deck eller båda",
+      "TKL kan lyssna på anläggningens nät; allt från en annan dator loggar in, även i lokalt läge"
+    ]
+  },
+  {
+    "version": "0.65.0",
+    "date": "2026-10-06",
+    "notes": [
+      "Växelgator: tretton knappar i rangerarens vy som lägger hela kedjan av egna växlar rakt ut till ett spår – Godsspår 51–54 från vänster och höger, Lastspår 1–3, Kolgård, Lokstall och vändskivan",
+      "Stream Deck i rangerarens vy: växelgatorna, begäran (håll in för att ångra eller lägga tillbaka) och de egna växlarna en och en"
+    ]
+  },
+  {
+    "version": "0.64.1",
+    "date": "2026-10-06",
+    "notes": [
+      "Rangeraren ser bara sin del av spårplanen: det egna området, spår 11–13 och streckade stumpar där TKL:s spår fortsätter"
+    ]
+  },
+  {
+    "version": "0.64.0",
+    "date": "2026-10-06",
+    "notes": [
+      "Rangerarläget, steg 3: rangerarens egen vy på /#ranger – samma spårplan med TKL:s område nedtonat, knappraden Begär av TKL, Ångra och Lägg tillbaka i statusraden",
+      "Rangeraren lägger egna växlar, gränsväxlar tillbaka och växeltågvägar inom området samt från spår 11–13 när gruppen ligger ute; återtar bara sina egna",
+      "Användarrollen rangerare: når bara rangerarens vy och dess API"
+    ]
+  },
+  {
+    "version": "0.63.0",
+    "date": "2026-10-06",
+    "notes": [
+      "Rangerarläget, steg 2: TKL svarar i statusraden – \"Rangeraren begär Höger 11\" med Godkänn och Neka, och \"ligger ute för rangeraren\" med Dra tillbaka",
+      "Gruppens växlar blinkar gult i spårplanen medan begäran väntar och lyser gult medan den ligger ute"
+    ]
+  },
+  {
+    "version": "0.62.0",
+    "date": "2026-10-06",
+    "notes": [
+      "Rangerarläget, steg 1: rangerarens eget område och åtta begäran (Vänster/Höger 11–13, Spår 6 ut via 154, 3d ut åt vänster) som växelgrupper i profilen",
+      "Begäran i kärnan: svar direkt till rangeraren när en tågväg ligger över gruppen, Godkänn/Neka för TKL, lagd grupp låst för TKL, rangeraren lägger tillbaka",
+      "Gränsväxlarna 102, 103, 112, 131, 132, 144, 154 och 164 med ett tillbaka-läge var; spår 11–13 är TKL:s",
+      "Lämna över rangerbangården är borta; Stream Deck-knappen Rangerbegäran godkänner med kort tryck och nekar med långt"
+    ]
+  },
+  {
+    "version": "0.61.0",
+    "date": "2026-10-05",
+    "notes": [
+      "Kom igång vid nyinstallation: ägare, AI-tjänst, banan och TrainMeet som steg; panelen visar \"N steg kvar\" tills ägaren markerat klart",
+      "Användare som i TrainMeet Server: ägare och administratörer, inbjudan med engångskod, Inställningar → Användare",
+      "Lokalt behöver operatören ingen inloggning; Inställningar och Objekt och regler kräver ägaren eller en administratör. Webbdriften kräver inloggning överallt som förut",
+      "AI-tjänst i Inställningar: modell och nyckel sparas på TKL-servern med provanrop; miljövariablerna är reservvärden"
+    ]
+  },
+  {
+    "version": "0.60.0",
+    "date": "2026-10-05",
+    "notes": [
+      "Studio: Objekt och regler på /studio.html med stationsplan, Data-vyn och genomgången av avvikelser",
+      "Regelspråk med utkast, simulatorprov och aktivering; förslag ur spårgrafen för dubbelkorsväxlarna X1 och X2",
+      "Chatten och AI-genomgången via Claude API, med nyckeln på servern",
+      "Mät objekt, Kort och MGP med SV2-inventering och Lyssna; i fysisk drift aktiveras ingen profil förrän allt är uppmätt"
+    ]
+  },
+  {
+    "version": "0.59.3",
+    "date": "2026-10-05",
+    "notes": [
+      "Händelselistan klipps inte i ett smalare fönster, och Kvittera syns alltid",
+      "Sök efter ny version under Uppdatering; annars söks det varje timme"
+    ]
+  },
+  {
+    "version": "0.59.2",
+    "date": "2026-10-05",
+    "notes": [
+      "Inga rutor över ställverket: AIS och nödåtertagning visas i statusfältet"
+    ]
+  },
+  {
+    "version": "0.59.1",
+    "date": "2026-10-05",
+    "notes": [
+      "Webbdriftens uppdatering godtar att servern svarar på sin publika adress"
+    ]
+  },
+  {
+    "version": "0.59.0",
+    "date": "2026-10-05",
+    "notes": [
+      "Webbdriften uppdateras med Uppdatera nu under Inställningar → Uppdatering"
+    ]
+  },
+  {
+    "version": "0.58.0",
+    "date": "2026-10-05",
+    "notes": [
+      "Vad är nytt: rubriker för varje version under Inställningar → Uppdatering"
+    ]
+  },
+  {
+    "version": "0.57.1",
+    "date": "2026-10-04",
+    "notes": [
+      "LocoNet frånkopplad skrivs en gång i journalen, inte varje sekund"
+    ]
+  },
+  {
+    "version": "0.57.0",
+    "date": "2026-10-04",
+    "notes": [
+      "Inställningar förklarar sig: räckvidd, konsekvens per rad och status som text"
+    ]
+  },
+  {
+    "version": "0.56.0",
+    "date": "2026-10-04",
+    "notes": [
+      "Den lokala tidtabellen är borttagen; TrainMeet är enda källan"
+    ]
+  },
+  {
+    "version": "0.55.0",
+    "date": "2026-10-04",
+    "notes": [
+      "Adminfönstret heter Inställningar, i tre grupper"
+    ]
+  },
+  {
+    "version": "0.54.0",
+    "date": "2026-10-04",
+    "notes": [
+      "Drift som flik i nederraden; övre högra hörnet är tomt"
+    ]
+  },
+  {
+    "version": "0.53.1",
+    "date": "2026-10-04",
+    "notes": [
+      "Uppdateringsraden att kopiera under Uppdatering"
+    ]
+  },
+  {
+    "version": "0.53.0",
+    "date": "2026-10-04",
+    "notes": [
+      "Sträckrutan visar vem som svarar i andra änden, och Flytta hit"
+    ]
+  },
+  {
+    "version": "0.52.0",
+    "date": "2026-10-03",
+    "notes": [
+      "En parkopplad station är i tjänst utan trafikpass"
+    ]
+  },
+  {
+    "version": "0.51.2",
+    "date": "2026-10-03",
+    "notes": [
+      "En upprepad tågvägsbegäran tar inte längre tillbaka tågvägen"
+    ]
+  },
+  {
+    "version": "0.51.1",
+    "date": "2026-10-03",
+    "notes": [
+      "Sidfoten visar versionen som körs"
+    ]
+  },
+  {
+    "version": "0.51.0",
+    "date": "2026-10-03",
+    "notes": [
+      "Stream Deck-layout per deck, med en ny redigerare"
+    ]
+  },
+  {
+    "version": "0.50.1",
+    "date": "2026-10-03",
+    "notes": [
+      "Mac-installationen sparar driftdata i state och överlever uppdateringar"
+    ]
+  },
+  {
+    "version": "0.50.0",
+    "date": "2026-10-03",
+    "notes": [
+      "CHARLOTTENDAL på en egen rad, ingen zoom"
+    ]
+  },
+  {
+    "version": "0.49.1",
+    "date": "2026-10-03",
+    "notes": [
+      "Mac-appen hamnar i Program"
+    ]
+  },
+  {
+    "version": "0.49.0",
+    "date": "2026-10-03",
+    "notes": [
+      "Notis i statusraden när en ny version kan installeras"
+    ]
+  },
+  {
+    "version": "0.48.0",
+    "date": "2026-10-03",
+    "notes": [
+      "Installation på Mac och Windows-PC med en rad"
+    ]
+  },
+  {
+    "version": "0.47.0",
+    "date": "2026-10-03",
+    "notes": [
+      "Installation på Raspberry Pi med en rad"
+    ]
+  },
+  {
+    "version": "0.46.1",
+    "date": "2026-10-03",
+    "notes": [
+      "Tidtabellsraderna och NU-strecket glider i stället för att hoppa"
+    ]
+  },
+  {
+    "version": "0.46.0",
+    "date": "2026-10-03",
+    "notes": [
+      "Dragbar gräns mellan spårplanen och nederraden"
+    ]
+  },
+  {
+    "version": "0.45.3",
+    "date": "2026-10-02",
+    "notes": [
+      "Träffklockan följer TrainMeet, och försenade tåg står över NU-strecket"
+    ]
+  },
+  {
+    "version": "0.45.2",
+    "date": "2026-10-02",
+    "notes": [
+      "Chip för att ladda om till en ny version, fokusring bara efter Tab"
+    ]
+  },
+  {
+    "version": "0.45.1",
+    "date": "2026-10-02",
+    "notes": [
+      "Kortare statusrad"
+    ]
+  },
+  {
+    "version": "0.45.0",
+    "date": "2026-10-02",
+    "notes": [
+      "Spårbeläggning som flik, Återställ och Styra RBG som chips i statusraden"
+    ]
+  },
+  {
+    "version": "0.44.2",
+    "date": "2026-10-02",
+    "notes": [
+      "Driftshändelser i en egen buffert, så att fältrader inte tränger ut dem"
+    ]
+  },
+  {
+    "version": "0.44.1",
+    "date": "2026-10-01",
+    "notes": [
+      "Händelsekolumnen visar driftshändelser, och TrainMeets observationer journalförs"
+    ]
+  },
+  {
+    "version": "0.44.0",
+    "date": "2026-10-01",
+    "notes": [
+      "Spårplanen, nederraden och statusraden i samma formspråk"
+    ]
+  },
+  {
+    "version": "0.43.0",
+    "date": "2026-10-01",
+    "notes": [
+      "Nederrad med tidtabell och händelser, spårplanen skalad efter bredden"
+    ]
+  },
+  {
+    "version": "0.42.3",
+    "date": "2026-10-01",
+    "notes": [
+      "Läsbar tidsgräns och Försök igen för stationslistan vid parkoppling"
+    ]
+  },
+  {
+    "version": "0.42.2",
+    "date": "2026-10-01",
+    "notes": [
+      "Parkopplingskoden visas som 123-456"
+    ]
+  },
+  {
+    "version": "0.42.1",
+    "date": "2026-10-01",
+    "notes": [
+      "Välj TrainMeet-station ur träffens lista vid parkoppling"
+    ]
+  },
+  {
+    "version": "0.42.0",
+    "date": "2026-10-01",
+    "notes": [
+      "Tågklarering via TrainMeet, Stream Deck och menyn med sex ingångar"
+    ]
+  },
+  {
+    "version": "0.41.1",
+    "date": "2026-09-30",
+    "notes": [
+      "Sex ingångar i adminmenyn"
+    ]
+  },
+  {
+    "version": "0.41.0",
+    "date": "2026-09-26",
+    "notes": [
+      "Anläggningsöversikt och tydligare simulatordiagnostik"
+    ]
+  },
+  {
+    "version": "0.40.0",
+    "date": "2026-09-26",
+    "notes": [
+      "Styra rangerbangården och utökad adminmeny"
+    ]
+  }
+]

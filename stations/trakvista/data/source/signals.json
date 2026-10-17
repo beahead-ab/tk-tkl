@@ -1,0 +1,597 @@
+{
+  "signals": [
+    {
+      "id": "3/5",
+      "sys": "IF$tsm:SE-TSFS-2010:dvsi_4($0013)",
+      "type": "dvsi_4",
+      "comment": null,
+      "cls": "TurnoutSignalMastXml",
+      "aspects": [
+        "Sh0",
+        "Sh1 Stop",
+        "Sh1 40",
+        "Sh1 80",
+        "Sh2",
+        "Sh3"
+      ],
+      "turnoutRefs": [
+        "3/5"
+      ],
+      "x": 205,
+      "y": 79,
+      "deg": 90
+    },
+    {
+      "id": "3/4",
+      "sys": "IF$tsm:SE-TSFS-2010:dvsi_4($0014)",
+      "type": "dvsi_4",
+      "comment": null,
+      "cls": "TurnoutSignalMastXml",
+      "aspects": [
+        "Sh0",
+        "Sh1 Stop",
+        "Sh1 40",
+        "Sh1 80",
+        "Sh2",
+        "Sh3"
+      ],
+      "turnoutRefs": [
+        "3/4"
+      ],
+      "x": 680,
+      "y": 103,
+      "deg": 270
+    },
+    {
+      "id": "2/3",
+      "sys": "IF$tsm:SE-TSFS-2010:dvsi_4($0015)",
+      "type": "dvsi_4",
+      "comment": null,
+      "cls": "TurnoutSignalMastXml",
+      "aspects": [
+        "Sh0",
+        "Sh1 Stop",
+        "Sh1 40",
+        "Sh1 80",
+        "Sh2",
+        "Sh3"
+      ],
+      "turnoutRefs": [
+        "2/3"
+      ],
+      "x": 170,
+      "y": 119,
+      "deg": 90
+    },
+    {
+      "id": "2/4",
+      "sys": "IF$tsm:SE-TSFS-2010:dvsi_4($0016)",
+      "type": "dvsi_4",
+      "comment": null,
+      "cls": "TurnoutSignalMastXml",
+      "aspects": [
+        "Sh0",
+        "Sh1 Stop",
+        "Sh1 40",
+        "Sh1 80",
+        "Sh2",
+        "Sh3"
+      ],
+      "turnoutRefs": [
+        "2/4"
+      ],
+      "x": 725,
+      "y": 143,
+      "deg": 270
+    },
+    {
+      "id": "1/4",
+      "sys": "IF$tsm:SE-TSFS-2010:dvsi_4($0020)",
+      "type": "dvsi_4",
+      "comment": null,
+      "cls": "TurnoutSignalMastXml",
+      "aspects": [
+        "Sh0",
+        "Sh1 Stop",
+        "Sh1 40",
+        "Sh1 80",
+        "Sh2",
+        "Sh3"
+      ],
+      "turnoutRefs": [
+        "1/4"
+      ],
+      "x": 705,
+      "y": 145,
+      "deg": 315
+    },
+    {
+      "id": "4/7",
+      "sys": "IF$tsm:SE-TSFS-2010:dvsi_4($0021)",
+      "type": "dvsi_4",
+      "comment": null,
+      "cls": "TurnoutSignalMastXml",
+      "aspects": [
+        "Sh0",
+        "Sh1 Stop",
+        "Sh1 40",
+        "Sh1 80",
+        "Sh2",
+        "Sh3"
+      ],
+      "turnoutRefs": [
+        "4/7"
+      ],
+      "x": 456,
+      "y": 182,
+      "deg": 44
+    },
+    {
+      "id": "4/4",
+      "sys": "IF$tsm:SE-TSFS-2010:dvsi_4($0022)",
+      "type": "dvsi_4",
+      "comment": null,
+      "cls": "TurnoutSignalMastXml",
+      "aspects": [
+        "Sh0",
+        "Sh1 Stop",
+        "Sh1 40",
+        "Sh1 80",
+        "Sh2",
+        "Sh3"
+      ],
+      "turnoutRefs": [
+        "4/4"
+      ],
+      "x": 647,
+      "y": 147,
+      "deg": 314
+    },
+    {
+      "id": "2/6",
+      "sys": "IF$tsm:SE-TSFS-2010:dvsi_4($0023)",
+      "type": "dvsi_4",
+      "comment": null,
+      "cls": "TurnoutSignalMastXml",
+      "aspects": [
+        "Sh0",
+        "Sh1 Stop",
+        "Sh1 40",
+        "Sh1 80",
+        "Sh2",
+        "Sh3"
+      ],
+      "turnoutRefs": [
+        "2/6"
+      ],
+      "x": 570,
+      "y": 143,
+      "deg": 270
+    },
+    {
+      "id": "2/5",
+      "sys": "IF$tsm:SE-TSFS-2010:dvsi_4($0025)",
+      "type": "dvsi_4",
+      "comment": null,
+      "cls": "TurnoutSignalMastXml",
+      "aspects": [
+        "Sh0",
+        "Sh1 Stop",
+        "Sh1 40",
+        "Sh1 80",
+        "Sh2",
+        "Sh3"
+      ],
+      "turnoutRefs": [
+        "2/5"
+      ],
+      "x": 231,
+      "y": 119,
+      "deg": 90
+    },
+    {
+      "id": "2/7",
+      "sys": "IF$tsm:SE-TSFS-2010:hdvsi_5($0003)",
+      "type": "hdvsi_5",
+      "comment": null,
+      "cls": "TurnoutSignalMastXml",
+      "aspects": [
+        "Stop and Sh0",
+        "Stop and Sh1",
+        "Stop and Sh2",
+        "Stop and Sh3",
+        "Clear 80",
+        "Clear 80 Caution",
+        "Clear 40",
+        "Clear 40 Caution"
+      ],
+      "turnoutRefs": [
+        "2/7",
+        "2/7d"
+      ],
+      "x": 524,
+      "y": 119,
+      "deg": 90
+    },
+    {
+      "id": "3/7",
+      "sys": "IF$tsm:SE-TSFS-2010:hdvsi_5($0004)",
+      "type": "hdvsi_5",
+      "comment": null,
+      "cls": "TurnoutSignalMastXml",
+      "aspects": [
+        "Stop and Sh0",
+        "Stop and Sh1",
+        "Stop and Sh2",
+        "Stop and Sh3",
+        "Clear 80",
+        "Clear 80 Caution",
+        "Clear 40",
+        "Clear 40 Caution"
+      ],
+      "turnoutRefs": [
+        "3/7",
+        "3/3d"
+      ],
+      "x": 654,
+      "y": 79,
+      "deg": 90
+    },
+    {
+      "id": "1/7",
+      "sys": "IF$tsm:SE-TSFS-2010:hdvsi_5($0005)",
+      "type": "hdvsi_5",
+      "comment": null,
+      "cls": "TurnoutSignalMastXml",
+      "aspects": [
+        "Stop and Sh0",
+        "Stop and Sh1",
+        "Stop and Sh2",
+        "Stop and Sh3",
+        "Clear 40",
+        "Clear 40 Caution"
+      ],
+      "turnoutRefs": [
+        "1/7",
+        "1/7d"
+      ],
+      "x": 475,
+      "y": 169,
+      "deg": 90
+    },
+    {
+      "id": "1/8",
+      "sys": "IF$tsm:SE-TSFS-2010:hdvsi_5($0007)",
+      "type": "hdvsi_5",
+      "comment": null,
+      "cls": "TurnoutSignalMastXml",
+      "aspects": [
+        "Stop and Sh0",
+        "Stop and Sh1",
+        "Stop and Sh2",
+        "Stop and Sh3",
+        "Clear 40",
+        "Clear 40 Caution"
+      ],
+      "turnoutRefs": [
+        "1/8",
+        "1/8d"
+      ],
+      "x": 280,
+      "y": 194,
+      "deg": 270
+    },
+    {
+      "id": "2/8",
+      "sys": "IF$tsm:SE-TSFS-2010:hdvsi_5($0008)",
+      "type": "hdvsi_5",
+      "comment": null,
+      "cls": "TurnoutSignalMastXml",
+      "aspects": [
+        "Stop and Sh0",
+        "Stop and Sh1",
+        "Stop and Sh2",
+        "Stop and Sh3",
+        "Clear 40",
+        "Clear 40 Caution"
+      ],
+      "turnoutRefs": [
+        "2/8",
+        "2/8d"
+      ],
+      "x": 255,
+      "y": 143,
+      "deg": 270
+    },
+    {
+      "id": "3/8",
+      "sys": "IF$tsm:SE-TSFS-2010:hdvsi_5($0009)",
+      "type": "hdvsi_5",
+      "comment": null,
+      "cls": "TurnoutSignalMastXml",
+      "aspects": [
+        "Stop and Sh0",
+        "Stop and Sh1",
+        "Stop and Sh2",
+        "Stop and Sh3",
+        "Clear 80",
+        "Clear 80 Caution",
+        "Clear 40",
+        "Clear 40 Caution"
+      ],
+      "turnoutRefs": [
+        "3/8",
+        "3/8d"
+      ],
+      "x": 225,
+      "y": 102,
+      "deg": 270
+    },
+    {
+      "id": "2/2",
+      "sys": "IF$tsm:SE-TSFS-2010:hsi_5($0002)",
+      "type": "hsi_5",
+      "comment": null,
+      "cls": "TurnoutSignalMastXml",
+      "aspects": [
+        "Stop",
+        "Clear 80",
+        "Clear 80 Expect Stop",
+        "Clear 80 Expect 80",
+        "Clear 40"
+      ],
+      "turnoutRefs": [
+        "2/2"
+      ],
+      "x": 803,
+      "y": 147,
+      "deg": 270
+    },
+    {
+      "id": "2/1",
+      "sys": "IF$tsm:SE-TSFS-2010:hsi_5($0006)",
+      "type": "hsi_5",
+      "comment": null,
+      "cls": "TurnoutSignalMastXml",
+      "aspects": [
+        "Stop",
+        "Clear 80",
+        "Clear 80 Expect Stop",
+        "Clear 80 Expect 80",
+        "Clear 40"
+      ],
+      "turnoutRefs": [
+        "2/1"
+      ],
+      "x": 114,
+      "y": 122,
+      "deg": 90
+    },
+    {
+      "id": "1/2",
+      "sys": "IF$tsm:SE-TSFS-2010:hsi_5($0010)",
+      "type": "hsi_5",
+      "comment": null,
+      "cls": "TurnoutSignalMastXml",
+      "aspects": [
+        "Stop",
+        "Clear 80",
+        "Clear 80 Expect Stop",
+        "Clear 80 Expect 80",
+        "Clear 40"
+      ],
+      "turnoutRefs": [
+        "1/2"
+      ],
+      "x": 781,
+      "y": 230,
+      "deg": 0
+    },
+    {
+      "id": "2/10",
+      "sys": "IF$tsm:SE-TSFS-2010:hsi_7($0017)",
+      "type": "hsi_7",
+      "comment": null,
+      "cls": "TurnoutSignalMastXml",
+      "aspects": [
+        "Stop",
+        "Clear 80",
+        "Clear 80 Expect Stop",
+        "Clear 80 Expect 80",
+        "Clear 80 Expect 40",
+        "Clear 40",
+        "Clear 40 Short Entry Route"
+      ],
+      "turnoutRefs": [
+        "2/10"
+      ],
+      "x": 85,
+      "y": 147,
+      "deg": 270
+    },
+    {
+      "id": "2/9",
+      "sys": "IF$tsm:SE-TSFS-2010:hsi_7($0018)",
+      "type": "hsi_7",
+      "comment": null,
+      "cls": "TurnoutSignalMastXml",
+      "aspects": [
+        "Stop",
+        "Clear 80",
+        "Clear 80 Expect Stop",
+        "Clear 80 Expect 80",
+        "Clear 80 Expect 40",
+        "Clear 40",
+        "Clear 40 Short Entry Route"
+      ],
+      "turnoutRefs": [
+        "2/9"
+      ],
+      "x": 835,
+      "y": 121,
+      "deg": 90
+    },
+    {
+      "id": "1/9",
+      "sys": "IF$tsm:SE-TSFS-2010:hsi_7($0019)",
+      "type": "hsi_7",
+      "comment": null,
+      "cls": "TurnoutSignalMastXml",
+      "aspects": [
+        "Stop",
+        "Clear 80",
+        "Clear 80 Expect Stop",
+        "Clear 80 Expect 80",
+        "Clear 80 Expect 40",
+        "Clear 40",
+        "Clear 40 Short Entry Route"
+      ],
+      "turnoutRefs": [
+        "1/9"
+      ],
+      "x": 807,
+      "y": 263,
+      "deg": 180
+    },
+    {
+      "id": "S3v",
+      "sys": "IF$tsm:SE-TSFS-2010:ssi_2($0011)",
+      "type": "ssi_2",
+      "comment": null,
+      "cls": "TurnoutSignalMastXml",
+      "aspects": [
+        "Lit",
+        "Unlit"
+      ],
+      "turnoutRefs": [
+        "S3v"
+      ],
+      "x": 70,
+      "y": 103,
+      "deg": 270
+    },
+    {
+      "id": "S3ö",
+      "sys": "IF$tsm:SE-TSFS-2010:ssi_2($0012)",
+      "type": "ssi_2",
+      "comment": null,
+      "cls": "TurnoutSignalMastXml",
+      "aspects": [
+        "Lit",
+        "Unlit"
+      ],
+      "turnoutRefs": [
+        "S3ö"
+      ],
+      "x": 835,
+      "y": 79,
+      "deg": 90
+    },
+    {
+      "id": "S4s",
+      "sys": "IF$tsm:SE-TSFS-2010:ssi_2($0026)",
+      "type": "ssi_2",
+      "comment": null,
+      "cls": "TurnoutSignalMastXml",
+      "aspects": [
+        "Lit",
+        "Unlit"
+      ],
+      "turnoutRefs": [
+        "S4s"
+      ],
+      "x": 754,
+      "y": 294,
+      "deg": 180
+    },
+    {
+      "id": "S4v",
+      "sys": "IF$tsm:SE-TSFS-2010:ssi_2($0027)",
+      "type": "ssi_2",
+      "comment": null,
+      "cls": "TurnoutSignalMastXml",
+      "aspects": [
+        "Lit",
+        "Unlit"
+      ],
+      "turnoutRefs": [
+        "S4v"
+      ],
+      "x": 375,
+      "y": 307,
+      "deg": 224
+    },
+    {
+      "id": "AInSignal",
+      "sys": "IF$vsm:SE-TSFS-2010:hsi_7($0001)",
+      "type": "hsi_7",
+      "comment": null,
+      "cls": "VirtualSignalMastXml",
+      "aspects": [],
+      "turnoutRefs": [],
+      "x": null,
+      "y": null,
+      "deg": null
+    },
+    {
+      "id": "BInSignal",
+      "sys": "IF$vsm:SE-TSFS-2010:hsi_7($0002)",
+      "type": "hsi_7",
+      "comment": null,
+      "cls": "VirtualSignalMastXml",
+      "aspects": [],
+      "turnoutRefs": [],
+      "x": null,
+      "y": null,
+      "deg": null
+    },
+    {
+      "id": "CInSignal",
+      "sys": "IF$vsm:SE-TSFS-2010:hsi_7($0003)",
+      "type": "hsi_7",
+      "comment": null,
+      "cls": "VirtualSignalMastXml",
+      "aspects": [],
+      "turnoutRefs": [],
+      "x": null,
+      "y": null,
+      "deg": null
+    },
+    {
+      "id": "AOutSignal",
+      "sys": "IF$vsm:SE-TSFS-2010:hsi_7($0004)",
+      "type": "hsi_7",
+      "comment": null,
+      "cls": "VirtualSignalMastXml",
+      "aspects": [],
+      "turnoutRefs": [],
+      "x": null,
+      "y": null,
+      "deg": null
+    },
+    {
+      "id": "BOutSignal",
+      "sys": "IF$vsm:SE-TSFS-2010:hsi_7($0005)",
+      "type": "hsi_7",
+      "comment": null,
+      "cls": "VirtualSignalMastXml",
+      "aspects": [],
+      "turnoutRefs": [],
+      "x": null,
+      "y": null,
+      "deg": null
+    },
+    {
+      "id": "COutSignal",
+      "sys": "IF$vsm:SE-TSFS-2010:hsi_7($0006)",
+      "type": "hsi_7",
+      "comment": null,
+      "cls": "VirtualSignalMastXml",
+      "aspects": [],
+      "turnoutRefs": [],
+      "x": null,
+      "y": null,
+      "deg": null
+    }
+  ]
+}

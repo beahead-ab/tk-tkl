@@ -1,0 +1,3740 @@
+{
+  "id": "trakvista-independent-network-field",
+  "turnouts": {
+    "Vx10": {
+      "address": 1001,
+      "inverted": false,
+      "source": "IT4",
+      "block": "S10",
+      "local": true,
+      "provenance": "Intern JMRI-växel IT4 utan LocoNet-adress. Läggs om elektriskt på plats; motorns givare är inte inställda i JMRI än. Bänkadress som TKL aldrig beordrar."
+    },
+    "Vx11": {
+      "address": 1002,
+      "inverted": false,
+      "source": "IT3",
+      "block": "S11",
+      "local": true,
+      "provenance": "Intern JMRI-växel IT3 utan LocoNet-adress. Läggs om elektriskt på plats; motorns givare är inte inställda i JMRI än. Bänkadress som TKL aldrig beordrar."
+    },
+    "Vx12": {
+      "address": 1003,
+      "inverted": false,
+      "source": "IT2",
+      "block": "S12",
+      "local": true,
+      "provenance": "Intern JMRI-växel IT2 utan LocoNet-adress. Läggs om elektriskt på plats; motorns givare är inte inställda i JMRI än. Bänkadress som TKL aldrig beordrar."
+    },
+    "Vx13": {
+      "address": 1004,
+      "inverted": false,
+      "source": "IT1",
+      "block": "S13",
+      "local": true,
+      "provenance": "Intern JMRI-växel IT1 utan LocoNet-adress. Läggs om elektriskt på plats; motorns givare är inte inställda i JMRI än. Bänkadress som TKL aldrig beordrar."
+    },
+    "Vx21a": {
+      "address": 12,
+      "inverted": false,
+      "source": "LT12",
+      "block": "S21a",
+      "provenance": "JMRI LT12 (Sektion 3 Växelkort 1-2). Givare vx21a-t och vx21a-c saknas i XML; läget väntas som växelrapport tills givarna är inställda. Ej uppmätt."
+    },
+    "Vx21b": {
+      "address": 13,
+      "inverted": false,
+      "source": "LT13",
+      "block": "S21b",
+      "feedbackSensors": {
+        "thrown": 214,
+        "closed": 215,
+        "thrownSensor": "vx21b-t",
+        "closedSensor": "vx21b-c"
+      },
+      "provenance": "JMRI LT13 (Sektion 3 Växelkort 1-3). Läget från motorns givare vx21b-t (LS214) och vx21b-c (LS215); XML anger ir21a/ir21b, som Benny säger inte är färdigställt. Ej uppmätt."
+    },
+    "Vx22a": {
+      "address": 1,
+      "inverted": false,
+      "source": "LT1",
+      "block": "S22a",
+      "feedbackSensors": {
+        "thrown": 251,
+        "closed": 252,
+        "thrownSensor": "vx22a-t",
+        "closedSensor": "vx22a-c"
+      },
+      "provenance": "JMRI LT1 (Sektion 1 Växelkort 1-1). Läget från motorns givare vx22a-t (LS251) och vx22a-c (LS252). Ej uppmätt."
+    },
+    "Vx22b": {
+      "address": 3,
+      "inverted": false,
+      "source": "LT3",
+      "block": "S22b",
+      "feedbackSensors": {
+        "thrown": 255,
+        "closed": 256,
+        "thrownSensor": "vx22b-t",
+        "closedSensor": "vx22b-c"
+      },
+      "provenance": "JMRI LT3 (Sektion 1 Växelkort 1-3). Läget från motorns givare vx22b-t (LS255) och vx22b-c (LS256). Ej uppmätt."
+    },
+    "Vx22c": {
+      "address": 4,
+      "inverted": false,
+      "source": "LT4",
+      "block": "S22c",
+      "feedbackSensors": {
+        "thrown": 258,
+        "closed": 257,
+        "thrownSensor": "vx22c-t",
+        "closedSensor": "vx22c-c"
+      },
+      "provenance": "JMRI LT4 (Sektion 1 Växelkort 1-4). Läget från motorns givare vx22c-t (LS258) och vx22c-c (LS257). Ej uppmätt."
+    },
+    "Vx23": {
+      "address": 2,
+      "inverted": false,
+      "source": "LT2",
+      "block": "S22a",
+      "feedbackSensors": {
+        "thrown": 254,
+        "closed": 253,
+        "thrownSensor": "vx23-t",
+        "closedSensor": "vx23-c"
+      },
+      "provenance": "JMRI LT2 (Sektion 1 Växelkort 1-2). Läget från motorns givare vx23-t (LS254) och vx23-c (LS253). Ej uppmätt."
+    },
+    "Vx31": {
+      "address": 11,
+      "inverted": true,
+      "source": "LT11",
+      "block": "S31",
+      "feedbackSensors": {
+        "thrown": 212,
+        "closed": 213,
+        "thrownSensor": "vx31-t",
+        "closedSensor": "vx31-c"
+      },
+      "provenance": "JMRI LT11 (Sektion 3 Växelkort 1-1). Läget från motorns givare vx31-t (LS212) och vx31-c (LS213); XML anger vx31-c/vx31-t, som Benny säger inte är färdigställt. Ej uppmätt."
+    },
+    "Vx32": {
+      "address": 6,
+      "inverted": false,
+      "source": "LT6",
+      "block": "S32",
+      "feedbackSensors": {
+        "thrown": 225,
+        "closed": 224,
+        "thrownSensor": "vx32-t",
+        "closedSensor": "vx32-c"
+      },
+      "provenance": "JMRI LT6 (Sektion 2 Växelkort 1-1). Läget från motorns givare vx32-t (LS225) och vx32-c (LS224). Ej uppmätt."
+    },
+    "Vx34": {
+      "address": 7,
+      "inverted": false,
+      "source": "LT7",
+      "block": "S34",
+      "feedbackSensors": {
+        "thrown": 226,
+        "closed": 227,
+        "thrownSensor": "vx34-t",
+        "closedSensor": "vx34-c"
+      },
+      "provenance": "JMRI LT7 (Sektion 2 Växelkort 1-2). Läget från motorns givare vx34-t (LS226) och vx34-c (LS227). Ej uppmätt."
+    }
+  },
+  "blocks": {
+    "SIIIa": {
+      "address": 234,
+      "activeMeansOccupied": true,
+      "sourceSensor": "SIIIa",
+      "sourceInputs": [
+        "LS234"
+      ],
+      "provenance": "SIIIa: slIIIa (LS234) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+    },
+    "SC1": {
+      "address": 235,
+      "activeMeansOccupied": true,
+      "sourceSensor": "SC1",
+      "sourceInputs": [
+        "LS235"
+      ],
+      "provenance": "SC1: slC1 (LS235) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+    },
+    "SB2": {
+      "address": 243,
+      "activeMeansOccupied": true,
+      "sourceSensor": "SB2",
+      "sourceInputs": [
+        "LS243"
+      ],
+      "provenance": "SB2: slB2 (LS243) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+    },
+    "S22c": {
+      "address": 237,
+      "activeMeansOccupied": true,
+      "sourceSensor": "S22c",
+      "sourceInputs": [
+        "LS237"
+      ],
+      "provenance": "S22c: sl22c (LS237) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+    },
+    "S22b": {
+      "address": 238,
+      "activeMeansOccupied": true,
+      "sourceSensor": "S22b",
+      "sourceInputs": [
+        "LS238"
+      ],
+      "provenance": "S22b: sl22b (LS238) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+    },
+    "S32": {
+      "address": 219,
+      "activeMeansOccupied": true,
+      "sourceSensor": "S32",
+      "sourceInputs": [
+        "LS219"
+      ],
+      "provenance": "S32: sl32 (LS219) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+    },
+    "S34": {
+      "address": 218,
+      "activeMeansOccupied": true,
+      "sourceSensor": "S34",
+      "sourceInputs": [
+        "LS218"
+      ],
+      "provenance": "S34: sl34 (LS218) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+    },
+    "SI": {
+      "address": 206,
+      "activeMeansOccupied": true,
+      "inputs": [
+        {
+          "address": 206,
+          "activeMeansOccupied": true
+        },
+        {
+          "address": 223,
+          "activeMeansOccupied": true
+        }
+      ],
+      "logic": "any",
+      "sourceSensor": "SI",
+      "sourceInputs": [
+        "LS206",
+        "LS223"
+      ],
+      "provenance": "SI: slI-a eller slI-b (LS206, LS223) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+    },
+    "SII": {
+      "address": 207,
+      "activeMeansOccupied": true,
+      "inputs": [
+        {
+          "address": 207,
+          "activeMeansOccupied": true
+        },
+        {
+          "address": 220,
+          "activeMeansOccupied": true
+        }
+      ],
+      "logic": "any",
+      "sourceSensor": "SII",
+      "sourceInputs": [
+        "LS207",
+        "LS220"
+      ],
+      "provenance": "SII: slII-a eller slII-b (LS207, LS220) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+    },
+    "SIII": {
+      "address": 208,
+      "activeMeansOccupied": true,
+      "inputs": [
+        {
+          "address": 208,
+          "activeMeansOccupied": true
+        },
+        {
+          "address": 221,
+          "activeMeansOccupied": true
+        }
+      ],
+      "logic": "any",
+      "sourceSensor": "SIII",
+      "sourceInputs": [
+        "LS208",
+        "LS221"
+      ],
+      "provenance": "SIII: slIII-a eller slIII-b (LS208, LS221) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+    },
+    "SA1": {
+      "address": 201,
+      "activeMeansOccupied": true,
+      "sourceSensor": "SA1",
+      "sourceInputs": [
+        "LS201"
+      ],
+      "provenance": "SA1: slA1 (LS201) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+    },
+    "SIIIc": {
+      "address": 203,
+      "activeMeansOccupied": true,
+      "sourceSensor": "SIIIc",
+      "sourceInputs": [
+        "LS203"
+      ],
+      "provenance": "SIIIc: slIIIc (LS203) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+    },
+    "S21b": {
+      "address": 204,
+      "activeMeansOccupied": true,
+      "sourceSensor": "S21b",
+      "sourceInputs": [
+        "LS204"
+      ],
+      "provenance": "S21b: sl21b (LS204) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+    },
+    "S31": {
+      "address": 205,
+      "activeMeansOccupied": true,
+      "sourceSensor": "S31",
+      "sourceInputs": [
+        "LS205"
+      ],
+      "provenance": "S31: sl31 (LS205) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+    },
+    "S21a": {
+      "address": 202,
+      "activeMeansOccupied": true,
+      "sourceSensor": "S21a",
+      "sourceInputs": [
+        "LS202"
+      ],
+      "provenance": "S21a: sl21a (LS202) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+    },
+    "line": {
+      "address": 3001,
+      "activeMeansOccupied": true,
+      "sourceSensor": null,
+      "provenance": "Bänkadress: ingen spårledningsregel i källan."
+    },
+    "SB1": {
+      "address": 236,
+      "activeMeansOccupied": true,
+      "sourceSensor": "SB1",
+      "sourceInputs": [
+        "LS236"
+      ],
+      "provenance": "SB1: slB1 (LS236) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+    },
+    "S22a": {
+      "address": 239,
+      "activeMeansOccupied": true,
+      "sourceSensor": "S22a",
+      "sourceInputs": [
+        "LS239"
+      ],
+      "provenance": "S22a: sl22a (LS239) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+    },
+    "Aut": {
+      "address": 3002,
+      "activeMeansOccupied": true,
+      "sourceSensor": null,
+      "provenance": "Bänkadress: ingen spårledningsregel i källan."
+    },
+    "L2": {
+      "address": 3003,
+      "activeMeansOccupied": true,
+      "sourceSensor": null,
+      "provenance": "Bänkadress: ingen spårledningsregel i källan.",
+      "local": true
+    },
+    "S13": {
+      "address": 3004,
+      "activeMeansOccupied": true,
+      "sourceSensor": null,
+      "provenance": "Bänkadress: ingen spårledningsregel i källan.",
+      "local": true
+    },
+    "S12": {
+      "address": 3005,
+      "activeMeansOccupied": true,
+      "sourceSensor": null,
+      "provenance": "Bänkadress: ingen spårledningsregel i källan.",
+      "local": true
+    },
+    "S11": {
+      "address": 3006,
+      "activeMeansOccupied": true,
+      "sourceSensor": null,
+      "provenance": "Bänkadress: ingen spårledningsregel i källan.",
+      "local": true
+    },
+    "S10": {
+      "address": 3007,
+      "activeMeansOccupied": true,
+      "sourceSensor": null,
+      "provenance": "Bänkadress: ingen spårledningsregel i källan.",
+      "local": true
+    },
+    "L3": {
+      "address": 3008,
+      "activeMeansOccupied": true,
+      "sourceSensor": null,
+      "provenance": "Bänkadress: ingen spårledningsregel i källan.",
+      "local": true
+    },
+    "TP": {
+      "address": 3009,
+      "activeMeansOccupied": true,
+      "sourceSensor": null,
+      "provenance": "Bänkadress: ingen spårledningsregel i källan.",
+      "local": true
+    },
+    "LS1": {
+      "address": 233,
+      "activeMeansOccupied": true,
+      "sourceSensor": "SLI",
+      "sourceInputs": [
+        "LS233"
+      ],
+      "provenance": "SLI: slLI (LS233) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt.",
+      "local": true
+    },
+    "LS2": {
+      "address": 232,
+      "activeMeansOccupied": true,
+      "sourceSensor": "SLII",
+      "sourceInputs": [
+        "LS232"
+      ],
+      "provenance": "SLII: slLII (LS232) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt.",
+      "local": true
+    },
+    "But": {
+      "address": 3010,
+      "activeMeansOccupied": true,
+      "sourceSensor": null,
+      "provenance": "Bänkadress: ingen spårledningsregel i källan."
+    },
+    "SIV": {
+      "address": 240,
+      "activeMeansOccupied": true,
+      "sourceSensor": "SIV",
+      "sourceInputs": [
+        "LS240"
+      ],
+      "provenance": "SIV: slIV (LS240) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+    },
+    "Cut": {
+      "address": 3011,
+      "activeMeansOccupied": true,
+      "sourceSensor": null,
+      "provenance": "Bänkadress: ingen spårledningsregel i källan."
+    },
+    "S4/7": {
+      "address": 222,
+      "activeMeansOccupied": true,
+      "sourceSensor": "S4/7",
+      "sourceInputs": [
+        "LS222"
+      ],
+      "provenance": "S4/7: sl47 (LS222) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+    },
+    "SA2": {
+      "address": 200,
+      "activeMeansOccupied": true,
+      "sourceSensor": "SA2",
+      "sourceInputs": [
+        "LS200"
+      ],
+      "provenance": "SA2: slA2 (LS200) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+    },
+    "SC2": {
+      "address": 242,
+      "activeMeansOccupied": true,
+      "sourceSensor": "SC2",
+      "sourceInputs": [
+        "LS242"
+      ],
+      "provenance": "SC2: slC2 (LS242) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+    },
+    "SSI": {
+      "address": 244,
+      "activeMeansOccupied": true,
+      "sourceSensor": "SSI",
+      "sourceInputs": [
+        "LS244"
+      ],
+      "provenance": "SSI: slSI (LS244) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt.",
+      "local": true
+    },
+    "SSII": {
+      "address": 245,
+      "activeMeansOccupied": true,
+      "sourceSensor": "SSII",
+      "sourceInputs": [
+        "LS245"
+      ],
+      "provenance": "SSII: slSII (LS245) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt.",
+      "local": true
+    }
+  },
+  "signals": {
+    "1/2": {
+      "address": 131,
+      "reportAddress": 131,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "hsi_5",
+      "sourceOutput": "LT131",
+      "sourceOutputName": "1/2",
+      "provenance": "Utgången LT131 (Sektion 3 Signalkort 2-2): Stop = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "1/4": {
+      "address": 124,
+      "reportAddress": 124,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "dvsi_4",
+      "sourceOutput": "LT124",
+      "sourceOutputName": "1/4",
+      "provenance": "Utgången LT124 (Sektion 3 Signalkort 1-5): Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "1/7": {
+      "address": 113,
+      "reportAddress": 113,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "hdvsi_5",
+      "sourceOutput": "LT113",
+      "sourceOutputName": "1/7",
+      "provenance": "Utgången LT113 (Sektion 2 Signalkort 1-4): Stop and Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "1/8": {
+      "address": 117,
+      "reportAddress": 117,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "hdvsi_5",
+      "sourceOutput": "LT117",
+      "sourceOutputName": "1/8",
+      "provenance": "Utgången LT117 (Sektion 2 Signalkort 1-8): Stop and Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "1/9": {
+      "address": 132,
+      "reportAddress": 132,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "hsi_7",
+      "sourceOutput": "LT132",
+      "sourceOutputName": "1/9",
+      "provenance": "Utgången LT132 (Sektion 3 Signalkort 2-3): Stop = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "2/1": {
+      "address": 100,
+      "reportAddress": 100,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "hsi_5",
+      "sourceOutput": "LT100",
+      "sourceOutputName": "2/1",
+      "provenance": "Utgången LT100 (Sektion 1 Signalkort 1-1): Stop = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "2/10": {
+      "address": 101,
+      "reportAddress": 101,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "hsi_7",
+      "sourceOutput": "LT101",
+      "sourceOutputName": "2/10",
+      "provenance": "Utgången LT101 (Sektion 1 Signalkort 1-2): Stop = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "2/2": {
+      "address": 126,
+      "reportAddress": 126,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "hsi_5",
+      "sourceOutput": "LT126",
+      "sourceOutputName": "2/2",
+      "provenance": "Utgången LT126 (Sektion 3 Signalkort 1-7): Stop = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "2/3": {
+      "address": 103,
+      "reportAddress": 103,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "dvsi_4",
+      "sourceOutput": "LT103",
+      "sourceOutputName": "2/3",
+      "provenance": "Utgången LT103 (Sektion 1 Signalkort 1-4): Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "2/4": {
+      "address": 125,
+      "reportAddress": 125,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "dvsi_4",
+      "sourceOutput": "LT125",
+      "sourceOutputName": "2/4",
+      "provenance": "Utgången LT125 (Sektion 3 Signalkort 1-6): Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "2/5": {
+      "address": 119,
+      "reportAddress": 119,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "dvsi_4",
+      "sourceOutput": "LT119",
+      "sourceOutputName": "2/5",
+      "provenance": "Utgången LT119 (Sektion 2 Signalkort 1-10): Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "2/6": {
+      "address": 110,
+      "reportAddress": 110,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "dvsi_4",
+      "sourceOutput": "LT110",
+      "sourceOutputName": "2/6",
+      "provenance": "Utgången LT110 (Sektion 2 Signalkort 1-1): Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "2/7": {
+      "address": 111,
+      "reportAddress": 111,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "hdvsi_5",
+      "sourceOutput": "LT111",
+      "sourceOutputName": "2/7",
+      "provenance": "Utgången LT111 (Sektion 2 Signalkort 1-2): Stop and Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "2/8": {
+      "address": 107,
+      "reportAddress": 107,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "hdvsi_5",
+      "sourceOutput": "LT107",
+      "sourceOutputName": "2/8",
+      "provenance": "Utgången LT107 (Sektion 1 Signalkort 1-8): Stop and Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "2/9": {
+      "address": 122,
+      "reportAddress": 122,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "hsi_7",
+      "sourceOutput": "LT122",
+      "sourceOutputName": "2/9",
+      "provenance": "Utgången LT122 (Sektion 3 Signalkort 1-3): Stop = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "3/4": {
+      "address": 129,
+      "reportAddress": 129,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "dvsi_4",
+      "sourceOutput": "LT129",
+      "sourceOutputName": "3/4",
+      "provenance": "Utgången LT129 (Sektion 3 Signalkort 1-10): Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "3/5": {
+      "address": 106,
+      "reportAddress": 106,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "dvsi_4",
+      "sourceOutput": "LT106",
+      "sourceOutputName": "3/5",
+      "provenance": "Utgången LT106 (Sektion 1 Signalkort 1-7): Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "3/7": {
+      "address": 120,
+      "reportAddress": 120,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "hdvsi_5",
+      "sourceOutput": "LT120",
+      "sourceOutputName": "3/7",
+      "provenance": "Utgången LT120 (Sektion 3 Signalkort 1-1): Stop and Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "3/8": {
+      "address": 104,
+      "reportAddress": 104,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "hdvsi_5",
+      "sourceOutput": "LT104",
+      "sourceOutputName": "3/8",
+      "provenance": "Utgången LT104 (Sektion 1 Signalkort 1-5): Stop and Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "4/4": {
+      "address": 116,
+      "reportAddress": 116,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "dvsi_4",
+      "sourceOutput": "LT116",
+      "sourceOutputName": "4/4",
+      "provenance": "Utgången LT116 (Sektion 2 Signalkort 1-7): Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "4/7": {
+      "address": 115,
+      "reportAddress": 115,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "dvsi_4",
+      "sourceOutput": "LT115",
+      "sourceOutputName": "4/7",
+      "provenance": "Utgången LT115 (Sektion 2 Signalkort 1-6): Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "S3v": {
+      "address": 102,
+      "reportAddress": 102,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "ssi_2",
+      "sourceOutput": "LT102",
+      "sourceOutputName": "S3v",
+      "provenance": "Utgången LT102 (Sektion 1 Signalkort 1-3): Lit = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "S3ö": {
+      "address": 128,
+      "reportAddress": 128,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "ssi_2",
+      "sourceOutput": "LT128",
+      "sourceOutputName": "S3ö",
+      "provenance": "Utgången LT128 (Sektion 3 Signalkort 1-9): Lit = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "S4s": {
+      "address": 130,
+      "reportAddress": 130,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "ssi_2",
+      "sourceOutput": "LT130",
+      "sourceOutputName": "S4s",
+      "provenance": "Utgången LT130 (Sektion 3 Signalkort 2-1): Lit = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "S4v": {
+      "address": 109,
+      "reportAddress": 109,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "ssi_2",
+      "sourceOutput": "LT109",
+      "sourceOutputName": "S4v",
+      "provenance": "Utgången LT109 (Sektion 1 Signalkort 1-10): Lit = THROWN, kör = CLOSED. Ej uppmätt."
+    }
+  },
+  "coupled": {
+    "Vx10": [
+      "Vx10"
+    ],
+    "Vx11": [
+      "Vx11"
+    ],
+    "Vx12": [
+      "Vx12"
+    ],
+    "Vx13": [
+      "Vx13"
+    ],
+    "Vx21a": [
+      "Vx21a"
+    ],
+    "Vx21b": [
+      "Vx21b"
+    ],
+    "Vx22a": [
+      "Vx22a"
+    ],
+    "Vx22b": [
+      "Vx22b"
+    ],
+    "Vx22c": [
+      "Vx22c"
+    ],
+    "Vx23": [
+      "Vx23"
+    ],
+    "Vx31": [
+      "Vx31"
+    ],
+    "Vx32": [
+      "Vx32"
+    ],
+    "Vx34": [
+      "Vx34"
+    ]
+  },
+  "protection": {
+    "1/2": {
+      "alternatives": [
+        {
+          "blocks": [
+            "SC1"
+          ],
+          "turnouts": {},
+          "nextSignal": "1/4"
+        }
+      ]
+    },
+    "1/4": {
+      "alternatives": [
+        {
+          "blocks": [
+            "S22a",
+            "S22c"
+          ],
+          "turnouts": {
+            "Vx22a": "C",
+            "Vx23": "T",
+            "Vx22c": "C"
+          },
+          "nextSignal": "2/6"
+        },
+        {
+          "blocks": [
+            "S22a",
+            "S22b",
+            "SIII"
+          ],
+          "turnouts": {
+            "Vx22a": "T",
+            "Vx23": "T",
+            "Vx22b": "T"
+          },
+          "nextSignal": null
+        },
+        {
+          "blocks": [
+            "S22a",
+            "S22b",
+            "SIII"
+          ],
+          "turnouts": {
+            "Vx22a": "T",
+            "Vx23": "T",
+            "Vx22b": "T"
+          },
+          "nextSignal": "3/8"
+        },
+        {
+          "blocks": [
+            "S22a",
+            "S22c"
+          ],
+          "turnouts": {
+            "Vx22a": "C",
+            "Vx23": "T",
+            "Vx22c": "C"
+          },
+          "nextSignal": null
+        }
+      ]
+    },
+    "1/7": {
+      "alternatives": [
+        {
+          "blocks": [
+            "S34",
+            "S32",
+            "S22c",
+            "S22a",
+            "SB1"
+          ],
+          "turnouts": {
+            "Vx34": "T",
+            "Vx32": "T",
+            "Vx22c": "C",
+            "Vx22a": "C",
+            "Vx23": "C"
+          },
+          "nextSignal": "2/9"
+        },
+        {
+          "blocks": [
+            "S34",
+            "S32",
+            "S22c",
+            "S22a",
+            "SC1"
+          ],
+          "turnouts": {
+            "Vx34": "T",
+            "Vx32": "T",
+            "Vx22c": "C",
+            "Vx22a": "C",
+            "Vx23": "T"
+          },
+          "nextSignal": "1/9"
+        },
+        {
+          "blocks": [
+            "S34",
+            "S32",
+            "S22c",
+            "S22a",
+            "SC1"
+          ],
+          "turnouts": {
+            "Vx34": "T",
+            "Vx32": "T",
+            "Vx22c": "C",
+            "Vx22a": "C",
+            "Vx23": "T"
+          },
+          "nextSignal": null
+        },
+        {
+          "blocks": [
+            "S34",
+            "S32",
+            "S22c",
+            "S22a",
+            "SB1"
+          ],
+          "turnouts": {
+            "Vx34": "T",
+            "Vx32": "T",
+            "Vx22c": "C",
+            "Vx22a": "C",
+            "Vx23": "C"
+          },
+          "nextSignal": null
+        },
+        {
+          "blocks": [
+            "S34",
+            "S32",
+            "S22c",
+            "SIV"
+          ],
+          "turnouts": {
+            "Vx34": "T",
+            "Vx32": "T",
+            "Vx22c": "T"
+          },
+          "nextSignal": null
+        }
+      ]
+    },
+    "1/8": {
+      "alternatives": [
+        {
+          "blocks": [
+            "S31",
+            "S21a",
+            "SA1"
+          ],
+          "turnouts": {
+            "Vx31": "T",
+            "Vx21a": "C"
+          },
+          "nextSignal": "2/10"
+        },
+        {
+          "blocks": [
+            "S31",
+            "S21a",
+            "SA1"
+          ],
+          "turnouts": {
+            "Vx31": "T",
+            "Vx21a": "C"
+          },
+          "nextSignal": null
+        }
+      ]
+    },
+    "1/9": {
+      "alternatives": [
+        {
+          "blocks": [
+            "SC2"
+          ],
+          "turnouts": {},
+          "nextSignal": null
+        }
+      ]
+    },
+    "2/1": {
+      "alternatives": [
+        {
+          "blocks": [
+            "SA1"
+          ],
+          "turnouts": {},
+          "nextSignal": "2/3"
+        }
+      ]
+    },
+    "2/10": {
+      "alternatives": [
+        {
+          "blocks": [
+            "SA2"
+          ],
+          "turnouts": {},
+          "nextSignal": null
+        }
+      ]
+    },
+    "2/2": {
+      "alternatives": [
+        {
+          "blocks": [
+            "SB1"
+          ],
+          "turnouts": {},
+          "nextSignal": "2/4"
+        }
+      ]
+    },
+    "2/3": {
+      "alternatives": [
+        {
+          "blocks": [
+            "S21a"
+          ],
+          "turnouts": {
+            "Vx21a": "C"
+          },
+          "nextSignal": "2/5"
+        },
+        {
+          "blocks": [
+            "S21a",
+            "S21b",
+            "SIII"
+          ],
+          "turnouts": {
+            "Vx21a": "T",
+            "Vx21b": "T"
+          },
+          "nextSignal": null
+        },
+        {
+          "blocks": [
+            "S21a",
+            "S21b",
+            "SIII"
+          ],
+          "turnouts": {
+            "Vx21a": "T",
+            "Vx21b": "T"
+          },
+          "nextSignal": "3/7"
+        },
+        {
+          "blocks": [
+            "S21a"
+          ],
+          "turnouts": {
+            "Vx21a": "C"
+          },
+          "nextSignal": null
+        }
+      ]
+    },
+    "2/4": {
+      "alternatives": [
+        {
+          "blocks": [
+            "S22a",
+            "S22c"
+          ],
+          "turnouts": {
+            "Vx22a": "C",
+            "Vx23": "C",
+            "Vx22c": "C"
+          },
+          "nextSignal": "2/6"
+        },
+        {
+          "blocks": [
+            "S22a",
+            "S22b",
+            "SIII"
+          ],
+          "turnouts": {
+            "Vx22a": "T",
+            "Vx23": "C",
+            "Vx22b": "T"
+          },
+          "nextSignal": null
+        },
+        {
+          "blocks": [
+            "S22a",
+            "S22b",
+            "SIII"
+          ],
+          "turnouts": {
+            "Vx22a": "T",
+            "Vx23": "C",
+            "Vx22b": "T"
+          },
+          "nextSignal": "3/8"
+        },
+        {
+          "blocks": [
+            "S22a",
+            "S22c"
+          ],
+          "turnouts": {
+            "Vx22a": "C",
+            "Vx23": "C",
+            "Vx22c": "C"
+          },
+          "nextSignal": null
+        }
+      ]
+    },
+    "2/5": {
+      "alternatives": [
+        {
+          "blocks": [
+            "S31",
+            "SI"
+          ],
+          "turnouts": {
+            "Vx31": "T"
+          },
+          "nextSignal": null
+        },
+        {
+          "blocks": [
+            "S31",
+            "SII"
+          ],
+          "turnouts": {
+            "Vx31": "C"
+          },
+          "nextSignal": null
+        },
+        {
+          "blocks": [
+            "S31",
+            "SII"
+          ],
+          "turnouts": {
+            "Vx31": "C"
+          },
+          "nextSignal": "2/7"
+        },
+        {
+          "blocks": [
+            "S31",
+            "SI"
+          ],
+          "turnouts": {
+            "Vx31": "T"
+          },
+          "nextSignal": "1/7"
+        }
+      ]
+    },
+    "2/6": {
+      "alternatives": [
+        {
+          "blocks": [
+            "S32",
+            "S34",
+            "SI"
+          ],
+          "turnouts": {
+            "Vx32": "T",
+            "Vx34": "T"
+          },
+          "nextSignal": null
+        },
+        {
+          "blocks": [
+            "S32",
+            "SII"
+          ],
+          "turnouts": {
+            "Vx32": "C"
+          },
+          "nextSignal": null
+        },
+        {
+          "blocks": [
+            "S32",
+            "S34",
+            "S4/7"
+          ],
+          "turnouts": {
+            "Vx32": "T",
+            "Vx34": "C"
+          },
+          "nextSignal": null
+        },
+        {
+          "blocks": [
+            "S32",
+            "SII"
+          ],
+          "turnouts": {
+            "Vx32": "C"
+          },
+          "nextSignal": "2/8"
+        },
+        {
+          "blocks": [
+            "S32",
+            "S34",
+            "SI"
+          ],
+          "turnouts": {
+            "Vx32": "T",
+            "Vx34": "T"
+          },
+          "nextSignal": "1/8"
+        }
+      ]
+    },
+    "2/7": {
+      "alternatives": [
+        {
+          "blocks": [
+            "S32",
+            "S22c",
+            "S22a",
+            "SB1"
+          ],
+          "turnouts": {
+            "Vx32": "C",
+            "Vx22c": "C",
+            "Vx22a": "C",
+            "Vx23": "C"
+          },
+          "nextSignal": "2/9"
+        },
+        {
+          "blocks": [
+            "S32",
+            "S22c",
+            "S22a",
+            "SC1"
+          ],
+          "turnouts": {
+            "Vx32": "C",
+            "Vx22c": "C",
+            "Vx22a": "C",
+            "Vx23": "T"
+          },
+          "nextSignal": "1/9"
+        },
+        {
+          "blocks": [
+            "S32",
+            "S22c",
+            "S22a",
+            "SC1"
+          ],
+          "turnouts": {
+            "Vx32": "C",
+            "Vx22c": "C",
+            "Vx22a": "C",
+            "Vx23": "T"
+          },
+          "nextSignal": null
+        },
+        {
+          "blocks": [
+            "S32",
+            "S22c",
+            "S22a",
+            "SB1"
+          ],
+          "turnouts": {
+            "Vx32": "C",
+            "Vx22c": "C",
+            "Vx22a": "C",
+            "Vx23": "C"
+          },
+          "nextSignal": null
+        },
+        {
+          "blocks": [
+            "S32",
+            "S22c",
+            "SIV"
+          ],
+          "turnouts": {
+            "Vx32": "C",
+            "Vx22c": "T"
+          },
+          "nextSignal": null
+        }
+      ]
+    },
+    "2/8": {
+      "alternatives": [
+        {
+          "blocks": [
+            "S31",
+            "S21a",
+            "SA1"
+          ],
+          "turnouts": {
+            "Vx31": "C",
+            "Vx21a": "C"
+          },
+          "nextSignal": "2/10"
+        },
+        {
+          "blocks": [
+            "S31",
+            "S21a",
+            "SA1"
+          ],
+          "turnouts": {
+            "Vx31": "C",
+            "Vx21a": "C"
+          },
+          "nextSignal": null
+        }
+      ]
+    },
+    "2/9": {
+      "alternatives": [
+        {
+          "blocks": [
+            "SB2"
+          ],
+          "turnouts": {},
+          "nextSignal": null
+        }
+      ]
+    },
+    "3/4": {
+      "alternatives": [
+        {
+          "blocks": [
+            "S22b",
+            "SIII"
+          ],
+          "turnouts": {
+            "Vx22b": "C"
+          },
+          "nextSignal": null
+        }
+      ]
+    },
+    "3/5": {
+      "alternatives": [
+        {
+          "blocks": [
+            "S21b",
+            "SIII"
+          ],
+          "turnouts": {
+            "Vx21b": "C"
+          },
+          "nextSignal": null
+        }
+      ]
+    },
+    "3/7": {
+      "alternatives": [
+        {
+          "blocks": [
+            "S22b",
+            "SIIIa"
+          ],
+          "turnouts": {
+            "Vx22b": "C"
+          },
+          "nextSignal": null
+        },
+        {
+          "blocks": [
+            "S22b",
+            "S22a",
+            "SB1"
+          ],
+          "turnouts": {
+            "Vx22b": "T",
+            "Vx22a": "T",
+            "Vx23": "C"
+          },
+          "nextSignal": "2/9"
+        },
+        {
+          "blocks": [
+            "S22b",
+            "S22a",
+            "SC1"
+          ],
+          "turnouts": {
+            "Vx22b": "T",
+            "Vx22a": "T",
+            "Vx23": "T"
+          },
+          "nextSignal": "1/9"
+        },
+        {
+          "blocks": [
+            "S22b",
+            "S22a",
+            "SC1"
+          ],
+          "turnouts": {
+            "Vx22b": "T",
+            "Vx22a": "T",
+            "Vx23": "T"
+          },
+          "nextSignal": null
+        },
+        {
+          "blocks": [
+            "S22b",
+            "S22a",
+            "SB1"
+          ],
+          "turnouts": {
+            "Vx22b": "T",
+            "Vx22a": "T",
+            "Vx23": "C"
+          },
+          "nextSignal": null
+        }
+      ]
+    },
+    "3/8": {
+      "alternatives": [
+        {
+          "blocks": [
+            "S21b",
+            "SIIIc"
+          ],
+          "turnouts": {
+            "Vx21b": "C"
+          },
+          "nextSignal": null
+        },
+        {
+          "blocks": [
+            "S21b",
+            "S21a",
+            "SA1"
+          ],
+          "turnouts": {
+            "Vx21b": "T",
+            "Vx21a": "T"
+          },
+          "nextSignal": "2/10"
+        },
+        {
+          "blocks": [
+            "S21b",
+            "S21a",
+            "SA1"
+          ],
+          "turnouts": {
+            "Vx21b": "T",
+            "Vx21a": "T"
+          },
+          "nextSignal": null
+        }
+      ]
+    },
+    "4/4": {
+      "alternatives": [
+        {
+          "blocks": [
+            "S22c"
+          ],
+          "turnouts": {
+            "Vx22c": "T"
+          },
+          "nextSignal": null
+        }
+      ]
+    },
+    "4/7": {
+      "alternatives": [
+        {
+          "blocks": [
+            "S34",
+            "S32",
+            "S22c",
+            "S22a",
+            "SC1"
+          ],
+          "turnouts": {
+            "Vx34": "C",
+            "Vx32": "T",
+            "Vx22c": "C",
+            "Vx22a": "C",
+            "Vx23": "T"
+          },
+          "nextSignal": null
+        },
+        {
+          "blocks": [
+            "S34",
+            "S32",
+            "S22c",
+            "S22a",
+            "SB1"
+          ],
+          "turnouts": {
+            "Vx34": "C",
+            "Vx32": "T",
+            "Vx22c": "C",
+            "Vx22a": "C",
+            "Vx23": "C"
+          },
+          "nextSignal": null
+        },
+        {
+          "blocks": [
+            "S34",
+            "S32",
+            "S22c",
+            "SIV"
+          ],
+          "turnouts": {
+            "Vx34": "C",
+            "Vx32": "T",
+            "Vx22c": "T"
+          },
+          "nextSignal": null
+        }
+      ]
+    },
+    "S3v": {
+      "alternatives": []
+    },
+    "S3ö": {
+      "alternatives": []
+    },
+    "S4s": {
+      "alternatives": []
+    },
+    "S4v": {
+      "alternatives": []
+    }
+  },
+  "programming": null,
+  "signalReport": {
+    "kind": "switch"
+  },
+  "scenarios": [
+    {
+      "id": "htvA--htvI",
+      "label": "A → Spår I",
+      "blocks": [
+        "SA1",
+        "S21a",
+        "S31",
+        "SI"
+      ],
+      "signal": "2/1",
+      "signals": [
+        "2/1",
+        "2/3",
+        "2/5"
+      ],
+      "signalEntries": [
+        {
+          "signal": "2/1",
+          "index": 0
+        },
+        {
+          "signal": "2/3",
+          "index": 1
+        },
+        {
+          "signal": "2/5",
+          "index": 2
+        }
+      ],
+      "turnouts": {
+        "Vx21a": "C",
+        "Vx31": "T"
+      }
+    },
+    {
+      "id": "htvA--htvII",
+      "label": "A → Spår II",
+      "blocks": [
+        "SA1",
+        "S21a",
+        "S31",
+        "SII"
+      ],
+      "signal": "2/1",
+      "signals": [
+        "2/1",
+        "2/3",
+        "2/5"
+      ],
+      "signalEntries": [
+        {
+          "signal": "2/1",
+          "index": 0
+        },
+        {
+          "signal": "2/3",
+          "index": 1
+        },
+        {
+          "signal": "2/5",
+          "index": 2
+        }
+      ],
+      "turnouts": {
+        "Vx21a": "C",
+        "Vx31": "C"
+      }
+    },
+    {
+      "id": "htvA--htvIII",
+      "label": "A → Spår III",
+      "blocks": [
+        "SA1",
+        "S21a",
+        "S21b",
+        "SIII"
+      ],
+      "signal": "2/1",
+      "signals": [
+        "2/1",
+        "2/3"
+      ],
+      "signalEntries": [
+        {
+          "signal": "2/1",
+          "index": 0
+        },
+        {
+          "signal": "2/3",
+          "index": 1
+        }
+      ],
+      "turnouts": {
+        "Vx21a": "T",
+        "Vx21b": "T"
+      }
+    },
+    {
+      "id": "htvA--htvIIIA",
+      "label": "A → Spår IIIa",
+      "blocks": [
+        "SA1",
+        "S21a",
+        "S21b",
+        "SIII",
+        "S22b",
+        "SIIIa"
+      ],
+      "signal": "2/1",
+      "signals": [
+        "2/1",
+        "2/3",
+        "3/7"
+      ],
+      "signalEntries": [
+        {
+          "signal": "2/1",
+          "index": 0
+        },
+        {
+          "signal": "2/3",
+          "index": 1
+        },
+        {
+          "signal": "3/7",
+          "index": 4
+        }
+      ],
+      "turnouts": {
+        "Vx21a": "T",
+        "Vx21b": "T",
+        "Vx22b": "C"
+      }
+    },
+    {
+      "id": "htvB--htvI",
+      "label": "B → Spår I",
+      "blocks": [
+        "SB1",
+        "S22a",
+        "S22c",
+        "S32",
+        "S34",
+        "SI"
+      ],
+      "signal": "2/2",
+      "signals": [
+        "2/2",
+        "2/4",
+        "2/6"
+      ],
+      "signalEntries": [
+        {
+          "signal": "2/2",
+          "index": 0
+        },
+        {
+          "signal": "2/4",
+          "index": 1
+        },
+        {
+          "signal": "2/6",
+          "index": 3
+        }
+      ],
+      "turnouts": {
+        "Vx22a": "C",
+        "Vx23": "C",
+        "Vx22c": "C",
+        "Vx32": "T",
+        "Vx34": "T"
+      }
+    },
+    {
+      "id": "htvB--htvII",
+      "label": "B → Spår II",
+      "blocks": [
+        "SB1",
+        "S22a",
+        "S22c",
+        "S32",
+        "SII"
+      ],
+      "signal": "2/2",
+      "signals": [
+        "2/2",
+        "2/4",
+        "2/6"
+      ],
+      "signalEntries": [
+        {
+          "signal": "2/2",
+          "index": 0
+        },
+        {
+          "signal": "2/4",
+          "index": 1
+        },
+        {
+          "signal": "2/6",
+          "index": 3
+        }
+      ],
+      "turnouts": {
+        "Vx22a": "C",
+        "Vx23": "C",
+        "Vx22c": "C",
+        "Vx32": "C"
+      }
+    },
+    {
+      "id": "htvB--htvIII",
+      "label": "B → Spår III",
+      "blocks": [
+        "SB1",
+        "S22a",
+        "S22b",
+        "SIII"
+      ],
+      "signal": "2/2",
+      "signals": [
+        "2/2",
+        "2/4"
+      ],
+      "signalEntries": [
+        {
+          "signal": "2/2",
+          "index": 0
+        },
+        {
+          "signal": "2/4",
+          "index": 1
+        }
+      ],
+      "turnouts": {
+        "Vx22a": "T",
+        "Vx23": "C",
+        "Vx22b": "T"
+      }
+    },
+    {
+      "id": "htvB--htvIIIC",
+      "label": "B → Spår IIIc",
+      "blocks": [
+        "SB1",
+        "S22a",
+        "S22b",
+        "SIII",
+        "S21b",
+        "SIIIc"
+      ],
+      "signal": "2/2",
+      "signals": [
+        "2/2",
+        "2/4",
+        "3/8"
+      ],
+      "signalEntries": [
+        {
+          "signal": "2/2",
+          "index": 0
+        },
+        {
+          "signal": "2/4",
+          "index": 1
+        },
+        {
+          "signal": "3/8",
+          "index": 4
+        }
+      ],
+      "turnouts": {
+        "Vx22a": "T",
+        "Vx23": "C",
+        "Vx22b": "T",
+        "Vx21b": "C"
+      }
+    },
+    {
+      "id": "htvC--htvI",
+      "label": "C → Spår I",
+      "blocks": [
+        "SC1",
+        "S22a",
+        "S22c",
+        "S32",
+        "S34",
+        "SI"
+      ],
+      "signal": "1/2",
+      "signals": [
+        "1/2",
+        "1/4",
+        "2/6"
+      ],
+      "signalEntries": [
+        {
+          "signal": "1/2",
+          "index": 0
+        },
+        {
+          "signal": "1/4",
+          "index": 1
+        },
+        {
+          "signal": "2/6",
+          "index": 3
+        }
+      ],
+      "turnouts": {
+        "Vx22a": "C",
+        "Vx23": "T",
+        "Vx22c": "C",
+        "Vx32": "T",
+        "Vx34": "T"
+      }
+    },
+    {
+      "id": "htvC--htvII",
+      "label": "C → Spår II",
+      "blocks": [
+        "SC1",
+        "S22a",
+        "S22c",
+        "S32",
+        "SII"
+      ],
+      "signal": "1/2",
+      "signals": [
+        "1/2",
+        "1/4",
+        "2/6"
+      ],
+      "signalEntries": [
+        {
+          "signal": "1/2",
+          "index": 0
+        },
+        {
+          "signal": "1/4",
+          "index": 1
+        },
+        {
+          "signal": "2/6",
+          "index": 3
+        }
+      ],
+      "turnouts": {
+        "Vx22a": "C",
+        "Vx23": "T",
+        "Vx22c": "C",
+        "Vx32": "C"
+      }
+    },
+    {
+      "id": "htvC--htvIII",
+      "label": "C → Spår III",
+      "blocks": [
+        "SC1",
+        "S22a",
+        "S22b",
+        "SIII"
+      ],
+      "signal": "1/2",
+      "signals": [
+        "1/2",
+        "1/4"
+      ],
+      "signalEntries": [
+        {
+          "signal": "1/2",
+          "index": 0
+        },
+        {
+          "signal": "1/4",
+          "index": 1
+        }
+      ],
+      "turnouts": {
+        "Vx22a": "T",
+        "Vx23": "T",
+        "Vx22b": "T"
+      }
+    },
+    {
+      "id": "htvC--htvIIIC",
+      "label": "C → Spår IIIc",
+      "blocks": [
+        "SC1",
+        "S22a",
+        "S22b",
+        "SIII",
+        "S21b",
+        "SIIIc"
+      ],
+      "signal": "1/2",
+      "signals": [
+        "1/2",
+        "1/4",
+        "3/8"
+      ],
+      "signalEntries": [
+        {
+          "signal": "1/2",
+          "index": 0
+        },
+        {
+          "signal": "1/4",
+          "index": 1
+        },
+        {
+          "signal": "3/8",
+          "index": 4
+        }
+      ],
+      "turnouts": {
+        "Vx22a": "T",
+        "Vx23": "T",
+        "Vx22b": "T",
+        "Vx21b": "C"
+      }
+    },
+    {
+      "id": "htvI--htvA",
+      "label": "Spår I → A",
+      "blocks": [
+        "S31",
+        "S21a",
+        "SA1",
+        "SA2"
+      ],
+      "signal": "1/8",
+      "signals": [
+        "1/8",
+        "2/10"
+      ],
+      "signalEntries": [
+        {
+          "signal": "1/8",
+          "index": 0
+        },
+        {
+          "signal": "2/10",
+          "index": 3
+        }
+      ],
+      "turnouts": {
+        "Vx31": "T",
+        "Vx21a": "C"
+      }
+    },
+    {
+      "id": "htvI--htvB",
+      "label": "Spår I → B",
+      "blocks": [
+        "S34",
+        "S32",
+        "S22c",
+        "S22a",
+        "SB1",
+        "SB2"
+      ],
+      "signal": "1/7",
+      "signals": [
+        "1/7",
+        "2/9"
+      ],
+      "signalEntries": [
+        {
+          "signal": "1/7",
+          "index": 0
+        },
+        {
+          "signal": "2/9",
+          "index": 5
+        }
+      ],
+      "turnouts": {
+        "Vx34": "T",
+        "Vx32": "T",
+        "Vx22c": "C",
+        "Vx22a": "C",
+        "Vx23": "C"
+      }
+    },
+    {
+      "id": "htvI--htvC",
+      "label": "Spår I → C",
+      "blocks": [
+        "S34",
+        "S32",
+        "S22c",
+        "S22a",
+        "SC1",
+        "SC2"
+      ],
+      "signal": "1/7",
+      "signals": [
+        "1/7",
+        "1/9"
+      ],
+      "signalEntries": [
+        {
+          "signal": "1/7",
+          "index": 0
+        },
+        {
+          "signal": "1/9",
+          "index": 5
+        }
+      ],
+      "turnouts": {
+        "Vx34": "T",
+        "Vx32": "T",
+        "Vx22c": "C",
+        "Vx22a": "C",
+        "Vx23": "T"
+      }
+    },
+    {
+      "id": "htvII--htvA",
+      "label": "Spår II → A",
+      "blocks": [
+        "S31",
+        "S21a",
+        "SA1",
+        "SA2"
+      ],
+      "signal": "2/8",
+      "signals": [
+        "2/8",
+        "2/10"
+      ],
+      "signalEntries": [
+        {
+          "signal": "2/8",
+          "index": 0
+        },
+        {
+          "signal": "2/10",
+          "index": 3
+        }
+      ],
+      "turnouts": {
+        "Vx31": "C",
+        "Vx21a": "C"
+      }
+    },
+    {
+      "id": "htvII--htvB",
+      "label": "Spår II → B",
+      "blocks": [
+        "S32",
+        "S22c",
+        "S22a",
+        "SB1",
+        "SB2"
+      ],
+      "signal": "2/7",
+      "signals": [
+        "2/7",
+        "2/9"
+      ],
+      "signalEntries": [
+        {
+          "signal": "2/7",
+          "index": 0
+        },
+        {
+          "signal": "2/9",
+          "index": 4
+        }
+      ],
+      "turnouts": {
+        "Vx32": "C",
+        "Vx22c": "C",
+        "Vx22a": "C",
+        "Vx23": "C"
+      }
+    },
+    {
+      "id": "htvII--htvC",
+      "label": "Spår II → C",
+      "blocks": [
+        "S32",
+        "S22c",
+        "S22a",
+        "SC1",
+        "SC2"
+      ],
+      "signal": "2/7",
+      "signals": [
+        "2/7",
+        "1/9"
+      ],
+      "signalEntries": [
+        {
+          "signal": "2/7",
+          "index": 0
+        },
+        {
+          "signal": "1/9",
+          "index": 4
+        }
+      ],
+      "turnouts": {
+        "Vx32": "C",
+        "Vx22c": "C",
+        "Vx22a": "C",
+        "Vx23": "T"
+      }
+    },
+    {
+      "id": "htvIII--htvA",
+      "label": "Spår III → A",
+      "blocks": [
+        "S21b",
+        "S21a",
+        "SA1",
+        "SA2"
+      ],
+      "signal": "3/8",
+      "signals": [
+        "3/8",
+        "2/10"
+      ],
+      "signalEntries": [
+        {
+          "signal": "3/8",
+          "index": 0
+        },
+        {
+          "signal": "2/10",
+          "index": 3
+        }
+      ],
+      "turnouts": {
+        "Vx21b": "T",
+        "Vx21a": "T"
+      }
+    },
+    {
+      "id": "htvIII--htvB",
+      "label": "Spår III → B",
+      "blocks": [
+        "S22b",
+        "S22a",
+        "SB1",
+        "SB2"
+      ],
+      "signal": "3/7",
+      "signals": [
+        "3/7",
+        "2/9"
+      ],
+      "signalEntries": [
+        {
+          "signal": "3/7",
+          "index": 0
+        },
+        {
+          "signal": "2/9",
+          "index": 3
+        }
+      ],
+      "turnouts": {
+        "Vx22b": "T",
+        "Vx22a": "T",
+        "Vx23": "C"
+      }
+    },
+    {
+      "id": "htvIII--htvC",
+      "label": "Spår III → C",
+      "blocks": [
+        "S22b",
+        "S22a",
+        "SC1",
+        "SC2"
+      ],
+      "signal": "3/7",
+      "signals": [
+        "3/7",
+        "1/9"
+      ],
+      "signalEntries": [
+        {
+          "signal": "3/7",
+          "index": 0
+        },
+        {
+          "signal": "1/9",
+          "index": 3
+        }
+      ],
+      "turnouts": {
+        "Vx22b": "T",
+        "Vx22a": "T",
+        "Vx23": "T"
+      }
+    },
+    {
+      "id": "htvIII--htvIIIA",
+      "label": "Spår III → Spår IIIa",
+      "blocks": [
+        "S22b",
+        "SIIIa"
+      ],
+      "signal": "3/7",
+      "signals": [
+        "3/7"
+      ],
+      "signalEntries": [
+        {
+          "signal": "3/7",
+          "index": 0
+        }
+      ],
+      "turnouts": {
+        "Vx22b": "C"
+      }
+    },
+    {
+      "id": "htvIII--htvIIIC",
+      "label": "Spår III → Spår IIIc",
+      "blocks": [
+        "S21b",
+        "SIIIc"
+      ],
+      "signal": "3/8",
+      "signals": [
+        "3/8"
+      ],
+      "signalEntries": [
+        {
+          "signal": "3/8",
+          "index": 0
+        }
+      ],
+      "turnouts": {
+        "Vx21b": "C"
+      }
+    },
+    {
+      "id": "htvA--htvB",
+      "label": "A → B",
+      "blocks": [
+        "SA1",
+        "S21a",
+        "S21b",
+        "SIII",
+        "S22b",
+        "S22a",
+        "SB1",
+        "SB2"
+      ],
+      "signal": "2/1",
+      "signals": [
+        "2/1",
+        "2/3",
+        "3/7",
+        "2/9"
+      ],
+      "signalEntries": [
+        {
+          "signal": "2/1",
+          "index": 0
+        },
+        {
+          "signal": "2/3",
+          "index": 1
+        },
+        {
+          "signal": "3/7",
+          "index": 4
+        },
+        {
+          "signal": "2/9",
+          "index": 7
+        }
+      ],
+      "turnouts": {
+        "Vx21a": "T",
+        "Vx21b": "T",
+        "Vx22b": "T",
+        "Vx22a": "T",
+        "Vx23": "C"
+      }
+    },
+    {
+      "id": "htvA--htvC",
+      "label": "A → C",
+      "blocks": [
+        "SA1",
+        "S21a",
+        "S21b",
+        "SIII",
+        "S22b",
+        "S22a",
+        "SC1",
+        "SC2"
+      ],
+      "signal": "2/1",
+      "signals": [
+        "2/1",
+        "2/3",
+        "3/7",
+        "1/9"
+      ],
+      "signalEntries": [
+        {
+          "signal": "2/1",
+          "index": 0
+        },
+        {
+          "signal": "2/3",
+          "index": 1
+        },
+        {
+          "signal": "3/7",
+          "index": 4
+        },
+        {
+          "signal": "1/9",
+          "index": 7
+        }
+      ],
+      "turnouts": {
+        "Vx21a": "T",
+        "Vx21b": "T",
+        "Vx22b": "T",
+        "Vx22a": "T",
+        "Vx23": "T"
+      }
+    },
+    {
+      "id": "htvB--htvA",
+      "label": "B → A",
+      "blocks": [
+        "SB1",
+        "S22a",
+        "S22b",
+        "SIII",
+        "S21b",
+        "S21a",
+        "SA1",
+        "SA2"
+      ],
+      "signal": "2/2",
+      "signals": [
+        "2/2",
+        "2/4",
+        "3/8",
+        "2/10"
+      ],
+      "signalEntries": [
+        {
+          "signal": "2/2",
+          "index": 0
+        },
+        {
+          "signal": "2/4",
+          "index": 1
+        },
+        {
+          "signal": "3/8",
+          "index": 4
+        },
+        {
+          "signal": "2/10",
+          "index": 7
+        }
+      ],
+      "turnouts": {
+        "Vx22a": "T",
+        "Vx23": "C",
+        "Vx22b": "T",
+        "Vx21b": "T",
+        "Vx21a": "T"
+      }
+    },
+    {
+      "id": "htvC--htvA",
+      "label": "C → A",
+      "blocks": [
+        "SC1",
+        "S22a",
+        "S22b",
+        "SIII",
+        "S21b",
+        "S21a",
+        "SA1",
+        "SA2"
+      ],
+      "signal": "1/2",
+      "signals": [
+        "1/2",
+        "1/4",
+        "3/8",
+        "2/10"
+      ],
+      "signalEntries": [
+        {
+          "signal": "1/2",
+          "index": 0
+        },
+        {
+          "signal": "1/4",
+          "index": 1
+        },
+        {
+          "signal": "3/8",
+          "index": 4
+        },
+        {
+          "signal": "2/10",
+          "index": 7
+        }
+      ],
+      "turnouts": {
+        "Vx22a": "T",
+        "Vx23": "T",
+        "Vx22b": "T",
+        "Vx21b": "T",
+        "Vx21a": "T"
+      }
+    },
+    {
+      "id": "vtv1.4--vtv2.6",
+      "label": "1/4 → 2/6",
+      "blocks": [
+        "S22a",
+        "S22c"
+      ],
+      "signal": "1/4",
+      "signals": [
+        "1/4"
+      ],
+      "signalEntries": [
+        {
+          "signal": "1/4",
+          "index": 0
+        }
+      ],
+      "turnouts": {
+        "Vx22a": "C",
+        "Vx23": "T",
+        "Vx22c": "C"
+      }
+    },
+    {
+      "id": "vtv1.7--vtv1.9",
+      "label": "1/7 → 1/9",
+      "blocks": [
+        "S34",
+        "S32",
+        "S22c",
+        "S22a",
+        "SC1"
+      ],
+      "signal": "1/7",
+      "signals": [
+        "1/7"
+      ],
+      "signalEntries": [
+        {
+          "signal": "1/7",
+          "index": 0
+        }
+      ],
+      "turnouts": {
+        "Vx34": "T",
+        "Vx32": "T",
+        "Vx22c": "C",
+        "Vx22a": "C",
+        "Vx23": "T"
+      }
+    },
+    {
+      "id": "vtv1.7--vtv2.9",
+      "label": "1/7 → 2/9",
+      "blocks": [
+        "S34",
+        "S32",
+        "S22c",
+        "S22a",
+        "SB1"
+      ],
+      "signal": "1/7",
+      "signals": [
+        "1/7"
+      ],
+      "signalEntries": [
+        {
+          "signal": "1/7",
+          "index": 0
+        }
+      ],
+      "turnouts": {
+        "Vx34": "T",
+        "Vx32": "T",
+        "Vx22c": "C",
+        "Vx22a": "C",
+        "Vx23": "C"
+      }
+    },
+    {
+      "id": "vtv1.7--vtv4s",
+      "label": "1/7 → 4s",
+      "blocks": [
+        "S34",
+        "S32",
+        "S22c",
+        "SIV"
+      ],
+      "signal": "1/7",
+      "signals": [
+        "1/7"
+      ],
+      "signalEntries": [
+        {
+          "signal": "1/7",
+          "index": 0
+        }
+      ],
+      "turnouts": {
+        "Vx34": "T",
+        "Vx32": "T",
+        "Vx22c": "T"
+      }
+    },
+    {
+      "id": "vtv1.8--vtv2.10",
+      "label": "1/8 → 2/10",
+      "blocks": [
+        "S31",
+        "S21a",
+        "SA1"
+      ],
+      "signal": "1/8",
+      "signals": [
+        "1/8"
+      ],
+      "signalEntries": [
+        {
+          "signal": "1/8",
+          "index": 0
+        }
+      ],
+      "turnouts": {
+        "Vx31": "T",
+        "Vx21a": "C"
+      }
+    },
+    {
+      "id": "vtv2.3--vtv2.5",
+      "label": "2/3 → 2/5",
+      "blocks": [
+        "S21a"
+      ],
+      "signal": "2/3",
+      "signals": [
+        "2/3"
+      ],
+      "signalEntries": [
+        {
+          "signal": "2/3",
+          "index": 0
+        }
+      ],
+      "turnouts": {
+        "Vx21a": "C"
+      }
+    },
+    {
+      "id": "vtv2.3--vtv3.7",
+      "label": "2/3 → 3/7",
+      "blocks": [
+        "S21a",
+        "S21b",
+        "SIII"
+      ],
+      "signal": "2/3",
+      "signals": [
+        "2/3"
+      ],
+      "signalEntries": [
+        {
+          "signal": "2/3",
+          "index": 0
+        }
+      ],
+      "turnouts": {
+        "Vx21a": "T",
+        "Vx21b": "T"
+      }
+    },
+    {
+      "id": "vtv2.4--vtv2.6",
+      "label": "2/4 → 2/6",
+      "blocks": [
+        "S22a",
+        "S22c"
+      ],
+      "signal": "2/4",
+      "signals": [
+        "2/4"
+      ],
+      "signalEntries": [
+        {
+          "signal": "2/4",
+          "index": 0
+        }
+      ],
+      "turnouts": {
+        "Vx22a": "C",
+        "Vx23": "C",
+        "Vx22c": "C"
+      }
+    },
+    {
+      "id": "vtv2.4--vtv3.8",
+      "label": "2/4 → 3/8",
+      "blocks": [
+        "S22a",
+        "S22b",
+        "SIII"
+      ],
+      "signal": "2/4",
+      "signals": [
+        "2/4"
+      ],
+      "signalEntries": [
+        {
+          "signal": "2/4",
+          "index": 0
+        }
+      ],
+      "turnouts": {
+        "Vx22a": "T",
+        "Vx23": "C",
+        "Vx22b": "T"
+      }
+    },
+    {
+      "id": "vtv2.5--vtv1.7",
+      "label": "2/5 → 1/7",
+      "blocks": [
+        "S31",
+        "SI"
+      ],
+      "signal": "2/5",
+      "signals": [
+        "2/5"
+      ],
+      "signalEntries": [
+        {
+          "signal": "2/5",
+          "index": 0
+        }
+      ],
+      "turnouts": {
+        "Vx31": "T"
+      }
+    },
+    {
+      "id": "vtv2.5--vtv2.7",
+      "label": "2/5 → 2/7",
+      "blocks": [
+        "S31",
+        "SII"
+      ],
+      "signal": "2/5",
+      "signals": [
+        "2/5"
+      ],
+      "signalEntries": [
+        {
+          "signal": "2/5",
+          "index": 0
+        }
+      ],
+      "turnouts": {
+        "Vx31": "C"
+      }
+    },
+    {
+      "id": "vtv2.6--vtv1.8",
+      "label": "2/6 → 1/8",
+      "blocks": [
+        "S32",
+        "S34",
+        "SI"
+      ],
+      "signal": "2/6",
+      "signals": [
+        "2/6"
+      ],
+      "signalEntries": [
+        {
+          "signal": "2/6",
+          "index": 0
+        }
+      ],
+      "turnouts": {
+        "Vx32": "T",
+        "Vx34": "T"
+      }
+    },
+    {
+      "id": "vtv2.6--vtv2.8",
+      "label": "2/6 → 2/8",
+      "blocks": [
+        "S32",
+        "SII"
+      ],
+      "signal": "2/6",
+      "signals": [
+        "2/6"
+      ],
+      "signalEntries": [
+        {
+          "signal": "2/6",
+          "index": 0
+        }
+      ],
+      "turnouts": {
+        "Vx32": "C"
+      }
+    },
+    {
+      "id": "vtv2.6--vtv4v",
+      "label": "2/6 → 4v",
+      "blocks": [
+        "S32",
+        "S34",
+        "S4/7"
+      ],
+      "signal": "2/6",
+      "signals": [
+        "2/6"
+      ],
+      "signalEntries": [
+        {
+          "signal": "2/6",
+          "index": 0
+        }
+      ],
+      "turnouts": {
+        "Vx32": "T",
+        "Vx34": "C"
+      }
+    },
+    {
+      "id": "vtv2.7--vtv1.9",
+      "label": "2/7 → 1/9",
+      "blocks": [
+        "S32",
+        "S22c",
+        "S22a",
+        "SC1"
+      ],
+      "signal": "2/7",
+      "signals": [
+        "2/7"
+      ],
+      "signalEntries": [
+        {
+          "signal": "2/7",
+          "index": 0
+        }
+      ],
+      "turnouts": {
+        "Vx32": "C",
+        "Vx22c": "C",
+        "Vx22a": "C",
+        "Vx23": "T"
+      }
+    },
+    {
+      "id": "vtv2.7--vtv2.9",
+      "label": "2/7 → 2/9",
+      "blocks": [
+        "S32",
+        "S22c",
+        "S22a",
+        "SB1"
+      ],
+      "signal": "2/7",
+      "signals": [
+        "2/7"
+      ],
+      "signalEntries": [
+        {
+          "signal": "2/7",
+          "index": 0
+        }
+      ],
+      "turnouts": {
+        "Vx32": "C",
+        "Vx22c": "C",
+        "Vx22a": "C",
+        "Vx23": "C"
+      }
+    },
+    {
+      "id": "vtv2.7--vtv4s",
+      "label": "2/7 → 4s",
+      "blocks": [
+        "S32",
+        "S22c",
+        "SIV"
+      ],
+      "signal": "2/7",
+      "signals": [
+        "2/7"
+      ],
+      "signalEntries": [
+        {
+          "signal": "2/7",
+          "index": 0
+        }
+      ],
+      "turnouts": {
+        "Vx32": "C",
+        "Vx22c": "T"
+      }
+    },
+    {
+      "id": "vtv2.8--vtv2.10",
+      "label": "2/8 → 2/10",
+      "blocks": [
+        "S31",
+        "S21a",
+        "SA1"
+      ],
+      "signal": "2/8",
+      "signals": [
+        "2/8"
+      ],
+      "signalEntries": [
+        {
+          "signal": "2/8",
+          "index": 0
+        }
+      ],
+      "turnouts": {
+        "Vx31": "C",
+        "Vx21a": "C"
+      }
+    },
+    {
+      "id": "vtv3.4--vtv3.8",
+      "label": "3/4 → 3/8",
+      "blocks": [
+        "S22b",
+        "SIII"
+      ],
+      "signal": "3/4",
+      "signals": [
+        "3/4"
+      ],
+      "signalEntries": [
+        {
+          "signal": "3/4",
+          "index": 0
+        }
+      ],
+      "turnouts": {
+        "Vx22b": "C"
+      }
+    },
+    {
+      "id": "vtv3.5--vtv3.7",
+      "label": "3/5 → 3/7",
+      "blocks": [
+        "S21b",
+        "SIII"
+      ],
+      "signal": "3/5",
+      "signals": [
+        "3/5"
+      ],
+      "signalEntries": [
+        {
+          "signal": "3/5",
+          "index": 0
+        }
+      ],
+      "turnouts": {
+        "Vx21b": "C"
+      }
+    },
+    {
+      "id": "vtv3.7--vtv1.9",
+      "label": "3/7 → 1/9",
+      "blocks": [
+        "S22b",
+        "S22a",
+        "SC1"
+      ],
+      "signal": "3/7",
+      "signals": [
+        "3/7"
+      ],
+      "signalEntries": [
+        {
+          "signal": "3/7",
+          "index": 0
+        }
+      ],
+      "turnouts": {
+        "Vx22b": "T",
+        "Vx22a": "T",
+        "Vx23": "T"
+      }
+    },
+    {
+      "id": "vtv3.7--vtv2.9",
+      "label": "3/7 → 2/9",
+      "blocks": [
+        "S22b",
+        "S22a",
+        "SB1"
+      ],
+      "signal": "3/7",
+      "signals": [
+        "3/7"
+      ],
+      "signalEntries": [
+        {
+          "signal": "3/7",
+          "index": 0
+        }
+      ],
+      "turnouts": {
+        "Vx22b": "T",
+        "Vx22a": "T",
+        "Vx23": "C"
+      }
+    },
+    {
+      "id": "vtv3.7--vtv3o",
+      "label": "3/7 → 3ö",
+      "blocks": [
+        "S22b",
+        "SIIIa"
+      ],
+      "signal": "3/7",
+      "signals": [
+        "3/7"
+      ],
+      "signalEntries": [
+        {
+          "signal": "3/7",
+          "index": 0
+        }
+      ],
+      "turnouts": {
+        "Vx22b": "C"
+      }
+    },
+    {
+      "id": "vtv3.8--vtv2.10",
+      "label": "3/8 → 2/10",
+      "blocks": [
+        "S21b",
+        "S21a",
+        "SA1"
+      ],
+      "signal": "3/8",
+      "signals": [
+        "3/8"
+      ],
+      "signalEntries": [
+        {
+          "signal": "3/8",
+          "index": 0
+        }
+      ],
+      "turnouts": {
+        "Vx21b": "T",
+        "Vx21a": "T"
+      }
+    },
+    {
+      "id": "vtv3.8--vtv3v",
+      "label": "3/8 → 3v",
+      "blocks": [
+        "S21b",
+        "SIIIc"
+      ],
+      "signal": "3/8",
+      "signals": [
+        "3/8"
+      ],
+      "signalEntries": [
+        {
+          "signal": "3/8",
+          "index": 0
+        }
+      ],
+      "turnouts": {
+        "Vx21b": "C"
+      }
+    },
+    {
+      "id": "vtv4.4--vtv2.6",
+      "label": "4/4 → 2/6",
+      "blocks": [
+        "S22c"
+      ],
+      "signal": "4/4",
+      "signals": [
+        "4/4"
+      ],
+      "signalEntries": [
+        {
+          "signal": "4/4",
+          "index": 0
+        }
+      ],
+      "turnouts": {
+        "Vx22c": "T"
+      }
+    },
+    {
+      "id": "vtv4.7--vtv1.9",
+      "label": "4/7 → 1/9",
+      "blocks": [
+        "S34",
+        "S32",
+        "S22c",
+        "S22a",
+        "SC1"
+      ],
+      "signal": "4/7",
+      "signals": [
+        "4/7"
+      ],
+      "signalEntries": [
+        {
+          "signal": "4/7",
+          "index": 0
+        }
+      ],
+      "turnouts": {
+        "Vx34": "C",
+        "Vx32": "T",
+        "Vx22c": "C",
+        "Vx22a": "C",
+        "Vx23": "T"
+      }
+    },
+    {
+      "id": "vtv4.7--vtv2.9",
+      "label": "4/7 → 2/9",
+      "blocks": [
+        "S34",
+        "S32",
+        "S22c",
+        "S22a",
+        "SB1"
+      ],
+      "signal": "4/7",
+      "signals": [
+        "4/7"
+      ],
+      "signalEntries": [
+        {
+          "signal": "4/7",
+          "index": 0
+        }
+      ],
+      "turnouts": {
+        "Vx34": "C",
+        "Vx32": "T",
+        "Vx22c": "C",
+        "Vx22a": "C",
+        "Vx23": "C"
+      }
+    },
+    {
+      "id": "vtv4.7--vtv4s",
+      "label": "4/7 → 4s",
+      "blocks": [
+        "S34",
+        "S32",
+        "S22c",
+        "SIV"
+      ],
+      "signal": "4/7",
+      "signals": [
+        "4/7"
+      ],
+      "signalEntries": [
+        {
+          "signal": "4/7",
+          "index": 0
+        }
+      ],
+      "turnouts": {
+        "Vx34": "C",
+        "Vx32": "T",
+        "Vx22c": "T"
+      }
+    },
+    {
+      "id": "vtv1.4--vtv3.8",
+      "label": "1/4 → 3/8",
+      "blocks": [
+        "S22a",
+        "S22b",
+        "SIII"
+      ],
+      "signal": "1/4",
+      "signals": [
+        "1/4"
+      ],
+      "signalEntries": [
+        {
+          "signal": "1/4",
+          "index": 0
+        }
+      ],
+      "turnouts": {
+        "Vx22a": "T",
+        "Vx23": "T",
+        "Vx22b": "T"
+      }
+    }
+  ],
+  "scenarioAlternatives": [
+    {
+      "id": "htvA--htvB",
+      "variantId": "htvA--htvB@1",
+      "label": "A → B",
+      "blocks": [
+        "SA1",
+        "S21a",
+        "S31",
+        "SII",
+        "S32",
+        "S22c",
+        "S22a",
+        "SB1",
+        "SB2"
+      ],
+      "signal": "2/1",
+      "signals": [
+        "2/1",
+        "2/3",
+        "2/5",
+        "2/7",
+        "2/9"
+      ],
+      "signalEntries": [
+        {
+          "signal": "2/1",
+          "index": 0
+        },
+        {
+          "signal": "2/3",
+          "index": 1
+        },
+        {
+          "signal": "2/5",
+          "index": 2
+        },
+        {
+          "signal": "2/7",
+          "index": 4
+        },
+        {
+          "signal": "2/9",
+          "index": 8
+        }
+      ],
+      "turnouts": {
+        "Vx21a": "C",
+        "Vx31": "C",
+        "Vx32": "C",
+        "Vx22c": "C",
+        "Vx22a": "C",
+        "Vx23": "C"
+      }
+    },
+    {
+      "id": "htvA--htvB",
+      "variantId": "htvA--htvB@2",
+      "label": "A → B",
+      "blocks": [
+        "SA1",
+        "S21a",
+        "S31",
+        "SI",
+        "S34",
+        "S32",
+        "S22c",
+        "S22a",
+        "SB1",
+        "SB2"
+      ],
+      "signal": "2/1",
+      "signals": [
+        "2/1",
+        "2/3",
+        "2/5",
+        "1/7",
+        "2/9"
+      ],
+      "signalEntries": [
+        {
+          "signal": "2/1",
+          "index": 0
+        },
+        {
+          "signal": "2/3",
+          "index": 1
+        },
+        {
+          "signal": "2/5",
+          "index": 2
+        },
+        {
+          "signal": "1/7",
+          "index": 4
+        },
+        {
+          "signal": "2/9",
+          "index": 9
+        }
+      ],
+      "turnouts": {
+        "Vx21a": "C",
+        "Vx31": "T",
+        "Vx34": "T",
+        "Vx32": "T",
+        "Vx22c": "C",
+        "Vx22a": "C",
+        "Vx23": "C"
+      }
+    },
+    {
+      "id": "htvA--htvC",
+      "variantId": "htvA--htvC@1",
+      "label": "A → C",
+      "blocks": [
+        "SA1",
+        "S21a",
+        "S31",
+        "SII",
+        "S32",
+        "S22c",
+        "S22a",
+        "SC1",
+        "SC2"
+      ],
+      "signal": "2/1",
+      "signals": [
+        "2/1",
+        "2/3",
+        "2/5",
+        "2/7",
+        "1/9"
+      ],
+      "signalEntries": [
+        {
+          "signal": "2/1",
+          "index": 0
+        },
+        {
+          "signal": "2/3",
+          "index": 1
+        },
+        {
+          "signal": "2/5",
+          "index": 2
+        },
+        {
+          "signal": "2/7",
+          "index": 4
+        },
+        {
+          "signal": "1/9",
+          "index": 8
+        }
+      ],
+      "turnouts": {
+        "Vx21a": "C",
+        "Vx31": "C",
+        "Vx32": "C",
+        "Vx22c": "C",
+        "Vx22a": "C",
+        "Vx23": "T"
+      }
+    },
+    {
+      "id": "htvA--htvC",
+      "variantId": "htvA--htvC@2",
+      "label": "A → C",
+      "blocks": [
+        "SA1",
+        "S21a",
+        "S31",
+        "SI",
+        "S34",
+        "S32",
+        "S22c",
+        "S22a",
+        "SC1",
+        "SC2"
+      ],
+      "signal": "2/1",
+      "signals": [
+        "2/1",
+        "2/3",
+        "2/5",
+        "1/7",
+        "1/9"
+      ],
+      "signalEntries": [
+        {
+          "signal": "2/1",
+          "index": 0
+        },
+        {
+          "signal": "2/3",
+          "index": 1
+        },
+        {
+          "signal": "2/5",
+          "index": 2
+        },
+        {
+          "signal": "1/7",
+          "index": 4
+        },
+        {
+          "signal": "1/9",
+          "index": 9
+        }
+      ],
+      "turnouts": {
+        "Vx21a": "C",
+        "Vx31": "T",
+        "Vx34": "T",
+        "Vx32": "T",
+        "Vx22c": "C",
+        "Vx22a": "C",
+        "Vx23": "T"
+      }
+    },
+    {
+      "id": "htvB--htvA",
+      "variantId": "htvB--htvA@1",
+      "label": "B → A",
+      "blocks": [
+        "SB1",
+        "S22a",
+        "S22c",
+        "S32",
+        "SII",
+        "S31",
+        "S21a",
+        "SA1",
+        "SA2"
+      ],
+      "signal": "2/2",
+      "signals": [
+        "2/2",
+        "2/4",
+        "2/6",
+        "2/8",
+        "2/10"
+      ],
+      "signalEntries": [
+        {
+          "signal": "2/2",
+          "index": 0
+        },
+        {
+          "signal": "2/4",
+          "index": 1
+        },
+        {
+          "signal": "2/6",
+          "index": 3
+        },
+        {
+          "signal": "2/8",
+          "index": 5
+        },
+        {
+          "signal": "2/10",
+          "index": 8
+        }
+      ],
+      "turnouts": {
+        "Vx22a": "C",
+        "Vx23": "C",
+        "Vx22c": "C",
+        "Vx32": "C",
+        "Vx31": "C",
+        "Vx21a": "C"
+      }
+    },
+    {
+      "id": "htvB--htvA",
+      "variantId": "htvB--htvA@2",
+      "label": "B → A",
+      "blocks": [
+        "SB1",
+        "S22a",
+        "S22c",
+        "S32",
+        "S34",
+        "SI",
+        "S31",
+        "S21a",
+        "SA1",
+        "SA2"
+      ],
+      "signal": "2/2",
+      "signals": [
+        "2/2",
+        "2/4",
+        "2/6",
+        "1/8",
+        "2/10"
+      ],
+      "signalEntries": [
+        {
+          "signal": "2/2",
+          "index": 0
+        },
+        {
+          "signal": "2/4",
+          "index": 1
+        },
+        {
+          "signal": "2/6",
+          "index": 3
+        },
+        {
+          "signal": "1/8",
+          "index": 6
+        },
+        {
+          "signal": "2/10",
+          "index": 9
+        }
+      ],
+      "turnouts": {
+        "Vx22a": "C",
+        "Vx23": "C",
+        "Vx22c": "C",
+        "Vx32": "T",
+        "Vx34": "T",
+        "Vx31": "T",
+        "Vx21a": "C"
+      }
+    },
+    {
+      "id": "htvC--htvA",
+      "variantId": "htvC--htvA@1",
+      "label": "C → A",
+      "blocks": [
+        "SC1",
+        "S22a",
+        "S22c",
+        "S32",
+        "SII",
+        "S31",
+        "S21a",
+        "SA1",
+        "SA2"
+      ],
+      "signal": "1/2",
+      "signals": [
+        "1/2",
+        "1/4",
+        "2/6",
+        "2/8",
+        "2/10"
+      ],
+      "signalEntries": [
+        {
+          "signal": "1/2",
+          "index": 0
+        },
+        {
+          "signal": "1/4",
+          "index": 1
+        },
+        {
+          "signal": "2/6",
+          "index": 3
+        },
+        {
+          "signal": "2/8",
+          "index": 5
+        },
+        {
+          "signal": "2/10",
+          "index": 8
+        }
+      ],
+      "turnouts": {
+        "Vx22a": "C",
+        "Vx23": "T",
+        "Vx22c": "C",
+        "Vx32": "C",
+        "Vx31": "C",
+        "Vx21a": "C"
+      }
+    },
+    {
+      "id": "htvC--htvA",
+      "variantId": "htvC--htvA@2",
+      "label": "C → A",
+      "blocks": [
+        "SC1",
+        "S22a",
+        "S22c",
+        "S32",
+        "S34",
+        "SI",
+        "S31",
+        "S21a",
+        "SA1",
+        "SA2"
+      ],
+      "signal": "1/2",
+      "signals": [
+        "1/2",
+        "1/4",
+        "2/6",
+        "1/8",
+        "2/10"
+      ],
+      "signalEntries": [
+        {
+          "signal": "1/2",
+          "index": 0
+        },
+        {
+          "signal": "1/4",
+          "index": 1
+        },
+        {
+          "signal": "2/6",
+          "index": 3
+        },
+        {
+          "signal": "1/8",
+          "index": 6
+        },
+        {
+          "signal": "2/10",
+          "index": 9
+        }
+      ],
+      "turnouts": {
+        "Vx22a": "C",
+        "Vx23": "T",
+        "Vx22c": "C",
+        "Vx32": "T",
+        "Vx34": "T",
+        "Vx31": "T",
+        "Vx21a": "C"
+      }
+    }
+  ],
+  "modules": [],
+  "note": "Oberoende anläggningsmodell. Bara LocoNet-telegram tas emot från TKL. Scenarierna är inte TKL:s drifttillstånd."
+}
