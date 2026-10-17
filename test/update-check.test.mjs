@@ -42,6 +42,21 @@ test('the web deployment can start its own update and reports the last run',asyn
   assert.equal(new UpdateCheck({current:'1.0.0',kind:'mac'}).view().canStart,false,'a Mac runs the line in Terminal');
 });
 
+// Casper 17 oktober: Uppdatering på Render sa Misslyckades om ett försök den 6 oktober på den gamla servern
+// (0.59.1 → 0.68.0) fast 0.81.0 var installerad och senaste versionen.
+test('a run between two older versions is left out; one that concerns the running version stays',()=>{
+  let text='{"phase":"failed","message":"0.68.0 startade inte. 0.59.1 är återställd; säkerhetskopia i /var/backups.","at":"2026-10-06T15:57:00Z","from":"0.59.1","to":"0.68.0"}';
+  const at=current=>new UpdateCheck({current,kind:'render',statusFile:'/data/state/update.json',readFile:()=>text});
+  assert.equal(at('0.81.0').view().run,null,'0.81.0 is newer than both versions in the run');
+  assert.equal(at('0.81.0').run().phase,'failed','the file is still read, only not shown');
+  assert.equal(at('0.59.1').view().run.phase,'failed','still on the version it fell back to');
+  assert.equal(at('0.68.0').view().run.phase,'failed','on the version it tried');
+  text='{"phase":"done","message":"Version 0.72.0 är installerad. Föregående version: 0.71.1.","at":"2026-10-08T10:05:00Z","from":"0.71.1","to":"0.72.0"}';
+  assert.equal(at('0.72.0').view().run.phase,'done');assert.equal(at('0.73.0').view().run,null,'Render built 0.73.0 by itself');
+  text='{"phase":"failed","message":"Kunde inte hämta.","at":"2026-10-08T10:05:00Z","from":"","to":""}';
+  assert.equal(at('0.81.0').view().run.phase,'failed','without versions it cannot be judged, so it stays');
+});
+
 test('on Render the Deploy Hook starts a build, and the next version settles the run',async()=>{
   const HOOK='https://api.render.com/deploy/srv-d3abc123?key=Xy_9-z';let file=null,now=Date.parse('2026-10-08T10:00:00Z');const calls=[];
   const io={statusFile:'/data/state/update.json',readFile:()=>{if(file===null)throw Error('ENOENT');return file;},writeFile:(_,text)=>{file=text;},now:()=>now};
