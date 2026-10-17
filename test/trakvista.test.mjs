@@ -169,3 +169,12 @@ test('Träkvistas server och anläggning startar som processer och lägger A →
     await until(async()=>(await api('/api/state')).routes.some(r=>r.from==='htvA'&&r.to==='htvII'&&r.state==='active'));
   }finally{await Promise.all(children.map(c=>new Promise(r=>{c.once('exit',r);c.kill('SIGTERM');})));fs.rmSync(dir,{recursive:true,force:true});}
 });
+
+test('Tk-TKL: publiceringen lägger in en GitHub-kontroll som kör proven och stationens kontroll på varje pull request',()=>{
+  const workflow=fs.readFileSync(new URL('../packaging/github/station-tests.yml',import.meta.url),'utf8');
+  assert.match(workflow,/^on:\n  pull_request:/m);assert.match(workflow,/- run: npm test$/m);assert.match(workflow,/verify:\$\(sed -n 's\/\^TKL_STATION=\/\/p' packaging\/identity\.env\)/);
+  // cda-tkl har publiceringen, Tk-TKL har kontrollen som publiceringen lade in.
+  const publish=new URL('../deploy/publish-station.sh',import.meta.url),installed=new URL('../.github/workflows/prov.yml',import.meta.url);
+  if(fs.existsSync(publish))assert.match(fs.readFileSync(publish,'utf8'),/cp packaging\/github\/station-tests\.yml \.github\/workflows\/prov\.yml/);
+  else assert.equal(fs.readFileSync(installed,'utf8'),workflow);
+});

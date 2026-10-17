@@ -66,6 +66,27 @@ node --test test/trakvista.test.mjs
 `npm run verify:trakvista` kontrollerar att de är aktuella. Vad som är gjort och vad som är kvar för Träkvista står i
 [docs/trakvista.md](docs/trakvista.md).
 
+## Göra ändringar
+
+1. **Gör en gren och en pull request mot main.** Proven körs av sig själva på varje pull request (fliken *Checks*,
+   kontrollen *Prov*). Slå ihop när de är gröna.
+2. **Prova lokalt först:**
+
+   ```sh
+   npm ci --ignore-scripts
+   npm run import:trakvista     # efter ändringar i Trakvista.xml, CSV-tabellerna eller station.json
+   npm run verify:trakvista     # de genererade filerna stämmer med källan
+   npm test
+   ```
+
+3. **Träkvistas filer** ligger i `stations/trakvista/`: källan `Trakvista.xml`, CSV-tabellerna, `station.json` (knappar,
+   linjer, lokala växlar och rättelser av källan) och de genererade filerna i `data/` och `profiles/`, som
+   `npm run import:trakvista` skriver. Ändra källan eller `station.json`, inte de genererade filerna.
+4. **README:** ändra `stations/trakvista/README.md`. README.md i roten skrivs om därifrån vid varje publicering, liksom
+   installationsskripten, `package.json`, `packaging/identity.env` och `.github/workflows/prov.yml`.
+5. **Ändringar i programmet** (`src/`, `public/`, `scripts/`) gäller även Charlottendal. De tas in där programmet
+   utvecklas och kommer tillbaka hit med nästa publicering, se nästa avsnitt.
+
 ## Hur Tk-TKL hålls aktuellt
 
 Tk-TKL innehåller programmet och Träkvista. Programmet är detsamma som Charlottendals och publiceras hit därifrån, en
