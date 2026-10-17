@@ -18085,8 +18085,7 @@
         "reason": "",
         "provenance": "Härledd ur grafen: spårledningen fri, skyddande signaler i stopp, ingen tågväg genom växeln. Ej ur källans Spärra växlar."
       }
-    },
-    "boundaryOverrides": {}
+    }
   },
   "operatingControls": {
     "lines": {

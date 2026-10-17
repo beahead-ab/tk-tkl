@@ -73,6 +73,10 @@ node --test test/trakvista.test.mjs
 `npm run verify:trakvista` kontrollerar att de är aktuella. Vad som är gjort och vad som är kvar för Träkvista står i
 [docs/trakvista.md](docs/trakvista.md).
 
+**Studio** (Inställningar → Studio) visar Träkvista ur dess egna källor: stationsplanen, regelkorten, avvikelselistan,
+driftbindningar och mätning, och hela Trakvista.xml post för post under Data → Källa; se
+[Studio för Träkvista](docs/trakvista.md#studio-för-träkvista).
+
 ## Göra ändringar
 
 1. **Gör en gren och en pull request mot main.** Proven körs av sig själva på varje pull request (fliken *Checks*,

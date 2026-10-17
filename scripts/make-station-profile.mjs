@@ -163,7 +163,8 @@ const manualRules = names.map(name => {
 // eller som enskild manöver.
 for (const r of manualRules) if (r.names.some(n => turnouts[n].local)) Object.assign(r, { status: 'unresolved', reason: 'Lokalt styrd växel: den läggs om på plats, inte från TKL.' });
 for (const r of allRoutes) if (Object.keys(r.turnouts).some(n => turnouts[n].local)) throw Error('Tågvägen går genom en lokalt styrd växel: ' + r.id);
-const manualPolicies = { rules: manualRules, byTurnout: Object.fromEntries(manualRules.map(r => [r.button, r])), boundaryOverrides: {} };
+// Som manual-policy.mjs: boundaryOverrides bara när det finns gränsväxlar (rangerbangården).
+const manualPolicies = { rules: manualRules, byTurnout: Object.fromEntries(manualRules.map(r => [r.button, r])) };
 // Linjerna: knappen och spårledningen vid den. Linjespärren motsvarar källans Spärra spår (ssA, ssB, ssC).
 const lines = Object.fromEntries(Object.entries(station.lines).map(([id, l]) => {
   const block = topology.segments[buttons[l.button].segment].b;
@@ -206,6 +207,10 @@ const anchors = panel.bicons.map((b, i) => ({ id: 'block-icon-' + i, key: 'block
 for (const a of anchors) fields.find(f => f.key === a.key)?.anchors.push(a.id);
 write('data/train-fields.json', { sourceHash: source.sourceHash, fields, anchors });
 write('data/indications.json', { sourceHash: source.sourceHash, group: null, indicators: [], note: `${station.title} har inga beräknade vägindikeringar i profilen.` });
+// Tågvägstäckningen, som Studio visar: varje NX-par i källan med de tågvägar som använder det, och de undantagna.
+write('data/route-coverage.json', { sourceHash: source.sourceHash,
+  nx: source.nxPairs.map(n => ({ ...n, routes: routes.filter(r => r.nxIds.includes(n.id)).map(r => r.id) })),
+  excluded: excluded.map(e => ({ from: e.from, to: e.to, rules: e.rules || [], nxButtons: e.nxButtons || [], reason: e.reason })) });
 console.log(JSON.stringify({ station: station.id, routes: routes.length, main: routes.filter(r => r.kind === 'main').length, shunt: routes.filter(r => r.kind === 'shunt').length,
   alternatives: routeAlternatives.length, excluded: excluded.length, excludedReasons: excluded.map(e => e.from + '→' + e.to + ': ' + e.reason), turnouts: names.length,
   blocks: Object.keys(blocks).length, detected: Object.values(blocks).filter(b => b.address < 3000).length, signals: Object.keys(signals).length, localBlocks, localSegments: localSegments.length }, null, 2));

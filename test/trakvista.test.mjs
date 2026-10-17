@@ -152,7 +152,7 @@ test('Tk-TKL: make-station-repository gives Träkvista its own installation, and
   fs.rmSync(dir,{recursive:true,force:true});
 });
 
-test('Träkvistas server och anläggning startar som processer och lägger A → Spår II, utan Charlottendals filer',{timeout:60000},async()=>{
+test('Träkvistas server och anläggning startar som processer, har Studio och lägger A → Spår II, utan Charlottendals filer',{timeout:60000},async()=>{
   const freePort=()=>new Promise((ok,no)=>{const s=net.createServer();s.once('error',no);s.listen(0,'127.0.0.1',()=>{const p=s.address().port;s.close(()=>ok(p));});});
   const [port,simPort,wirePort]=await Promise.all([freePort(),freePort(),freePort()]),dir=fs.mkdtempSync(path.join(os.tmpdir(),'trakvista-'));
   const env={...process.env,CHARLOTTENDAL_STATION:'trakvista',CHARLOTTENDAL_CONNECTION_MODE:'simulator',CHARLOTTENDAL_WIRE_HOST:'127.0.0.1',
@@ -163,6 +163,10 @@ test('Träkvistas server och anläggning startar som processer och lägger A →
   try{
     const config=await until(()=>api('/api/config'));
     assert.equal(config.station.id,'trakvista');assert.equal(config.routes.length,57);
+    assert.deepEqual({studio:config.station.studio,source:config.station.source,register:config.station.register,migration:config.station.migration},{studio:true,source:'Trakvista.xml',register:true,migration:false});
+    const studio=await api('/api/studio');assert.equal(studio.counts.turnouts,13);assert.equal(studio.counts.routes,57);
+    const original=await fetch(`http://127.0.0.1:${port}/data/source/Trakvista.xml`);assert.equal(original.status,200);assert.match((await original.text()).slice(0,200),/<\?xml/);
+    assert.equal((await fetch(`http://127.0.0.1:${port}/data/source/station.json`)).status,404,'only the JMRI file is served from the station folder');
     await until(async()=>(await api('/api/state')).connection==='connected');
     // Direkt efter anslutningen har spårledningarna inte rapporterat än; begäran nekas tills de har det.
     await until(async()=>(await api('/api/route',{from:'htvA',to:'htvII'})).ok);
@@ -177,4 +181,21 @@ test('Tk-TKL: publiceringen lägger in en GitHub-kontroll som kör proven och st
   const publish=new URL('../deploy/publish-station.sh',import.meta.url),installed=new URL('../.github/workflows/prov.yml',import.meta.url);
   if(fs.existsSync(publish))assert.match(fs.readFileSync(publish,'utf8'),/cp packaging\/github\/station-tests\.yml \.github\/workflows\/prov\.yml/);
   else assert.equal(fs.readFileSync(installed,'utf8'),workflow);
+});
+
+test('Träkvistas Studio: källorna ur stationens katalog och Trakvista.xml, LogixNG-avkänningen och regler som kompileras tillbaka oförändrade',async()=>{
+  const {currentStation}=await import('../src/station.mjs'),{loadSources}=await import('../src/studio/sources.mjs'),{studioData}=await import('../src/studio/index.mjs');
+  const sources=loadSources(undefined,currentStation({CHARLOTTENDAL_STATION:'trakvista'}));
+  assert.deepEqual(sources.station,{id:'trakvista',title:'Träkvista',sourceName:'Trakvista.xml'});assert.equal(sources.migration,null);
+  const data=studioData(sources);
+  assert.deepEqual({...data.counts,measured:undefined},{turnouts:13,signals:25,blocks:36,routes:57,modules:0,measured:undefined});
+  // LogixNG: importören har följt reglerna till ingångarna, så varje spårledning med sensor har sina LS-ingångar.
+  assert.deepEqual(data.detection.shapes,{single:22,any:3,noSensor:11});assert.deepEqual(data.detection.undetected.noRule,[]);
+  assert.ok(data.detection.sections.filter(s=>s.sourceSensor).every(s=>s.inputs.length&&s.inputs.every(i=>/^LS\d+$/.test(i))));
+  // Regler härledda ur profilen ger exakt profilen tillbaka: en aktivering i Studio ändrar inget som inte ändrats i Studio.
+  assert.equal(data.rules.compiledIdentical,true);assert.deepEqual(data.rules.baseDiff,{fragments:0,routes:0});assert.deepEqual(data.rules.problems,[]);
+  // Inget i avvikelselistan förutsätter Charlottendal: rangerbangården, vändskivan och programmeringsspåret räknas som noll.
+  const dev=Object.fromEntries(data.deviations.map(r=>[r.id,r.count]));
+  assert.equal(dev['yard-boundaries'],0);assert.equal(dev.turntable,0);assert.equal(dev['programming-relay'],0);assert.equal(dev['nx-without-route'],0);
+  assert.equal(dev['turnout-unmeasured'],13);assert.equal(dev['manual-groups'],4,'de fyra lokala växlarna');
 });

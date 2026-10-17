@@ -1,0 +1,356 @@
+{
+  "sourceHash": "3e7b63c95d05e7c152304dd24b27cc3286cb66e9b6e89e9932aba73edff97e79",
+  "nx": [
+    {
+      "id": "IN:23f08525-9c8b-40e8-b33d-ee5b18b52016",
+      "fromSensor": "tvs1/2",
+      "toSensor": "tvs1/4",
+      "type": "fullinterlocking",
+      "routes": [
+        "htvC--htvI",
+        "htvC--htvII",
+        "htvC--htvIII",
+        "htvC--htvIIIC",
+        "htvC--htvA"
+      ]
+    },
+    {
+      "id": "IN:e7c78340-a96c-4450-93fe-ff35fe6bac4d",
+      "fromSensor": "tvs1/4",
+      "toSensor": "tvs2/6",
+      "type": "fullinterlocking",
+      "routes": [
+        "htvC--htvI",
+        "htvC--htvII",
+        "vtv1.4--vtv2.6"
+      ]
+    },
+    {
+      "id": "IN:e778e8d7-becd-42d6-8ece-3fe6ca404932",
+      "fromSensor": "tvs1/4",
+      "toSensor": "tvs3/8",
+      "type": "fullinterlocking",
+      "routes": [
+        "htvC--htvIII",
+        "htvC--htvIIIC",
+        "htvC--htvA",
+        "vtv1.4--vtv3.8"
+      ]
+    },
+    {
+      "id": "IN:a566aa6c-dc54-456a-8375-e112f72c94b0",
+      "fromSensor": "tvs1/7",
+      "toSensor": "tvs1/9",
+      "type": "fullinterlocking",
+      "routes": [
+        "htvI--htvC",
+        "vtv1.7--vtv1.9"
+      ]
+    },
+    {
+      "id": "IN:728e1dce-99a5-4078-9da2-58bfc5eafc4e",
+      "fromSensor": "tvs1/7",
+      "toSensor": "tvs2/9",
+      "type": "fullinterlocking",
+      "routes": [
+        "htvI--htvB",
+        "vtv1.7--vtv2.9"
+      ]
+    },
+    {
+      "id": "IN:61603f51-6a6a-4c89-af90-9f6cd393932c",
+      "fromSensor": "tvs1/7",
+      "toSensor": "tvs4s",
+      "type": "fullinterlocking",
+      "routes": [
+        "vtv1.7--vtv4s"
+      ]
+    },
+    {
+      "id": "IN:9100965d-868e-4e59-a840-faf48f35c5b7",
+      "fromSensor": "tvs1/8",
+      "toSensor": "tvs2/10",
+      "type": "fullinterlocking",
+      "routes": [
+        "htvI--htvA",
+        "vtv1.8--vtv2.10"
+      ]
+    },
+    {
+      "id": "IN:36fe7025-610b-48c7-b2e1-117c0043e4c8",
+      "fromSensor": "tvs2/1",
+      "toSensor": "tvs2/3",
+      "type": "fullinterlocking",
+      "routes": [
+        "htvA--htvI",
+        "htvA--htvII",
+        "htvA--htvIII",
+        "htvA--htvIIIA",
+        "htvA--htvB",
+        "htvA--htvC"
+      ]
+    },
+    {
+      "id": "IN:2df87b49-6c96-4098-b5a9-d09e45c0b82c",
+      "fromSensor": "tvs2/2",
+      "toSensor": "tvs2/4",
+      "type": "fullinterlocking",
+      "routes": [
+        "htvB--htvI",
+        "htvB--htvII",
+        "htvB--htvIII",
+        "htvB--htvIIIC",
+        "htvB--htvA"
+      ]
+    },
+    {
+      "id": "IN:90c45123-426c-402c-b688-c6882c476d64",
+      "fromSensor": "tvs2/3",
+      "toSensor": "tvs2/5",
+      "type": "fullinterlocking",
+      "routes": [
+        "htvA--htvI",
+        "htvA--htvII",
+        "vtv2.3--vtv2.5"
+      ]
+    },
+    {
+      "id": "IN:c829d1af-7298-4892-ab47-2ddb1fae36d9",
+      "fromSensor": "tvs2/3",
+      "toSensor": "tvs3/7",
+      "type": "fullinterlocking",
+      "routes": [
+        "htvA--htvIII",
+        "htvA--htvIIIA",
+        "htvA--htvB",
+        "htvA--htvC",
+        "vtv2.3--vtv3.7"
+      ]
+    },
+    {
+      "id": "IN:65a7ef63-a5f3-4b51-bc78-cd806d15b20a",
+      "fromSensor": "tvs2/4",
+      "toSensor": "tvs2/6",
+      "type": "fullinterlocking",
+      "routes": [
+        "htvB--htvI",
+        "htvB--htvII",
+        "vtv2.4--vtv2.6"
+      ]
+    },
+    {
+      "id": "IN:248185bb-95cd-4104-adaa-aaa67d63feb8",
+      "fromSensor": "tvs2/4",
+      "toSensor": "tvs3/8",
+      "type": "fullinterlocking",
+      "routes": [
+        "htvB--htvIII",
+        "htvB--htvIIIC",
+        "htvB--htvA",
+        "vtv2.4--vtv3.8"
+      ]
+    },
+    {
+      "id": "IN:287edca9-f116-44da-be3e-846fbd67b20c",
+      "fromSensor": "tvs2/5",
+      "toSensor": "tvs1/7",
+      "type": "fullinterlocking",
+      "routes": [
+        "htvA--htvI",
+        "vtv2.5--vtv1.7"
+      ]
+    },
+    {
+      "id": "IN:2abe16a4-0503-443f-b4e9-a0e057e0de07",
+      "fromSensor": "tvs2/5",
+      "toSensor": "tvs2/7",
+      "type": "fullinterlocking",
+      "routes": [
+        "htvA--htvII",
+        "vtv2.5--vtv2.7"
+      ]
+    },
+    {
+      "id": "IN:7d30185e-3e0e-4cd7-b4db-9cab406c80cb",
+      "fromSensor": "tvs2/6",
+      "toSensor": "tvs1/8",
+      "type": "fullinterlocking",
+      "routes": [
+        "htvB--htvI",
+        "htvC--htvI",
+        "vtv2.6--vtv1.8"
+      ]
+    },
+    {
+      "id": "IN:b6d205c9-5b08-44e8-9379-28fb13ab3870",
+      "fromSensor": "tvs2/6",
+      "toSensor": "tvs2/8",
+      "type": "fullinterlocking",
+      "routes": [
+        "htvB--htvII",
+        "htvC--htvII",
+        "vtv2.6--vtv2.8"
+      ]
+    },
+    {
+      "id": "IN:ca405742-1035-4d25-b7db-15bf8f489025",
+      "fromSensor": "tvs2/6",
+      "toSensor": "tvs4v",
+      "type": "fullinterlocking",
+      "routes": [
+        "vtv2.6--vtv4v"
+      ]
+    },
+    {
+      "id": "IN:c436ec67-e0e3-4cf7-94db-5bc035a3ee41",
+      "fromSensor": "tvs2/7",
+      "toSensor": "tvs1/9",
+      "type": "fullinterlocking",
+      "routes": [
+        "htvII--htvC",
+        "vtv2.7--vtv1.9"
+      ]
+    },
+    {
+      "id": "IN:c37d0778-a54e-4bb5-8243-01bd13f091e1",
+      "fromSensor": "tvs2/7",
+      "toSensor": "tvs2/9",
+      "type": "fullinterlocking",
+      "routes": [
+        "htvII--htvB",
+        "vtv2.7--vtv2.9"
+      ]
+    },
+    {
+      "id": "IN:d78e82b1-fdd9-495f-9e6a-7a478befe644",
+      "fromSensor": "tvs2/7",
+      "toSensor": "tvs4s",
+      "type": "fullinterlocking",
+      "routes": [
+        "vtv2.7--vtv4s"
+      ]
+    },
+    {
+      "id": "IN:67a81e81-fecd-4d3c-adeb-7692d708b8af",
+      "fromSensor": "tvs2/8",
+      "toSensor": "tvs2/10",
+      "type": "fullinterlocking",
+      "routes": [
+        "htvII--htvA",
+        "vtv2.8--vtv2.10"
+      ]
+    },
+    {
+      "id": "IN:e3c1d82d-bc16-4105-ac6f-09a1f6781c5c",
+      "fromSensor": "tvs3/4",
+      "toSensor": "tvs3/8",
+      "type": "fullinterlocking",
+      "routes": [
+        "vtv3.4--vtv3.8"
+      ]
+    },
+    {
+      "id": "IN:a8e0646c-9236-4156-a648-393d3f279ff5",
+      "fromSensor": "tvs3/5",
+      "toSensor": "tvs3/7",
+      "type": "fullinterlocking",
+      "routes": [
+        "vtv3.5--vtv3.7"
+      ]
+    },
+    {
+      "id": "IN:82d25242-c83b-4c62-8f4d-32f90b19add2",
+      "fromSensor": "tvs3/7",
+      "toSensor": "tvs1/9",
+      "type": "fullinterlocking",
+      "routes": [
+        "htvIII--htvC",
+        "htvA--htvC",
+        "vtv3.7--vtv1.9"
+      ]
+    },
+    {
+      "id": "IN:913af25d-2e7d-49af-876e-3bbfee50acac",
+      "fromSensor": "tvs3/7",
+      "toSensor": "tvs2/9",
+      "type": "fullinterlocking",
+      "routes": [
+        "htvIII--htvB",
+        "htvA--htvB",
+        "vtv3.7--vtv2.9"
+      ]
+    },
+    {
+      "id": "IN:a0a11175-81e2-4c8d-b5ea-c907e7e01ab6",
+      "fromSensor": "tvs3/7",
+      "toSensor": "tvs3ö",
+      "type": "fullinterlocking",
+      "routes": [
+        "htvA--htvIIIA",
+        "htvIII--htvIIIA",
+        "vtv3.7--vtv3o"
+      ]
+    },
+    {
+      "id": "IN:55400354-d660-44ec-b977-fcd813187270",
+      "fromSensor": "tvs3/8",
+      "toSensor": "tvs2/10",
+      "type": "fullinterlocking",
+      "routes": [
+        "htvIII--htvA",
+        "htvB--htvA",
+        "htvC--htvA",
+        "vtv3.8--vtv2.10"
+      ]
+    },
+    {
+      "id": "IN:533e29ba-2143-48b4-994a-e2c2d9c8045d",
+      "fromSensor": "tvs3/8",
+      "toSensor": "tvs3v",
+      "type": "fullinterlocking",
+      "routes": [
+        "htvB--htvIIIC",
+        "htvC--htvIIIC",
+        "htvIII--htvIIIC",
+        "vtv3.8--vtv3v"
+      ]
+    },
+    {
+      "id": "IN:5d577f86-2bc3-4f4c-85fb-fd8cfb0cb52d",
+      "fromSensor": "tvs4/4",
+      "toSensor": "tvs2/6",
+      "type": "fullinterlocking",
+      "routes": [
+        "vtv4.4--vtv2.6"
+      ]
+    },
+    {
+      "id": "IN:eb4359e4-7c20-4574-926b-3a393fa9dd45",
+      "fromSensor": "tvs4/7",
+      "toSensor": "tvs1/9",
+      "type": "fullinterlocking",
+      "routes": [
+        "vtv4.7--vtv1.9"
+      ]
+    },
+    {
+      "id": "IN:d204b509-6812-4d8f-aca4-ad2ee0452f2f",
+      "fromSensor": "tvs4/7",
+      "toSensor": "tvs2/9",
+      "type": "fullinterlocking",
+      "routes": [
+        "vtv4.7--vtv2.9"
+      ]
+    },
+    {
+      "id": "IN:e5e8e0f6-041b-46a7-b400-d675687ab900",
+      "fromSensor": "tvs4/7",
+      "toSensor": "tvs4s",
+      "type": "fullinterlocking",
+      "routes": [
+        "vtv4.7--vtv4s"
+      ]
+    }
+  ],
+  "excluded": []
+}

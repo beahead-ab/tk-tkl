@@ -76,9 +76,28 @@ skärmbild och med stationsfilen.
 2. **Spärr för lokalt styrda spår.** Växlarna är spärrade för TKL, men tågvägar in på lokala spår är inte spärrade i
    fjärrläge. Ingen tågväg går dit i dag.
 3. **Givarna på plats.** Vx21a:s givare och de lokala växlarnas givare behöver ställas in och mätas.
-4. **Studio.** Studio bygger på Charlottendals källor och är avstängt för Träkvista.
+4. **Studio: Införandestatus och MGP-moduler.** Studio finns för Träkvista (se nedan), men Införandestatus bygger på
+   Charlottendals Logix-migrering och visas inte, och modulerna kan inte läsas ur kommentarerna i Trakvista.xml.
 5. **Manöver av enskild växel.** Regeln är härledd ur grafen, inte översatt från gruppen *Spärra växlar*.
 6. **Automatiskt tågmöte och Friställd.** Automaten ska godkänna klareringen genom TrainMeet när infarten är lagd.
+
+## Studio för Träkvista
+
+Studio (Inställningar → Studio, eller `/studio.html`) läser Träkvistas egna källor: driftprofilen, panelen och
+`Trakvista.xml`. Allt som räknas ur dem finns:
+
+- **Konfigurera:** stationsplanen ritad ur Bennys panel, med 13 växlar, 25 signaler, 36 spårledningar och lager för
+  nummer, adresser och avvikelser; regelkorten (21, härledda ur profilen) och chatten; visning, orter och övriga delar.
+- **Data:** alla mängder och de 57 tågvägarna, och **Källa**, hela Trakvista.xml post för post med JMRI:s fält och
+  referenser. Originalfilen kan hämtas oförändrad.
+- **Genomgång:** avvikelselistan, bland annat 13 växeladresser ej uppmätta, 11 spår utan detektering i källan och 21
+  signalrelationer i JMRI utan tågväg.
+- **Driftsättning:** utkast, aktivering, driftbindningar, mätning av objekt, lyssna och kort.
+
+Spåravkänningen läses ur LogixNG: importören har följt *Spårledningar* till ingångarna, så 22 spårledningar har en
+ingång och 3 någon av flera. Reglerna som Studio härleder ur profilen kompileras tillbaka till exakt samma profil, så en
+aktivering ändrar bara det som ändrats i Studio. Källregistret byggs av `npm run import:trakvista` och kontrolleras av
+`npm run verify:trakvista`.
 
 ## Förrådet Tk-TKL
 

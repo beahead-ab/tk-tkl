@@ -13,9 +13,7 @@
     "backend": "node src/server.mjs",
     "simulator": "node src/simulator.mjs",
     "test": "node --test test/*.test.mjs",
-    "check": "node scripts/check.mjs",
-    "import:trakvista": "python3 scripts/import-layout.py stations/trakvista/Trakvista.xml --panel Träkvista --station stations/trakvista/station.json --out stations/trakvista/data/panel.json && python3 scripts/import-logixng.py stations/trakvista && node scripts/make-station-profile.mjs stations/trakvista",
-    "verify:trakvista": "python3 scripts/import-layout.py stations/trakvista/Trakvista.xml --panel Träkvista --station stations/trakvista/station.json --out stations/trakvista/data/panel.json --check && python3 scripts/import-logixng.py stations/trakvista --check && node scripts/make-station-profile.mjs stations/trakvista --check"
+    "check": "node scripts/check.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "0.131.0",

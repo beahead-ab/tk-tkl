@@ -17,9 +17,12 @@ export function stationIds() {
 export function currentStation(env = process.env) {
   const id = env.CHARLOTTENDAL_STATION || DEFAULT_STATION;
   if (!stationIds().includes(id)) throw Error('Okänd station: ' + id + '. Finns: ' + stationIds().join(', ') + '.');
-  if (id === BUILT_IN) return { id, title: 'Charlottendal', builtIn: true, dataDir: ROOT + 'public/data', profile: null, field: null };
+  if (id === BUILT_IN) return { id, title: 'Charlottendal', builtIn: true, dataDir: ROOT + 'public/data', profile: null, field: null, source: ROOT + 'public/data/source/Cda60.xml', sourceName: 'Cda60.xml' };
   const dir = `${ROOT}stations/${id}`, station = JSON.parse(fs.readFileSync(dir + '/station.json', 'utf8'));
-  return { id, title: station.title, signature: station.signature, builtIn: false, dataDir: dir + '/data', profile: dir + '/profiles/network.json', field: dir + '/profiles/field.json' };
+  // JMRI-filen som stationen är importerad ur: Studio läser den, som Charlottendals Cda60.xml.
+  const source = station.source && /^[\w.-]+\.xml$/.test(station.source) && fs.existsSync(dir + '/' + station.source) ? dir + '/' + station.source : null;
+  return { id, title: station.title, signature: station.signature, builtIn: false, dataDir: dir + '/data', profile: dir + '/profiles/network.json', field: dir + '/profiles/field.json',
+    source, sourceName: source ? station.source : null };
 }
 // Driftdata (lås, journal, inställningar): var/ för Charlottendal, var/<id>/ för en annan station, så att två stationers
 // lås aldrig blandas. CHARLOTTENDAL_STATE_DIR gäller före båda.

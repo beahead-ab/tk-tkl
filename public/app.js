@@ -102,7 +102,8 @@ function setPage(page,{historyMode='push'}={}) {
   adminNavigation.sync();
   document.title=adminNavigation.title()+' · '+stationTitle()+' TKL';
   window.scrollTo(0,0);$('admin-shell-content').scrollTop=0;syncAdminWorkspaces();paint();
-  if(page==='admin'||page==='advanced')return sourceRegister.open().catch(e=>message(e.message));
+  // Källregistret läser stationens JMRI-fil post för post; en station utan registret har inget att öppna (config.station.register).
+  if((page==='admin'||page==='advanced')&&config?.station?.register!==false)return sourceRegister.open().catch(e=>message(e.message));
 }
 function stationTitle(){return config?.station?.title||'Charlottendal';}
 function openTools(section) {
@@ -815,6 +816,10 @@ async function start() {
     // Rangerarens station ser läget men byter det inte.
     onMode:rangerMode?null:()=>openConnectionMode(state?.connectionMode,{api,message})});
   document.querySelector('.plan-head-title').textContent=stationTitle();document.title=document.title.replace(/Charlottendal/g,stationTitle());
+  // En annan station: dess namn i stället för CHARLOTTENDAL, och ingen länk till Studio om stationen saknar sin JMRI-fil.
+  for(const el of document.querySelectorAll('.brand span,.phone-brand,.admin-shell-bar-title'))el.textContent=stationTitle().toUpperCase();
+  if(config.station?.studio===false){const group=$('admin-tab')?.closest('.admin-nav-group'),heading=group?.previousElementSibling;group?.remove();
+    if(heading?.classList.contains('admin-nav-heading')&&!heading.nextElementSibling?.classList.contains('admin-nav-group'))heading.remove();}
   if(rangerMode){document.querySelector('.plan-head-title').textContent=stationTitle()+' · Rangeraren';rangerBar=createRangerBar({root:$('panel-events'),api});}
   createPanelSplit({bottom:$('panel-bottom'),viewport:document.querySelector('.panel-scroll')});
   // Nothing administrative in the signal box's frame: the update chips join the Drift tab's buttons.
