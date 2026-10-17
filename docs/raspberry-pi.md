@@ -174,8 +174,12 @@ installationen har sagt åt Chromium att ställverket får använda Elgatos enhe
 När en ny version finns visar statusraden `● Uppdatering 0.49.0` (blå). Tryck på den och välj
 **Uppdatera nu**: Pi:n hämtar versionen, installerar den och startar om TKL, vilket tar ett par
 minuter. När den är klar visar statusraden `● Ny version · ladda om`; tryck på det. Pi:n tittar efter
-nya versioner när den startar och sedan var sjätte timme, och läser då bara versionsnumret i det
-publika förrådet.
+nya versioner när den startar och sedan varje timme, och läser då bara versionsnumret i förrådet. Kunde det
+inte läsas visar Inställningar → Uppdatering **Hämta senaste versionen**, som installerar den senaste ändå.
+
+Ett privat förråd (Tk-TKL medan det är privat) läses med den token som installationen fick
+(`TKL_TOKEN` eller `CDA_TKL_TOKEN` på installationsraden). Den ligger i `/etc/<id>/github-token`, läsbar bara för
+root och TKL:s egen användare, och används både av TKL för att se nya versioner och av uppdateringen.
 
 Samma sak från terminalen:
 

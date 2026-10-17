@@ -4,9 +4,18 @@
 // (charlottendal-update installed) and on Render (deploy/render sets the kind).
 // Förrådet är Charlottendals cda-tkl-install om installationen inte anger ett annat (CHARLOTTENDAL_INSTALL_REPOSITORY,
 // som installationen skriver för en annan station, till exempel beahead-ab/Tk-TKL för Träkvista).
+import fs from 'node:fs';
 export const DEFAULT_REPOSITORY='beahead-ab/cda-tkl-install';
 export const installRepository=(env=process.env)=>/^[\w.-]+\/[\w.-]+$/.test(env.CHARLOTTENDAL_INSTALL_REPOSITORY||'')?env.CHARLOTTENDAL_INSTALL_REPOSITORY:DEFAULT_REPOSITORY;
 export const repositoryUrls=repository=>({url:`https://raw.githubusercontent.com/${repository}/main/package.json`,releasesUrl:`https://raw.githubusercontent.com/${repository}/main/public/releases.json`});
+// Ett privat förråd (Tk-TKL medan det är privat) läses genom GitHubs API med installationens token, samma som
+// installationen och uppdateringstjänsten använder: filen i CHARLOTTENDAL_GITHUB_TOKEN_FILE (/etc/<id>/github-token).
+// Filen läses vid varje kontroll, så en token som läggs in senare gäller utan omstart. Den syns aldrig i panelen.
+export const readToken=(env=process.env,read=file=>fs.readFileSync(file,'utf8'))=>{
+  if(!env.CHARLOTTENDAL_GITHUB_TOKEN_FILE)return '';
+  try{const token=read(env.CHARLOTTENDAL_GITHUB_TOKEN_FILE).trim();return /^[A-Za-z0-9_]{20,255}$/.test(token)?token:'';}catch{return '';}
+};
+export const apiUrl=(repository,file)=>`https://api.github.com/repos/${repository}/contents/${file}?ref=main`;
 export const UPDATE_URL=repositoryUrls(DEFAULT_REPOSITORY).url;
 // What each release did, headings only (public/releases.json): read beside the version
 // so Inställningar → Uppdatering can say what a newer release brings.
@@ -24,15 +33,21 @@ const IN_PROGRESS=new Set(['fetching','installing','backup','restarting']);
 export const UPDATE_UNITS={'raspberry-pi':'cda-tkl-update.service',web:'charlottendal-update.service'};
 export const newer=(a,b)=>{const x=String(a).split(/[.+-]/).map(Number),y=String(b).split(/[.+-]/).map(Number);for(let i=0;i<3;i++){const d=(x[i]||0)-(y[i]||0);if(d)return d>0;}return false;};
 export class UpdateCheck{
-  constructor({current,kind,fetcher=fetch,now=Date.now,repository=DEFAULT_REPOSITORY,product='Charlottendal TKL',url=repositoryUrls(repository).url,releasesUrl=repositoryUrls(repository).releasesUrl,intervalMs=3600000,statusFile=null,readFile=null,writeFile=null,hook=''}){
+  constructor({current,kind,fetcher=fetch,now=Date.now,repository=DEFAULT_REPOSITORY,product='Charlottendal TKL',url=repositoryUrls(repository).url,releasesUrl=repositoryUrls(repository).releasesUrl,token=()=>'',intervalMs=3600000,statusFile=null,readFile=null,writeFile=null,hook=''}){
     if(!KINDS.has(kind))throw Error('Okänd installationstyp: '+kind);
-    Object.assign(this,{current,kind,fetcher,now,repository,product,url,releasesUrl,intervalMs,statusFile,readFile,writeFile,hook:kind==='render'?renderHook(hook):''});this.runCache={text:null,value:null};this.latest=null;this.checkedAt=0;this.error='';this.timer=null;this.newReleases=[];
+    Object.assign(this,{current,kind,fetcher,now,repository,product,url,releasesUrl,token,intervalMs,statusFile,readFile,writeFile,hook:kind==='render'?renderHook(hook):''});this.runCache={text:null,value:null};this.latest=null;this.checkedAt=0;this.error='';this.timer=null;this.newReleases=[];
   }
   start(delayMs=30000){this.settle();const run=()=>this.check().catch(()=>{});this.timer=setTimeout(()=>{run();this.timer=setInterval(run,this.intervalMs);this.timer.unref?.();},delayMs);this.timer.unref?.();}
+  // Med token: GitHubs API, som läser även ett privat förråd. Utan: den publika filen, som förut.
+  get(file,raw){
+    const token=this.token(),signal=AbortSignal.timeout(10000);
+    return token?this.fetcher(apiUrl(this.repository,file),{headers:{Authorization:'Bearer '+token,Accept:'application/vnd.github.raw+json','X-GitHub-Api-Version':'2022-11-28'},signal})
+      :this.fetcher(raw,{headers:{Accept:'application/json'},signal});
+  }
   async check(){
     try{
-      const response=await this.fetcher(this.url,{headers:{Accept:'application/json'},signal:AbortSignal.timeout(10000)});
-      if(!response.ok)throw Error('svar '+response.status);
+      const response=await this.get('package.json',this.url);
+      if(!response.ok)throw Error('svar '+response.status+(response.status===404&&!this.token()?'; är förrådet privat behöver installationen en token':[401,403].includes(response.status)?'; GitHub godtar inte installationens token':''));
       const version=(await response.json())?.version;
       if(typeof version!=='string'||!/^\d+\.\d+\.\d+/.test(version))throw Error('ogiltig version');
       this.latest=version;this.error='';
@@ -42,7 +57,7 @@ export class UpdateCheck{
   }
   // Never fatal: without the headings the offer is vaguer, not wrong.
   async releases(){
-    try{const response=await this.fetcher(this.releasesUrl,{headers:{Accept:'application/json'},signal:AbortSignal.timeout(10000)});if(!response.ok)return [];
+    try{const response=await this.get('public/releases.json',this.releasesUrl);if(!response.ok)return [];
       const list=await response.json();return Array.isArray(list)?list.filter(r=>typeof r?.version==='string'&&newer(r.version,this.current)&&Array.isArray(r.notes)).map(r=>({version:r.version,date:String(r.date||''),notes:r.notes.map(String)})):[];}
     catch{return [];}
   }

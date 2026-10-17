@@ -102,3 +102,10 @@ test('packaging/identity.env names the installation; Charlottendal\'s package in
   assert.match(script,/TKL_ID=cda-tkl TKL_NAME=Charlottendal TKL_STATION=charlottendal TKL_REPOSITORY=beahead-ab\/cda-tkl-install/,'defaults without the file');
   assert.ok(fs.existsSync(new URL('../stations/'+id.TKL_STATION+'/station.json',import.meta.url))||id.TKL_STATION==='charlottendal','the station exists');
 });
+
+test('a token for a private repository is readable by the TKL service group, so Uppdatering can see new versions',()=>{
+  const script=read('scripts/install-raspberry-pi.sh');
+  assert.match(script,/chown "root:\$TKL_ID" "\$CONFIG_DIR\/github-token" && chmod 0640 "\$CONFIG_DIR\/github-token"/);
+  assert.match(script,/CHARLOTTENDAL_GITHUB_TOKEN_FILE=%s\\n' "\$CONFIG_DIR\/github-token"/);
+  assert.match(read('packaging/raspberry-pi/cda-tkl-update'),/github-token \] && TOKEN=/,'the update service reads the same token');
+});

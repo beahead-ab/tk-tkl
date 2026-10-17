@@ -108,6 +108,11 @@ KIOSK_ORIGIN=$(printf '%s' "$KIOSK_URL" | sed -E 's#^(https?://[^/]+).*#\1#')
 if [ -n "${CDA_TKL_TOKEN:-}" ]; then
   umask 077 && printf '%s\n' "$CDA_TKL_TOKEN" > "$CONFIG_DIR/github-token" && umask 022
 fi
+# TKL läser token för att se nya versioner i ett privat förråd (Uppdatering i panelen); bara dess grupp får läsa den.
+if [ -f "$CONFIG_DIR/github-token" ]; then
+  chown "root:$TKL_ID" "$CONFIG_DIR/github-token" && chmod 0640 "$CONFIG_DIR/github-token"
+  grep -q '^CHARLOTTENDAL_GITHUB_TOKEN_FILE=' "$CONFIG_DIR/app.env" || printf 'CHARLOTTENDAL_GITHUB_TOKEN_FILE=%s\n' "$CONFIG_DIR/github-token" >> "$CONFIG_DIR/app.env"
+fi
 
 install -d -m 0755 /etc/systemd/system /usr/local/sbin /usr/local/bin
 render "$PACKAGING/cda-tkl.service" "/etc/systemd/system/$TKL_ID.service" 0644

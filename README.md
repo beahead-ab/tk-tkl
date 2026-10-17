@@ -36,13 +36,20 @@ På en Pi med skrivbord öppnar Chromium ställverket i helskärm efter nästa o
 
 ## Uppdatera
 
+I ställverket: när en ny version finns visar statusraden `● Uppdatering` med versionen. Tryck på den, eller gå till
+Inställningar → Uppdatering, och välj **Uppdatera nu**. Pi:n hämtar versionen, installerar den och startar om TKL,
+vilket tar ett par minuter; sedan visar statusraden `● Ny version · ladda om`. Kunde versionen inte läsas visar
+Uppdatering i stället **Hämta senaste versionen**, som gör detsamma.
+
+Så länge förrådet är privat läser Pi:n det med den token som installationen fick (`TKL_TOKEN` på installationsraden);
+utan den syns inga nya versioner. Samma sak från terminalen:
+
 ```sh
 sudo tk-tkl-update
 ```
 
-Den senaste versionen från det här förrådet installeras på samma sätt som första gången. Inställningar och driftdata
-ligger kvar, och svarar den nya versionen inte återställs den föregående. Att köra installationsraden igen gör
-detsamma. Uppdateringsrutan i panelen behöver ett publikt förråd; med ett privat förråd uppdaterar du från terminalen.
+Inställningar och driftdata ligger kvar, och svarar den nya versionen inte återställs den föregående. Att köra
+installationsraden igen gör detsamma.
 
 ## Koppla till anläggningen och grannarna
 
