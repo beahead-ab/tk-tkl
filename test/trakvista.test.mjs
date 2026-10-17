@@ -5,7 +5,8 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawn } from 'node:child_process';
+import net from 'node:net';
 import { Engine } from '../src/engine.mjs';
 import { Field } from '../src/field.mjs';
 import { decode, sensorReport, switchReport } from '../src/protocol.mjs';
@@ -149,4 +150,22 @@ test('Tk-TKL: make-station-repository gives Träkvista its own installation, and
   assert.equal(at('README.md'),at('stations/trakvista/README.md'));
   assert.match(run(),/redan inställd/);
   fs.rmSync(dir,{recursive:true,force:true});
+});
+
+test('Träkvistas server och anläggning startar som processer och lägger A → Spår II, utan Charlottendals filer',{timeout:60000},async()=>{
+  const freePort=()=>new Promise((ok,no)=>{const s=net.createServer();s.once('error',no);s.listen(0,'127.0.0.1',()=>{const p=s.address().port;s.close(()=>ok(p));});});
+  const [port,simPort,wirePort]=await Promise.all([freePort(),freePort(),freePort()]),dir=fs.mkdtempSync(path.join(os.tmpdir(),'trakvista-'));
+  const env={...process.env,CHARLOTTENDAL_STATION:'trakvista',CHARLOTTENDAL_CONNECTION_MODE:'simulator',CHARLOTTENDAL_WIRE_HOST:'127.0.0.1',
+    CHARLOTTENDAL_PORT:String(port),CHARLOTTENDAL_SIM_PORT:String(simPort),CHARLOTTENDAL_WIRE_PORT:String(wirePort),CHARLOTTENDAL_STATE_DIR:dir};
+  let output='';const children=['src/simulator.mjs','src/server.mjs'].map(file=>{const c=spawn(process.execPath,[file],{cwd:new URL('..',import.meta.url),env});c.stdout.on('data',d=>output+=d);c.stderr.on('data',d=>output+=d);return c;});
+  const api=async(p,body)=>{const r=await fetch(`http://127.0.0.1:${port}${p}`,body?{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}:{});return r.json();};
+  const until=async(fn,ms=20000)=>{const end=Date.now()+ms;while(Date.now()<end){try{const v=await fn();if(v)return v;}catch{}await new Promise(r=>setTimeout(r,200));}throw Error('Tidsgräns. '+output.slice(-2000));};
+  try{
+    const config=await until(()=>api('/api/config'));
+    assert.equal(config.station.id,'trakvista');assert.equal(config.routes.length,57);
+    await until(async()=>(await api('/api/state')).connection==='connected');
+    // Direkt efter anslutningen har spårledningarna inte rapporterat än; begäran nekas tills de har det.
+    await until(async()=>(await api('/api/route',{from:'htvA',to:'htvII'})).ok);
+    await until(async()=>(await api('/api/state')).routes.some(r=>r.from==='htvA'&&r.to==='htvII'&&r.state==='active'));
+  }finally{await Promise.all(children.map(c=>new Promise(r=>{c.once('exit',r);c.kill('SIGTERM');})));fs.rmSync(dir,{recursive:true,force:true});}
 });

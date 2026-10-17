@@ -114,10 +114,11 @@ function createRuntime(p){
 }
 // Studio's rules describe the network profile; another profile (the legacy commissioning
 // one) runs as it is.
-const withRules=p=>p.id===studioSources.profile.id?studioDrafts.apply(p).profile:p;
+const withRules=p=>p.id===studioSources.profile?.id?studioDrafts.apply(p).profile:p;
 const bindings=new BindingConfiguration(baseProfile,{storage,canActivate:activationStatus,prepare:p=>{const next=createRuntime(withRules(p));return ()=>installRuntime(next);}});
 // Studio: reglerna ovanpå driftbindningarna. Kärnan får alltid den kompilerade profilen, aldrig utkastet.
-const studioSources=loadSources();
+// Studio bygger på Charlottendals källor; en annan station har inga, och dess eget förråd saknar Charlottendals filer.
+const studioSources=station.builtIn?loadSources():{profile:null,panel:null,coverage:null,indications:null,migration:null,xml:null,rules:null};
 // The reviewed rules file belongs to the network profile; another profile (the legacy
 // commissioning one) gets its own rules read out of itself.
 const studioDrafts=new StudioDrafts({base:baseProfile,field:loadProfile('field',{activated:false}),rules:(studioSources.rules?.profile===baseProfile.id?studioSources.rules.rules:null)||rulesFromProfile(baseProfile,{indications:studioSources.indications}),storage,canActivate:activationStatus,
