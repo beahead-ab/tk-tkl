@@ -1,5 +1,13 @@
 [
   {
+    "version": "0.82.2",
+    "date": "2026-10-18",
+    "notes": [
+      "Uppdatering på en annan stations webbdrift säger vilket förråd Render bygger ur, till exempel Tk-TKL",
+      "En annan station kan köras som ny webbdrift på Render, med ägaren ur miljön; Charlottendals webbdrift är oförändrad"
+    ]
+  },
+  {
     "version": "0.82.1",
     "date": "2026-10-18",
     "notes": [
