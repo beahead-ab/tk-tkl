@@ -51,6 +51,23 @@ sudo tk-tkl-update
 Inställningar och driftdata ligger kvar, och svarar den nya versionen inte återställs den föregående. Att köra
 installationsraden igen gör detsamma.
 
+## Webbdrift på Render
+
+Träkvista kan också köras som webbdrift, utan egen dator, på [Render](https://render.com):
+
+1. I Render: **New → Blueprint** och välj förrådet `beahead-ab/Tk-TKL`. Render behöver åtkomst till förrådet via sin
+   GitHub-app. `render.yaml` i förrådet beskriver tjänsten: `tk-tkl` i Frankfurt, planen Starter och en disk på 1 GB
+   för driftdata.
+2. Ange ägarens e-post (`TKL_OWNER_EMAIL`) och ett tillfälligt lösenord (`TKL_OWNER_PASSWORD`) när Render frågar.
+3. När tjänsten svarar: öppna dess adress, logga in med e-posten och det tillfälliga lösenordet och välj ett eget.
+   Fler användare bjuds in under Inställningar → Användare.
+
+Ägaren skapas bara första gången; därefter ligger användarna på disken och variablerna används inte. Render bygger om
+tjänsten varje gång Tk-TKL ändras, alltså vid varje publicering, och driftdata ligger kvar. Webbdriften har ingen
+LocoNet: TKL svarar själv och kör trafikspelets tåg, och TrainMeet parkopplas i panelen som vanligt. Så länge förrådet
+är privat kan Uppdatering i panelen inte läsa versionen utan en token; lägg den i så fall som hemlig fil
+`github-token` i Render och sätt `CHARLOTTENDAL_GITHUB_TOKEN_FILE=/etc/secrets/github-token`.
+
 ## Koppla till anläggningen och grannarna
 
 - **LocoNet.** Installationen startar mot simulatorn. *Anslut till LocoNet* i panelen kopplar till en LocoBuffer på

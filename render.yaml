@@ -1,0 +1,25 @@
+# Träkvista TKL som webbdrift på Render. I Render: New → Blueprint och välj det här förrådet. Ange ägarens e-post och ett
+# tillfälligt lösenord när Render frågar; lösenordet byts vid första inloggningen. Render bygger om när main ändras,
+# alltså vid varje publicering hit.
+services:
+  - type: web
+    name: tk-tkl
+    runtime: docker
+    dockerfilePath: ./Dockerfile.render
+    region: frankfurt
+    plan: starter
+    healthCheckPath: /healthz
+    autoDeploy: true
+    disk:
+      name: data
+      mountPath: /data
+      sizeGB: 1
+    envVars:
+      - key: TKL_OWNER_EMAIL
+        sync: false
+      - key: TKL_OWNER_PASSWORD
+        sync: false
+      - key: CHARLOTTENDAL_STATION
+        value: trakvista
+      - key: CHARLOTTENDAL_INSTALL_REPOSITORY
+        value: beahead-ab/Tk-TKL

@@ -4,7 +4,8 @@
 //
 // deploy/publish-station.sh kör det på programmet och stationens katalog ur cda-tkl. Allt program är detsamma; bara
 // installationens identitet byts, ur "installation" i stations/<id>/station.json: packaging/identity.env, förrådet i
-// install.sh och install.ps1, paketets namn och npm start, och README.md från stations/<id>/README.md. Går att köra igen.
+// install.sh och install.ps1, paketets namn och npm start, README.md från stations/<id>/README.md, och render.yaml och
+// Dockerfile.render för webbdrift på Render. Går att köra igen.
 import fs from 'node:fs';
 
 const root = new URL('..', import.meta.url), file = name => new URL(name, root);
@@ -36,5 +37,11 @@ write('package.json', JSON.stringify({ ...pkg, name: target.id, scripts: { ...sc
 let n = 0;
 write('package-lock.json', read('package-lock.json').replace(new RegExp(`"name": "${pkg.name}"`, 'g'), match => n++ < 2 ? `"name": "${target.id}"` : match));
 if (fs.existsSync(file(`stations/${id}/README.md`))) write('README.md', read(`stations/${id}/README.md`));
+// Webbdriften på Render: en Blueprint (render.yaml) med installationens namn, station och förråd, och dess Dockerfile.
+if (fs.existsSync(file('packaging/render/render.yaml'))) {
+  write('render.yaml', read('packaging/render/render.yaml').replaceAll('__TKL_ID__', target.id).replaceAll('__NAME__', target.name)
+    .replaceAll('__STATION__', id).replaceAll('__REPOSITORY__', target.repository));
+  write('Dockerfile.render', read('packaging/render/Dockerfile'));
+}
 
 console.log(changed.length ? `${target.name} TKL (${target.repository}): ${changed.join(', ')}` : `${target.name} TKL är redan inställd.`);

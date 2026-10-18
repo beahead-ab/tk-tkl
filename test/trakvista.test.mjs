@@ -7,6 +7,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { execFileSync, spawn } from 'node:child_process';
 import net from 'node:net';
+import http from 'node:http';
 import { Engine } from '../src/engine.mjs';
 import { Field } from '../src/field.mjs';
 import { decode, sensorReport, switchReport } from '../src/protocol.mjs';
@@ -132,7 +133,7 @@ test('växelmotorns två givare: läget när exakt en är aktiv, okänt medan v�
 
 test('Tk-TKL: make-station-repository gives Träkvista its own installation, and a second run changes nothing',()=>{
   const dir=fs.mkdtempSync(path.join(os.tmpdir(),'tk-tkl-'));
-  for(const f of ['packaging/identity.env','install.sh','install.ps1','package.json','package-lock.json','stations/trakvista/station.json','stations/trakvista/README.md','scripts/make-station-repository.mjs','scripts/start.mjs']){
+  for(const f of ['packaging/identity.env','install.sh','install.ps1','package.json','package-lock.json','stations/trakvista/station.json','stations/trakvista/README.md','scripts/make-station-repository.mjs','scripts/start.mjs','packaging/render/render.yaml','packaging/render/Dockerfile']){
     fs.mkdirSync(path.dirname(path.join(dir,f)),{recursive:true});fs.copyFileSync(new URL('../'+f,import.meta.url),path.join(dir,f));
   }
   fs.writeFileSync(path.join(dir,'README.md'),'# Charlottendal TKL\n');
@@ -148,6 +149,10 @@ test('Tk-TKL: make-station-repository gives Träkvista its own installation, and
   assert.equal(pkg.scripts['verify:layout'],undefined,'scripts for files the station repository lacks are left out');assert.equal(pkg.scripts.backend,'node src/server.mjs');
   assert.equal(lock.name,'tk-tkl');assert.equal(lock.packages[''].name,'tk-tkl');assert.equal(lock.version,pkg.version);
   assert.equal(at('README.md'),at('stations/trakvista/README.md'));
+  // Webbdriften på Render: Blueprint och Dockerfile med Träkvistas namn, station och förråd.
+  assert.match(at('render.yaml'),/^    name: tk-tkl$/m);assert.match(at('render.yaml'),/key: CHARLOTTENDAL_STATION\n        value: trakvista/);
+  assert.match(at('render.yaml'),/key: CHARLOTTENDAL_INSTALL_REPOSITORY\n        value: beahead-ab\/Tk-TKL/);assert.doesNotMatch(at('render.yaml'),/__/);
+  assert.equal(at('Dockerfile.render'),at('packaging/render/Dockerfile'));assert.match(at('Dockerfile.render'),/COPY stations \.\/stations/);
   assert.match(run(),/redan inställd/);
   fs.rmSync(dir,{recursive:true,force:true});
 });
@@ -198,4 +203,41 @@ test('Träkvistas Studio: källorna ur stationens katalog och Trakvista.xml, Log
   const dev=Object.fromEntries(data.deviations.map(r=>[r.id,r.count]));
   assert.equal(dev['yard-boundaries'],0);assert.equal(dev.turntable,0);assert.equal(dev['programming-relay'],0);assert.equal(dev['nx-without-route'],0);
   assert.equal(dev['turnout-unmeasured'],13);assert.equal(dev['manual-groups'],4,'de fyra lokala växlarna');
+});
+
+test('webbdrift på Render för en ny station: ägaren skapas en gång, lösenordet byts, Träkvista svarar; flyttläget väntar som förut',{timeout:90000},async()=>{
+  const freePort=()=>new Promise((ok,no)=>{const s=net.createServer();s.once('error',no);s.listen(0,'127.0.0.1',()=>{const p=s.address().port;s.close(()=>ok(p));});});
+  const host='tk-tkl.example.test',origin='https://'+host;
+  const launch=async extra=>{
+    const [port,tkl,sim,wire]=await Promise.all([freePort(),freePort(),freePort(),freePort()]),dir=fs.mkdtempSync(path.join(os.tmpdir(),'render-'));
+    for(const d of ['state','auth'])fs.mkdirSync(path.join(dir,d));
+    const env={...process.env,RENDER_EXTERNAL_URL:origin,CDA_RENDER_DATA_DIR:dir,PORT:String(port),CDA_RENDER_LISTEN:'127.0.0.1',CDA_RENDER_TKL_PORT:String(tkl),CDA_RENDER_SIM_PORT:String(sim),CDA_RENDER_WIRE_PORT:String(wire),CHARLOTTENDAL_STATION:'trakvista',...extra};
+    let output='';const child=spawn(process.execPath,['deploy/render/start.mjs'],{cwd:new URL('..',import.meta.url),env});child.stdout.on('data',d=>output+=d);child.stderr.on('data',d=>output+=d);
+    return {port,dir,child,log:()=>output};
+  };
+  const call=(port,method,p,{body,cookie}={})=>new Promise((ok,no)=>{const data=body?JSON.stringify(body):'';
+    const req=http.request({hostname:'127.0.0.1',port,method,path:p,headers:{host,origin,'content-type':'application/json','content-length':Buffer.byteLength(data),...(cookie?{cookie}:{})}},res=>{let t='';res.on('data',c=>t+=c);res.on('end',()=>{let json=null;try{json=JSON.parse(t);}catch{}ok({status:res.statusCode,json,cookie:(res.headers['set-cookie']||[])[0]?.split(';')[0]});});});
+    req.on('error',no);req.end(data);});
+  const until=async(fn,log,ms=40000)=>{const end=Date.now()+ms;while(Date.now()<end){try{const v=await fn();if(v)return v;}catch{}await new Promise(r=>setTimeout(r,250));}throw Error('Tidsgräns. '+log().slice(-1500));};
+  const stop=async g=>{await new Promise(r=>{if(g.child.exitCode!==null)return r();g.child.once('exit',r);g.child.kill('SIGTERM');});fs.rmSync(g.dir,{recursive:true,force:true});};
+  const fresh=await launch({TKL_RENDER_NEW:'1',TKL_OWNER_EMAIL:'benny@example.test',TKL_OWNER_PASSWORD:'tillfalligt-123'});
+  try{
+    await until(async()=>(await call(fresh.port,'GET','/healthz')).json?.status==='running',fresh.log);
+    const users=JSON.parse(fs.readFileSync(path.join(fresh.dir,'auth','users.json'),'utf8')).users;
+    assert.deepEqual(users.map(u=>[u.username,u.role,u.mustChange]),[['benny@example.test','owner',true]]);
+    const login=await until(async()=>{const r=await call(fresh.port,'POST','/api/auth/login',{body:{username:'benny@example.test',password:'tillfalligt-123'}});return r.status===200&&r;},fresh.log);
+    assert.equal(login.json.mustChange,true);
+    assert.equal((await call(fresh.port,'GET','/api/config',{cookie:login.cookie})).status,428,'the temporary password must be changed first');
+    const changed=await call(fresh.port,'POST','/api/auth/password',{cookie:login.cookie,body:{currentPassword:'tillfalligt-123',newPassword:'bennys-eget-456'}});
+    assert.equal(changed.status,200);
+    const config=await call(fresh.port,'GET','/api/config',{cookie:changed.cookie});
+    assert.equal(config.json.station.id,'trakvista');assert.equal(config.json.routes.length,57);
+    assert.equal((await call(fresh.port,'GET','/api/config')).status,401,'nothing without logging in');
+  }finally{await stop(fresh);}
+  // Utan TKL_RENDER_NEW är det Charlottendals flyttade webbdrift: inget startar förrän återställningen är gjord.
+  const moved=await launch({});
+  try{
+    await until(async()=>(await call(moved.port,'GET','/healthz')).json?.status==='waiting-for-restore',moved.log,15000);
+    assert.equal(fs.existsSync(path.join(moved.dir,'auth','users.json')),false);
+  }finally{await stop(moved);}
 });
