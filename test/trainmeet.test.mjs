@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {TrainMeet} from '../src/trainmeet.mjs';
+import {TrainMeet,matchStation} from '../src/trainmeet.mjs';
 import fs from 'node:fs';
 import {readTimetable} from '../src/trainmeet-timetable.mjs';
 test('accepts timetable emitted by the reviewed TrainMeet server itself',()=>{
@@ -162,10 +162,10 @@ test('plain HTTP is accepted on the meet network only: private, link-local and .
 test('a refused pairing code reports the server reason with a hint, as a refusal rather than a gateway error',async()=>{
   const r=rig();const inner=r.fetcher;
   r.service.fetcher=async(url,options)=>url.endsWith('/v1/pair')?new Response(JSON.stringify({message:'Parkopplingskoden är ogiltig eller har gått ut'}),{status:401}):inner(url,options);
-  await assert.rejects(()=>pair(r),e=>e.status===409&&e.message==='Parkopplingskoden är ogiltig eller har gått ut. Hämta en aktuell kod under Skärmar → Visa anslutningsuppgifter i TrainMeet.');
+  await assert.rejects(()=>pair(r),e=>e.status===409&&e.message==='Parkopplingskoden är ogiltig eller har gått ut. Koden finns i TrainMeet Server för den som är inloggad som administratör: Drift → Anslut en box, eller Inställningar → Anslutningskod. En ny träff ger en ny kod.');
   assert.equal(r.saved(),undefined);assert.equal(r.service.view().status,'unpaired');assert.match(r.service.view().error,/ogiltig eller har gått ut/);
   r.service.fetcher=async(url,options)=>url.endsWith('/v1/pair')?new Response('',{status:403}):inner(url,options);
-  await assert.rejects(()=>pair(r),e=>e.status===409&&e.message==='TrainMeet godkände inte anslutningskoden. Hämta en aktuell kod under Skärmar → Visa anslutningsuppgifter i TrainMeet.');
+  await assert.rejects(()=>pair(r),e=>e.status===409&&e.message==='TrainMeet godkände inte anslutningskoden. Koden finns i TrainMeet Server för den som är inloggad som administratör: Drift → Anslut en box, eller Inställningar → Anslutningskod. En ny träff ger en ny kod.');
 });
 test('upstream failures answer 503, never 502 or 504 which the public proxy replaces with its own page',async()=>{
   const r=rig();const inner=r.fetcher;
@@ -213,4 +213,50 @@ test('the feed is read as a stream, retried after it ends and backed off when th
   assert.equal(calls[0].url,'https://trainmeet.example/v1/events');assert.equal(calls[0].accept,'text/event-stream');assert.equal(calls[0].auth,undefined,'the feed never carries the key');
   assert.equal(service.urgent,true);assert.equal(service.feed,null);assert.equal(service.feedRetryAt,3000);
   answer=()=>new Response('{}',{status:404});await service.follow();assert.equal(service.feedRetryAt,1000+300000);
+});
+
+// Casper 17 oktober: "Det ska bara behövas mata in adress + kod i tkl - inget mer." TrainMeet har en kod för hela
+// träffen; TKL väljer sin station själv ur träffens stationer.
+test('Anslut tar adress och kod och väljer ställverkets station själv',async()=>{
+  const r=rig(),service=new TrainMeet({storage:r.storage,fetcher:r.fetcher,now:()=>100000});
+  r.display.stations=[{id:'kfs',name:'Kungsfors',code:'KF'},{id:'cda',name:'Charlottendal',code:'CDA'}];
+  await assert.rejects(()=>service.connect({origin:'',code:'123-456'}),/adress/);
+  await assert.rejects(()=>service.connect({origin:'https://trainmeet.example',code:'12'}),/sex tecken/);
+  const view=await service.connect({origin:' https://trainmeet.example ',code:'123-456'});
+  assert.equal(view.status,'connected');assert.equal(view.stationId,'cda');assert.equal(view.origin,'https://trainmeet.example');
+  const pair=r.calls.find(c=>c.url.endsWith('/v1/pair'));assert.equal(JSON.parse(pair.options.body).pairing_code,'123456');
+  assert.equal(r.saved().pairings['https://trainmeet.example'].stationId,'cda');
+});
+
+test('saknar träffen ställverkets station väljer operatören, och en fast adress går inte att byta',async()=>{
+  const r=rig(),service=new TrainMeet({storage:r.storage,fetcher:r.fetcher,now:()=>100000,station:'Charlottendal'});
+  r.display.stations=[{id:'kfs',name:'Kungsfors',code:'KF'},{id:'cda',name:'Charlottendal C',code:'CDA'},{id:'cdb',name:'Charlottendal Norra',code:'CDN'}];
+  const asked=await service.connect({origin:'https://trainmeet.example',code:'123456'});
+  assert.equal(asked.status,'unpaired');assert.deepEqual(asked.choose.stations.map(s=>s.id),['kfs','cda','cdb']);assert.match(asked.choose.reason,/ingen station som heter Charlottendal/);
+  assert.equal(r.calls.some(c=>c.url.endsWith('/v1/pair')),false,'koden används inte förrän stationen är vald');
+  assert.equal((await service.connect({origin:'https://trainmeet.example',code:'123456',stationId:'cda'})).status,'connected');
+  await assert.rejects(()=>r.service.connect({origin:'https://different.example',code:'123456'}),/fast TrainMeet-adress/);
+});
+
+test('ställverkets station: samma namn, annars den enda som innehåller namnet',()=>{
+  const list=[{id:'a',name:'Charlottendal Norra'},{id:'b',name:'charlottendal'},{id:'c',name:'Kungsfors'}];
+  assert.equal(matchStation(list,'Charlottendal').id,'b');assert.equal(matchStation(list.slice(0,1),'Charlottendal').id,'a');
+  assert.equal(matchStation([list[0],{id:'d',name:'Charlottendal Södra'}],'Charlottendal'),null);assert.equal(matchStation(list,''),null);
+});
+
+test('en ny installation får installationens TKL-id; ett sparat id står kvar',async()=>{
+  const r=rig(),fresh=new TrainMeet({storage:r.storage,fetcher:r.fetcher,clientId:'cda-tkl-pi'});
+  assert.equal(fresh.view().clientId,'cda-tkl-pi');
+  r.display.stations=[{id:'cda',name:'Charlottendal'}];await fresh.connect({origin:'https://trainmeet.example',code:'123-456'});
+  assert.equal(JSON.parse(r.calls.find(c=>c.url.endsWith('/v1/pair')).options.body).client_id,'cda-tkl-pi');
+  assert.equal(new TrainMeet({storage:r.storage,fetcher:r.fetcher,clientId:'cda-tkl-mac'}).view().clientId,'cda-tkl-pi','sparat id ändras inte');
+});
+
+test('Anslut väntar ut en pågående läsning i stället för att neka',async()=>{
+  const r=rig();r.display.stations=[{id:'cda',name:'Charlottendal'}];
+  let release;const slow=new Promise(resolve=>{release=resolve;});
+  r.service.busy=true;r.service.current=slow;
+  const pending=r.service.connect({origin:'https://trainmeet.example',code:'123-456'});
+  setTimeout(()=>{r.service.busy=false;r.service.current=null;release();},20);
+  assert.equal((await pending).status,'connected');
 });

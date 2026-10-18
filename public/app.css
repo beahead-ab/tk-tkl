@@ -63,7 +63,7 @@ button,input,select,textarea{border-radius:3px}button{padding:6px 10px}.app-head
 
 
 @media(prefers-reduced-motion:reduce){}
-#tm-pair input.pairing-code{font-family:Menlo,monospace;font-size:18px;letter-spacing:.16em;font-variant-numeric:tabular-nums}#tm-pair input.pairing-code::placeholder{opacity:.4}
+#tm-connect-form input.pairing-code{font-family:Menlo,monospace;font-size:18px;letter-spacing:.16em;font-variant-numeric:tabular-nums}#tm-connect-form input.pairing-code::placeholder{opacity:.4}
 /* Focus ring only for the keyboard (Casper, 2 oktober 2026): no box around fields and
    controls after a click or a touch, a ring after Tab. admin-navigation.js sets
    data-nav-keyboard on Tab and clears it on any pointer press. A text field always shows
@@ -71,3 +71,4 @@ button,input,select,textarea{border-radius:3px}button{padding:6px 10px}.app-head
 body:not([data-nav-keyboard]) :is(button,a,input,select,textarea,summary,[role=button],[role=tab],[tabindex]):is(:focus,:focus-visible){outline:none!important}
 body[data-nav-keyboard] :is(button,a,input,select,textarea,summary,[role=button],[role=tab],[tabindex]):focus-visible{outline:2px solid #aeb6be!important;outline-offset:2px!important}
 :is(input:not([type=range]):not([type=checkbox]):not([type=radio]),select,textarea):focus{border-color:#8a939c!important}
+#tm-connect-form #tm-server{width:min(380px,80vw)}

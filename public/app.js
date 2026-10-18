@@ -749,7 +749,7 @@ async function start() {
   telegramRecorder=createTelegramRecorder();
   connectionSettings=createConnectionSettings($('connection-mode-settings'),{api});
   operatingControls=createOperatingControls({api,openSource});
-  modelClock=createModelClock({api});trainMeet=createTrainMeet({api,onTimetable:()=>openTools('trainmeet-timetable'),stationHint:()=>config?.title||stationTitle()});feedback=createFeedback();clearanceView=createClearance({api,message,onRequest:()=>{panelEvents?.showClearance({auto:true});feedback?.ring();},onAttention:list=>{clearanceAttention=list;paintClearance();}});
+  modelClock=createModelClock({api});trainMeet=createTrainMeet({api,stationHint:()=>config?.title||stationTitle()});feedback=createFeedback();clearanceView=createClearance({api,message,onRequest:()=>{panelEvents?.showClearance({auto:true});feedback?.ring();},onAttention:list=>{clearanceAttention=list;paintClearance();}});
   panelEvents=createPanelEvents();panelConsole=createPanelConsole({onOpen:()=>{appMenu?.close();},onResetComplete:text=>message(text,{error:false,duration:4000}),showDrift:()=>panelEvents?.showDrift(),showClearance:()=>panelEvents?.showClearance()});
   authSession=await fetch('/api/auth/session').then(r=>r.ok?r.json():null).catch(()=>null);
   if(authSession?.user?.role==='ranger'||location.hash==='#ranger')rangerMode=true;

@@ -178,6 +178,17 @@ export class Field extends EventEmitter {
     const t={number,label:line?'På linjen':'Uppställt',blocks:[block],index:0,position:at,standing:true,park:true,signalEntries:[],turnouts:{},waiting:line?'Väntar vid infartssignalen':'Uppställt',nextAt:this.now()+500};
     this.trains.push(t);this.train=this.trains[0]||null;return {number,block};
   }
+  // Ett av trafikspelets tåg som trafikspelet inte längre har här tas bort från banan (0.82.0), och bara när det står:
+  // ett tåg som kör lämnar banan själv.
+  removeTrain({number}={}) {
+    const t=this.trains.find(x=>x.number===number);
+    if(!t)throw Error(`Tåg ${number} finns inte på banan.`);
+    if(!t.park)throw Error(`Tåg ${number} är inte ett av trafikspelets tåg.`);
+    if(!t.standing)throw Error(`Tåg ${number} kör.`);
+    this.trains=this.trains.filter(x=>x!==t);this.train=this.trains[0]||null;
+    for(const block of t.blocks)this.updateBlock(block,false);
+    return {number};
+  }
   depart(t) {
     const here=t.blocks[t.index],address=this.profile.blocks[here].address,near=this.neighbours()[here]||new Set();
     const busy=new Set(this.trains.filter(o=>o!==t).flatMap(o=>o.blocks.map(n=>this.profile.blocks[n].address)));
@@ -211,6 +222,7 @@ export class Field extends EventEmitter {
   }
   simulate(command) {
     if (command?.kind === 'spawn') { const result = this.spawnTrain(command); this.tick(); return result; }
+    if (command?.kind === 'remove') { const result = this.removeTrain(command); this.tick(); return result; }
     throw Error('Okänt simuleringskommando.');
   }
   snapshot() { return { turnouts: this.turnouts, blocks: this.blocks, signals: this.signals, programming:this.programming,faults: this.faults, train: this.train, trains:this.trains, scenarios: this.profile.scenarios }; }

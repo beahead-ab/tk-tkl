@@ -119,15 +119,15 @@ Båda ska stå som `active (running)`.
 
 Tidtabellen, träffklockan och tågklareringen kommer från TrainMeet Server. Koppla Pi:n så här:
 
-1. Öppna menyn **⋯** uppe till vänster i ställverket och välj **Tidtabeller → TrainMeet**.
-2. Tryck **Redigera anslutning**:
-   - **Server:** till exempel `https://server.trainmeet.app`, eller adressen till träffens egen
-     TrainMeet Server på det lokala nätet.
-   - **TKL-id:** ge Pi:n ett eget id, till exempel `cda-tkl-pi`. TrainMeet släpper bara in ett TKL
-     per id och station; om webbdriften eller en annan dator redan är kopplad som Charlottendal med
-     samma id kopplas den bort när Pi:n parkopplas.
-3. Spara, tryck **Parkoppla**, välj **Charlottendal** i stationslistan och skriv in koden som
-   TrainMeet Server visar (sex tecken, till exempel `123-456`).
+1. Öppna menyn **⋯** uppe till vänster i ställverket och välj **TrainMeet** (under Träffen).
+2. Skriv **serverns adress**, till exempel `https://server.trainmeet.app` eller adressen till
+   träffens egen TrainMeet Server på det lokala nätet.
+3. Skriv **anslutningskoden**, sex siffror, till exempel `123-456`. I TrainMeet Server finns adressen
+   och koden under **Drift → Anslut en box**, inloggad som administratör, och koden också under
+   Inställningar → Anslutningskod.
+4. Tryck **Anslut**. Sedan 0.82.0 är det allt: TKL väljer sin station själv (Charlottendal, i Tk-TKL
+   Träkvista). En ny Pi heter `cda-tkl-pi` hos TrainMeet (Tk-TKL: `tk-tkl-pi`), så den kopplar inte
+   bort webbdriften.
 
 Inom några sekunder visas tidtabellen i nederraden och klockan går i takt med träffen.
 
@@ -270,7 +270,7 @@ sudo systemctl start cda-tkl-simulator cda-tkl
 | "Ingen kontakt med anläggningen" eller anläggningen är tom | `systemctl status cda-tkl-simulator` och `journalctl -u cda-tkl-simulator -n 50`. |
 | Stream Deck kopplas inte upp | Dra ur och sätt i den igen. Kontrollera att regeln finns: `cat /etc/udev/rules.d/50-cda-tkl-streamdeck.rules`, och att Chromium har policyn: öppna `chrome://policy` och leta efter `WebHidAllowDevicesForUrls`. Prova en annan USB-port eller en strömförsörjd USB-hubb. |
 | Varning om strömförsörjning (blixt i hörnet) | Använd den officiella 27 W-adaptern. |
-| Tidtabellen kommer inte | Se **Tidtabeller → TrainMeet**. "Parkopplingen gäller inte längre" betyder att ett annat TKL med samma TKL-id har kopplats; ge Pi:n ett eget id och parkoppla igen. |
+| Tidtabellen kommer inte | Se **⋯ → TrainMeet**. Står formuläret där igen, har träffen bytts eller koden gått ut: skriv den nya koden och tryck **Anslut med ny kod**. "Parkopplingen gäller inte längre" betyder att ett annat TKL med samma TKL-id har kopplats. |
 
 Loggarna följs live med `journalctl -fu cda-tkl`.
 

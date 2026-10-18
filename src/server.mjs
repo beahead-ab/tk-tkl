@@ -137,7 +137,12 @@ const studioReview=new StudioReview({sources:studioSources,assistant:studioAssis
 // bara när AIS är aktiv och inga lås finns, och inget av dem aktiverar något.
 const studioCards=new CardInventory({storage,send:b=>!!client?.send(b)});
 const studioMeasure=new Measurements({storage,send:b=>!!client?.send(b),guard:()=>{const s=activationStatus(null);return s.allowed?null:s.reason;},mode:()=>connectionInfo(profile).mode});
-const trainMeet=new TrainMeet({storage,origin:process.env.CHARLOTTENDAL_TRAINMEET_ORIGIN||''});
+// TKL-id hos TrainMeet. TrainMeet släpper in ett TKL per id och station, och sedan 0.82.0 anges inget id vid anslutningen:
+// en ny installation på en Pi, en Mac eller en PC får ett eget (cda-tkl-pi, tk-tkl-mac …), så att den inte kopplar bort
+// webbdriften (cda-tkl). En installation som redan har ett id behåller det. TKL väljer stationen med samma namn.
+const tklName=station.builtIn?'cda-tkl':(station.signature||station.id).toLowerCase().replace(/[^a-z0-9]/g,'')+'-tkl';
+const clientId=tklName+({'raspberry-pi':'-pi',mac:'-mac',windows:'-pc'}[process.env.CHARLOTTENDAL_INSTALL_KIND]||'');
+const trainMeet=new TrainMeet({storage,origin:process.env.CHARLOTTENDAL_TRAINMEET_ORIGIN||'',station:station.title||'Charlottendal',clientId});
 // Kom igång (src/onboarding.mjs): stegens status ur det som finns; panelen visar "N steg kvar" tills ägaren markerat klart.
 const onboarding=new Onboarding({storage});
 const onboardingContext=()=>({auth,ai:aiSettings.view(),connection:{mode:connectionInfo(profile).mode,state:engine?.connected?'connected':'disconnected'},trainMeet:trainMeet.view()});
@@ -166,7 +171,8 @@ let trafficTicked=0,trafficRevision=0;
 function playTraffic(){
   if(!trafficTrains.available||Date.now()-trafficTicked<1000)return;trafficTicked=Date.now();
   const edges=Object.fromEntries(Object.entries(edgeInfo()).map(([edge,info])=>[edge,{...info,block:tracker.edgeBlock[edge]}]));
-  trafficTrains.tick({context:trainMeet.view().context,edges,tracks:stationTracks(),blocks:engine.blocks,tracked:tracker.view().trains,expect:(block,number)=>tracker.expect(block,number)})
+  const meet=trainMeet.view();
+  trafficTrains.tick({context:meet.context,fresh:!meet.stale,edges,tracks:stationTracks(),blocks:engine.blocks,tracked:tracker.view().trains,expect:(block,number)=>tracker.expect(block,number),forget:number=>tracker.forget(number)})
     .catch(error=>engine.log('error','Trafikspelets tåg: '+error.message)).finally(()=>{if(trafficTrains.revision!==trafficRevision){trafficRevision=trafficTrains.revision;dirty=true;}});
 }
 let automated=0,automationRevision=0;
@@ -311,7 +317,7 @@ const server = http.createServer(async (req, res) => {
     if(url.pathname==='/api/connection/mode'){switchConnection(data?.mode);dirty=true;return json(res,{connection:connectionView(),state:snapshot()});}
     if(url.pathname==='/api/connection/locobuffer'){connection.setLocobuffer(data);engine.log('connection-mode',`LocoBuffer inställd: ${data.device||'ingen'} · ${data.baud} baud · ${data.flow==='rtscts'?'RTS/CTS':'ingen flödeskontroll'}.`);dirty=true;return json(res,connectionView({devices:true}));}
     if(url.pathname==='/api/destinations'){const result=destinations.save(data,trainMeet.context?.stations||[]);dirty=true;return json(res,result);}
-    if(url.pathname.startsWith('/api/trainmeet/')){const command={configure:'configure',pair:'pair',refresh:'refresh',disconnect:'disconnect',stations:'stations',clearance:'clearance',movement:'movement'}[url.pathname.slice('/api/trainmeet/'.length)];if(!command)return json(res,{error:'Okänd TrainMeet-åtgärd'},404);return json(res,await trainMeet[command](data));}
+    if(url.pathname.startsWith('/api/trainmeet/')){const command={connect:'connect',configure:'configure',pair:'pair',refresh:'refresh',disconnect:'disconnect',stations:'stations',clearance:'clearance',movement:'movement'}[url.pathname.slice('/api/trainmeet/'.length)];if(!command)return json(res,{error:'Okänd TrainMeet-åtgärd'},404);return json(res,await trainMeet[command](data));}
     // On a Raspberry Pi the panel can start cda-tkl-update.service (allowed for the cda-tkl
     // user by the installer's polkit rule). It reinstalls and restarts TKL; the panel then
     // offers a reload. Elsewhere the update is started from Terminal or PowerShell.

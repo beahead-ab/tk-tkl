@@ -1,5 +1,23 @@
 [
   {
+    "version": "0.82.1",
+    "date": "2026-10-18",
+    "notes": [
+      "TrainMeet-sidan säger var adressen och koden finns: Drift → Anslut en box i TrainMeet Server"
+    ]
+  },
+  {
+    "version": "0.82.0",
+    "date": "2026-10-17",
+    "notes": [
+      "Anslut till TrainMeet med bara serverns adress och anslutningskoden; TKL väljer stationen Charlottendal själv",
+      "Med LocoNet ej ansluten tas tåg som trafikspelet inte har här bort från banan, så att planen och tidtabellen visar samma tåg",
+      "En ny installation på Pi, Mac eller PC får ett eget TKL-id och kopplar inte bort webbdriften",
+      "Flera stationer: samma program kör Charlottendal eller en annan station, till exempel Träkvista, med stationens egen spårplan, tågvägar, Studio och installation",
+      "Uppdatering på en Pi visar Hämta senaste versionen när den senaste versionen inte gick att läsa"
+    ]
+  },
+  {
     "version": "0.81.1",
     "date": "2026-10-17",
     "notes": [
