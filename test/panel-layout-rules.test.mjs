@@ -52,5 +52,5 @@ test('the harmonised plan reads its colours from scoped tokens and only restyles
 
 test('the page footer names the version in package.json',()=>{
   const version=JSON.parse(read('package.json')).version;
-  assert.match(read('public/index.html'),new RegExp(`<footer>Charlottendal TKL · version ${version.replace(/\./g,'\\.')}</footer>`),'bump the footer in public/index.html with the version');
+  assert.match(read('public/index.html'),new RegExp(`<footer><span id="footer-station">Charlottendal</span> TKL · version ${version.replace(/\./g,'\\.')}</footer>`),'bump the footer in public/index.html with the version');
 });

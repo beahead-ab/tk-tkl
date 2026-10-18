@@ -437,9 +437,14 @@ test('Träkvistas automat följer tidtabellsspår I och verkliga A/B-klareringar
           posts: game.posts, routes: s.routes, blocks: s.blocks, trains: f.trains,
           tracking: s.trainTracking.trains, events: s.operatingEvents.slice(-20)
         }));
+        // TKL:s egen bild av TrainMeet hinner ikapp först vid nästa läsning av context, efter avgångsanmälan.
+        const movement = s.trainMeet.context.movements.find(m => m.id === train.movementId);
+        const from = s.trainMeet.context.lines.find(l => l.id === train.from.connection);
+        const to = s.trainMeet.context.lines.find(l => l.id === train.to.connection);
         return game.posts.some(p => p.path === '/v1/tkl/movement' && p.departure === 'departed') &&
           s.routes.length === 0 && f.trains.length === 0 && s.trainTracking.trains.length === 0 &&
-          Object.values(s.blocks).every(b => b.occupied === false) && s;
+          Object.values(s.blocks).every(b => b.occupied === false) &&
+          movement?.departure === 'departed' && from?.state === 'free' && to?.direction === 'out' && s;
       }, 'automatens A → spår I → B inklusive verklig väntetid och avgångsanmälan', 120000);
       assert.equal(finished.automation.enabled, true, 'automaten kör vidare efter tågets passage');
       assert.ok(seen.has('SA2'), 'rätt inkommande yttre block observerades');
