@@ -80,7 +80,7 @@ test('stationsvalet: paketets station är standard, Träkvista väljs med CHARLO
   assert.equal(currentStation({}).id,DEFAULT_STATION);
   assert.equal(tk.title,'Träkvista');assert.match(tk.dataDir,/stations\/trakvista\/data$/);assert.match(tk.profile,/stations\/trakvista\/profiles\/network\.json$/);
   assert.throws(()=>currentStation({CHARLOTTENDAL_STATION:'../profiles'}),/Okänd station/);
-  if(withCharlottendal){const cda=currentStation({});assert.equal(cda.builtIn,true);assert.match(cda.dataDir,/public\/data$/);assert.match(stateDirectory({},cda),/var$/);}
+  if(withCharlottendal){const cda=currentStation({});assert.equal(cda.id,'charlottendal');assert.match(cda.dataDir,/public\/data$/);assert.match(stateDirectory({},cda),/var$/);}
   else assert.throws(()=>currentStation({CHARLOTTENDAL_STATION:'charlottendal'}),/Okänd station/);
   assert.match(stateDirectory({},tk),/var\/trakvista$/);
   assert.equal(stateDirectory({CHARLOTTENDAL_STATE_DIR:'/tmp/x'},tk),'/tmp/x');

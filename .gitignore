@@ -8,6 +8,7 @@ var/*
 *.key
 deploy/secrets/
 node_modules/
+.tkl-installation/
 __pycache__/
 # Production host and key (see deploy/publish-release.sh)
 deploy/production.env

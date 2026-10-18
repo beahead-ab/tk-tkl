@@ -1,6 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { execFileSync } from 'node:child_process';
 const read=p=>fs.readFileSync(new URL('../'+p,import.meta.url),'utf8');
 const identity=()=>Object.fromEntries([...read('packaging/identity.env').matchAll(/^(TKL_\w+)=(.*)$/gm)].map(m=>[m[1],m[2]]));
 
@@ -76,7 +79,73 @@ test('installed copies turn on the update notice, and only the Pi service may st
 test('the Mac app goes in Program when it can, else Program in the home folder',()=>{
   const mac=read('scripts/install-mac.sh');
   assert.match(mac,/APPS=\/Applications\n\[ -w "\$APPS" \] \|\| \{ APPS="\$HOME\/Applications"/);
-  assert.match(mac,/osacompile -o "\$APPS\/Charlottendal TKL\.app"/);
+  assert.match(mac,/osacompile -o "\$APPS\/\$APP_NAME\.app"/);
+});
+
+test('Windows läser paketets identitet före installation och håller stationernas genvägar isär',()=>{
+  const ps=read('install.ps1');
+  assert.ok(ps.indexOf('$IdentityFile =')<ps.indexOf('$App ='),'identiteten läses innan installationskatalogen väljs');
+  assert.ok(ps.indexOf('$App =')<ps.indexOf('# Node.js 22'),'även Node installeras i stationens egen katalog');
+  assert.match(ps,/TKL_NAME = 'Charlottendal'/,'äldre paket utan identitetsfil behåller Charlottendals namn');
+  assert.match(ps,/\$Name = \$Identity\['TKL_NAME'\] \+ ' TKL'/);
+  assert.match(ps,/\$App = if \(\$env:CDA_TKL_HOME\) \{ \$env:CDA_TKL_HOME \} else \{ Join-Path \$env:LOCALAPPDATA \$Name \}/);
+  for(const folder of ['Startup','Desktop'])assert.ok(ps.includes(`GetFolderPath('${folder}')) "$Name.lnk"`),'egen genväg i '+folder);
+  assert.ok(ps.includes(`Start-Process (Join-Path ([Environment]::GetFolderPath('Desktop')) "$Name.lnk")`));
+  assert.doesNotMatch(ps,/'Charlottendal TKL\.lnk'/,'Träkvista får inte skriva över Charlottendals genväg');
+});
+
+test('Mac installerar och uppdaterar varje station för sig och behåller Charlottendals äldre driftdata',
+  {skip:process.platform!=='darwin'},()=>{
+  const dir=fs.mkdtempSync(path.join(os.tmpdir(),'tkl-mac-prov-'));
+  const put=(name,content,mode)=>{fs.mkdirSync(path.dirname(name),{recursive:true});fs.writeFileSync(name,content,mode?{mode}:{});};
+  try{
+    const source=path.join(dir,'paket'),home=path.join(dir,'hem'),bin=path.join(dir,'bin'),log=path.join(dir,'kommandon');
+    for(const name of ['scripts/install-mac.sh','packaging/raspberry-pi/app.env','packaging/mac/run.sh','packaging/mac/launchd.plist','packaging/mac/open-panel.applescript'])put(path.join(source,name),read(name));
+    put(path.join(source,'src/server.mjs'),'// Installationsprov; servern startas inte.\n');
+    put(path.join(source,'package.json'),'{\n  "version": "1.0.0"\n}\n');
+    // Alla kommandon som når appar, autostart, nätet eller webbläsaren ersätts. Inget körs i den riktiga installationen.
+    put(path.join(bin,'id'),'#!/bin/sh\necho 501\n',0o755);
+    for(const cmd of ['rm','osacompile','launchctl','curl','open'])put(path.join(bin,cmd),
+      `#!/bin/sh\nprintf '${cmd} %s\\n' "$*" >> "$TKL_TEST_LOG"\n${cmd==='launchctl'?'[ "$1" != print ]':'exit 0'}\n`,0o755);
+    const apps={};
+    for(const [id,name] of [['cda-tkl','Charlottendal'],['tk-tkl','Träkvista']]){
+      const station=id==='cda-tkl'?'charlottendal':'trakvista',app=path.join(home,'Library/Application Support',name+' TKL');
+      apps[id]=app;
+      put(path.join(source,'packaging/identity.env'),`TKL_ID=${id}\nTKL_NAME=${name}\nTKL_STATION=${station}\nTKL_REPOSITORY=beahead-ab/${id==='cda-tkl'?'cda-tkl-install':'Tk-TKL'}\n`);
+      put(path.join(app,'node/bin/node'),'#!/bin/sh\n[ "$1" != -p ] || echo 22.0.0\nexit 0\n',0o755);
+      put(path.join(app,'node/bin/npm'),'#!/bin/sh\nexit 0\n',0o755);
+      if(id==='cda-tkl'){
+        const previous=path.join(app,'releases/aldre');
+        for(const file of ['users.json','settings.json','locks.json'])put(path.join(previous,'var',file),`{"bevarad":"${file}"}\n`);
+        fs.symlinkSync(previous,path.join(app,'current'));
+        put(path.join(app,'app.env'),`CHARLOTTENDAL_STATE_DIR=${app}/state\nCHARLOTTENDAL_INSTALL_KIND=mac\nCHARLOTTENDAL_PROFILE=profiles/charlottendal.json\nEGEN_INSTALLNING=bevarad\n`);
+      }
+      const run=()=>execFileSync('sh',[path.join(source,'scripts/install-mac.sh'),source],{encoding:'utf8',env:{...process.env,HOME:home,PATH:bin+':'+process.env.PATH,CDA_TKL_HOME:'',CDA_TKL_NO_LAUNCHD:'',TKL_TEST_LOG:log}});
+      fs.writeFileSync(log,'');
+      assert.match(run(),new RegExp(name+' TKL 1\\.0\\.0 är installerad'));
+      const commands=fs.readFileSync(log,'utf8');
+      assert.ok(commands.includes('/'+name+' TKL.app'),'appens eget namn');
+      assert.ok(commands.includes('se.beahead.'+id),'egen launchd-agent');
+      assert.ok(!commands.includes(id==='cda-tkl'?'Träkvista TKL.app':'Charlottendal TKL.app'),'den andra stationens app rörs inte');
+      const plist=fs.readFileSync(path.join(home,'Library/LaunchAgents/se.beahead.'+id+'.plist'),'utf8');
+      assert.ok(plist.includes(app+'/run.sh'));
+      const env=fs.readFileSync(path.join(app,'app.env'),'utf8');
+      assert.ok(env.includes(`CHARLOTTENDAL_STATE_DIR="${app}/state"`),'driftdata under stationens egen katalog');
+      if(id==='cda-tkl'){
+        assert.ok(env.includes('CHARLOTTENDAL_PROFILE=profiles/charlottendal.json'),'gammalt profilval behålls');
+        for(const file of ['users.json','settings.json','locks.json'])assert.equal(fs.readFileSync(path.join(app,'state',file),'utf8'),`{"bevarad":"${file}"}\n`);
+      }else{
+        assert.ok(env.includes('CHARLOTTENDAL_STATION=trakvista'));
+        assert.ok(env.includes('CHARLOTTENDAL_INSTALL_REPOSITORY=beahead-ab/Tk-TKL'));
+      }
+      put(path.join(app,'state/prov.json'),'{"orört":true}\n');
+      run();
+      assert.equal(fs.readFileSync(path.join(app,'app.env'),'utf8'),env,'uppdateringen bevarar inställningarna');
+      assert.equal(fs.readFileSync(path.join(app,'state/prov.json'),'utf8'),'{"orört":true}\n','uppdateringen bevarar driftdata');
+    }
+    assert.notEqual(apps['cda-tkl'],apps['tk-tkl']);
+    assert.ok(fs.existsSync(path.join(apps['cda-tkl'],'state/users.json')),'Charlottendals användare finns kvar efter installation av Träkvista');
+  }finally{fs.rmSync(dir,{recursive:true,force:true});}
 });
 
 test('the Mac keeps its data in state although the path has a space, and re-registers launchd reliably',()=>{

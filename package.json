@@ -1,6 +1,6 @@
 {
   "name": "tk-tkl",
-  "version": "0.82.2",
+  "version": "0.82.10",
   "private": true,
   "type": "module",
   "description": "Charlottendal TKL och en separat LocoNet-anläggningssimulator",
@@ -13,7 +13,12 @@
     "backend": "node src/server.mjs",
     "simulator": "node src/simulator.mjs",
     "test": "node --test test/*.test.mjs",
-    "check": "node scripts/check.mjs"
+    "check": "node scripts/check.mjs",
+    "import:xml": "python3 scripts/import-source.py",
+    "import:trakvista": "python3 scripts/import-source.py --source stations/trakvista/Trakvista.xml --out stations/trakvista/data/source && python3 scripts/import-layout.py stations/trakvista/Trakvista.xml --panel Träkvista --station stations/trakvista/station.json --out stations/trakvista/data/panel.json && python3 scripts/import-logixng.py stations/trakvista && node scripts/make-station-profile.mjs stations/trakvista",
+    "verify:trakvista": "python3 scripts/import-source.py --source stations/trakvista/Trakvista.xml --out stations/trakvista/data/source --check >/dev/null && python3 scripts/import-layout.py stations/trakvista/Trakvista.xml --panel Träkvista --station stations/trakvista/station.json --out stations/trakvista/data/panel.json --check && python3 scripts/import-logixng.py stations/trakvista --check && node scripts/make-station-profile.mjs stations/trakvista --check",
+    "test:station-traffic": "node --test test/station-traffic-integration.mjs",
+    "test:station-selection": "node --test test/station-selection-integration.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "0.131.0",

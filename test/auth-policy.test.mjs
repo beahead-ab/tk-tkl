@@ -15,6 +15,7 @@ const req = (method, url, { cookie, origin, body } = {}) => { const headers = { 
 const call = async (auth, method, url, opts) => { const r = req(method, url, opts), res = fakeRes(), u = new URL(url, 'http://127.0.0.1:8910'); let error = null; let handled; try { handled = await auth.handle(r, res, u); } catch (e) { error = e; } return { handled, res, error, json: res.body ? JSON.parse(res.body) : null }; };
 
 test('administrationen och operatörens vägar', () => {
+  assert.ok(isAdminRoute('/api/installation/station'), 'stationsvalet kräver administration');
   for (const p of ['/studio.html', '/api/studio', '/api/studio/measure/probe', '/api/ai', '/api/ai/test', '/api/users', '/api/users/invite', '/api/bindings/save', '/api/recordings/x/download', '/api/update/check', '/api/configuration/save', '/api/destinations', '/api/note', '/api/trainmeet/configure', '/api/streamdeck/save']) assert.ok(isAdminRoute(p), p + ' är administration');
   for (const p of ['/', '/index.html', '/api/state', '/api/events', '/api/config', '/api/route', '/api/all-stop', '/api/clock', '/api/trainmeet/movement', '/api/streamdeck/seen', '/api/train-information/follow', '/data/panel.json', '/api/aix', '/api/updates']) assert.ok(!isAdminRoute(p), p + ' är operatörens');
 });

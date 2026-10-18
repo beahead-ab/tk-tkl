@@ -5,14 +5,14 @@ import {parseHash} from '../public/studio-model.js';
 import {isLegacyView} from '../public/studio-legacy-views.js';
 
 const registered=['#trainmeet','#tools/appearance','#tools/streamdeck','#tools/streamdeck/layout','#tools/journal',
-  '#advanced/start','#advanced/protocol','#advanced/ai','#advanced/users','#advanced/update'];
+  '#advanced/start','#advanced/station','#advanced/protocol','#advanced/ai','#advanced/users','#advanced/update'];
 
-test('Inställningar has ten entries in three groups; Anläggningen is one link to Studio',()=>{
+test('Inställningar visar stationsvalet under Den här datorn; Anläggningen länkar till Studio',()=>{
   // Drift is the bottom row's tab in the signal box, not a page here (docs/installningar-plan.md).
   assert.deepEqual(NAVIGATION_GROUPS.map(g=>g.label),['Träffen','Den här datorn','Anläggningen']);
   assert.deepEqual(NAVIGATION_SECTIONS.map(s=>[s.group,s.label]),[
     ['traffen','TrainMeet'],['traffen','Händelser'],
-    ['datorn','Kom igång'],['datorn','Utseende och ljud'],['datorn','Stream Deck'],['datorn','Banan (LocoNet)'],['datorn','AI-tjänst'],['datorn','Användare'],['datorn','Uppdatering'],
+    ['datorn','Kom igång'],['datorn','Station'],['datorn','Utseende och ljud'],['datorn','Stream Deck'],['datorn','Banan (LocoNet)'],['datorn','AI-tjänst'],['datorn','Användare'],['datorn','Uppdatering'],
     ['anlaggningen','Studio']]);
   const studio=NAVIGATION_SECTIONS.at(-1);assert.equal(studio.href,'/studio.html');assert.equal(studio.hash,undefined);assert.deepEqual(studio.tabs,[]);
   // A group's entries stand together, so the rail shows each heading once.
@@ -42,6 +42,7 @@ test('every registered address resolves to one section with a page title of its 
   assert.equal(titles.get('#advanced/protocol'),'Protokollinspelning');
   assert.equal(resolveNavigation('#advanced/protocol').section.label,'Banan (LocoNet)');
   assert.equal(resolveNavigation('#advanced/update').section.label,'Uppdatering');
+  assert.equal(resolveNavigation('#advanced/station').section.label,'Station');
   assert.equal(resolveNavigation('#tools/operations/blocks').section,null);
   const trainmeet=resolveNavigation('#trainmeet');
   assert.equal(trainmeet.section.status,'menu-trainmeet-status');assert.equal(trainmeet.title,'TrainMeet');
