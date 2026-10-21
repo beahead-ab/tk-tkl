@@ -112,3 +112,38 @@ test('a private repository (Tk-TKL) is read through GitHub\'s API with the insta
   assert.equal(readToken({CHARLOTTENDAL_GITHUB_TOKEN_FILE:'/etc/tk-tkl/missing'},read),'');
   assert.equal(readToken({},read),'');
 });
+
+// Uppdatera nu på en Mac eller PC (0.84.0): installeraren lägger ett update-skript i installationens mapp och
+// skriver vägen i app.env. Panelen startar skriptet fristående; TKL för anteckningarna själv, som på Render.
+test('en Mac eller PC med installationens update-skript startar uppdateringen härifrån', () => {
+  let file=null,now=1000;
+  const io={statusFile:'/state/update.json',readFile:()=>{if(file===null)throw Error('ENOENT');return file;},writeFile:(_,text)=>{file=text;},now:()=>now};
+  const check=new UpdateCheck({current:'0.83.0',kind:'mac',command:'/Users/casper/Library/Application Support/Charlottendal TKL/update.sh',...io});
+  check.latest='0.84.0';
+  assert.equal(check.view().canStart,true);
+  check.startLocal();
+  assert.equal(check.view().run.phase,'fetching');
+  assert.match(check.view().run.message,/0\.84\.0/);
+  // Nästa process läser filen: har versionen bytts är uppdateringen klar.
+  const after=new UpdateCheck({current:'0.84.0',kind:'mac',command:'/x/update.sh',...io});
+  after.settle();
+  assert.equal(after.view().run.phase,'done');
+  assert.match(after.view().run.message,/Föregående version: 0\.83\.0/);
+});
+
+test('en uppdatering som inte bytt version på tjugo minuter rapporteras som misslyckad', () => {
+  let file=null,now=1000;
+  const io={statusFile:'/state/update.json',readFile:()=>{if(file===null)throw Error('ENOENT');return file;},writeFile:(_,text)=>{file=text;},now:()=>now};
+  const check=new UpdateCheck({current:'0.83.0',kind:'windows',command:'C:\\Users\\Casper\\update.ps1',...io});
+  check.latest='0.84.0';check.startLocal();
+  now+=19*60000;check.settle();
+  assert.equal(check.view().run.phase,'fetching','en pågående uppdatering får ta sin tid');
+  now+=2*60000;check.settle();
+  assert.equal(check.view().run.phase,'failed');
+  assert.match(check.view().run.message,/0\.83\.0 kör fortfarande/);
+  // Utan skript finns ingen knapp, och ingenting kan startas.
+  const plain=new UpdateCheck({current:'0.83.0',kind:'windows'});
+  assert.equal(plain.view().canStart,false);
+  assert.throws(()=>plain.startLocal(),/inget uppdateringsskript/);
+});
+

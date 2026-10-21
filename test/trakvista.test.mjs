@@ -149,6 +149,12 @@ test('Tk-TKL: make-station-repository gives Träkvista its own installation, and
   assert.equal(pkg.scripts['verify:layout'],undefined,'scripts for files the station repository lacks are left out');assert.equal(pkg.scripts.backend,'node src/server.mjs');
   assert.equal(lock.name,'tk-tkl');assert.equal(lock.packages[''].name,'tk-tkl');assert.equal(lock.version,pkg.version);
   assert.equal(at('README.md'),at('stations/trakvista/README.md'));
+  // Stationens förråd installeras på alla tre plattformarna, och dess egen läsanvisning säger hur.
+  const readme=at('README.md');
+  assert.match(readme,/Tk-TKL\/main\/install\.sh \| sudo sh/,'Raspberry Pi');
+  assert.match(readme,/Tk-TKL\/main\/install\.sh \| sh\n/,'Mac, utan sudo');
+  assert.match(readme,/irm https:\/\/raw\.githubusercontent\.com\/beahead-ab\/Tk-TKL\/main\/install\.ps1 \| iex/,'Windows');
+  assert.doesNotMatch(readme,/cda-tkl-install/,'ingen hänvisning till Charlottendals installationsförråd');
   // Webbdriften på Render: Blueprint och Dockerfile med Träkvistas namn, station och förråd.
   assert.match(at('render.yaml'),/^    name: tk-tkl$/m);assert.match(at('render.yaml'),/key: CHARLOTTENDAL_STATION\n        value: trakvista/);
   assert.match(at('render.yaml'),/key: CHARLOTTENDAL_INSTALL_REPOSITORY\n        value: beahead-ab\/Tk-TKL/);assert.doesNotMatch(at('render.yaml'),/__/);

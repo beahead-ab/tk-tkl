@@ -38,7 +38,7 @@ test('LocoBuffern sparas och prövas; live startar gatewayen, offline stoppar de
   assert.deepEqual(s.calls[0].args.slice(1), ['--device', '/dev/serial/by-id/usb-RR-CirKits_LocoBuffer-USB-if00', '--baud', '57600', '--flow', 'rtscts', '--port', '8913']);
   assert.match(s.calls[0].args[0], /scripts\/locobuffer-gateway\.mjs$/);
   assert.deepEqual(c.target(profile), { mode: 'hardware', host: '127.0.0.1', port: 8913, label: 'LocoNet ansluten via LocoBuffer (/dev/serial/by-id/usb-RR-CirKits_LocoBuffer-USB-if00)' });
-  s.calls[0].child.stdout.emit('data', 'LocoBuffer gateway: 127.0.0.1:8913\n'); assert.equal(c.view().gateway.state, 'running');
+  s.calls[0].child.stdout.emit('data', 'LocoNet-gateway: 127.0.0.1:8913\n'); assert.equal(c.view().gateway.state, 'running');
   assert.throws(() => c.setLocobuffer({ device: '', baud: '57600', flow: 'rtscts' }), /Koppla från LocoNet innan/);
   c.switch('offline');
   assert.equal(s.calls[0].child.killed, 'SIGTERM'); assert.equal(c.mode, 'offline'); assert.equal(c.view().gateway.state, 'stopped');
@@ -80,4 +80,48 @@ test('USB-serieportarna listas med stabila namn först', () => {
   const dirs = { '/dev/serial/by-id': ['usb-RR-CirKits_LocoBuffer-USB-if00'], '/dev': ['tty', 'ttyACM0', 'ttyS0', 'ttyUSB1', 'cu.usbserial-A1', 'null'] };
   const list = listSerialDevices(d => { if (!dirs[d]) throw Error('ENOENT'); return dirs[d]; });
   assert.deepEqual(list.map(d => d.path), ['/dev/serial/by-id/usb-RR-CirKits_LocoBuffer-USB-if00', '/dev/cu.usbserial-A1', '/dev/ttyACM0', '/dev/ttyUSB1']);
+});
+
+// BTLocoBridge (0.83.0): Möllehems Bluetooth-kort som andra anslutning till samma LocoNet. Kortet paras i datorn;
+// TKL ansluter till dess adress över RFCOMM, eller till den parade serieport systemet skapar åt det.
+test('BTLocoBridge väljs som anslutning, prövas och startar gatewayen mot kortets adress', () => {
+  const { c, s } = make();
+  assert.equal(c.view().adapter, 'locobuffer');
+  assert.throws(() => c.setAdapter({ adapter: 'btspp' }), /Okänd anslutning/);
+  assert.throws(() => c.setAdapter({ adapter: 'btlocobridge', btlocobridge: { target: 'AA:BB:CC' } }), /AA:BB:CC:DD:EE:FF/);
+  assert.throws(() => c.setAdapter({ adapter: 'btlocobridge', btlocobridge: { target: 'AA:BB:CC:DD:EE:FF', channel: 99 } }), /Kanalen är 1–30/);
+  assert.match(c.liveReason(), /Ingen LocoBuffer/);
+  c.setAdapter({ adapter: 'btlocobridge', btlocobridge: { target: 'aa:bb:cc:dd:ee:ff', channel: 1 } });
+  assert.equal(c.view().adapter, 'btlocobridge');
+  assert.equal(c.storage.files['connection.json'].btlocobridge.target, 'AA:BB:CC:DD:EE:FF', 'adressen sparas med versaler');
+  assert.equal(c.storage.files['connection.json'].schema, 2);
+  assert.equal(c.liveReason(), '');
+  c.switch('live');
+  assert.deepEqual(s.calls[0].args.slice(1), ['--adapter', 'btlocobridge', '--address', 'AA:BB:CC:DD:EE:FF', '--channel', '1', '--port', '8913']);
+  assert.deepEqual(c.target(profile), { mode: 'hardware', host: '127.0.0.1', port: 8913, label: 'LocoNet ansluten via BTLocoBridge (AA:BB:CC:DD:EE:FF)' });
+  assert.throws(() => c.setAdapter({ adapter: 'btlocobridge', btlocobridge: { target: '' } }), /Koppla från LocoNet innan BTLocoBridge/);
+  // USB-inställningen ligger kvar bredvid och kan väljas igen utan att skrivas om.
+  assert.equal(c.view().locobuffer.baud, '57600');
+});
+
+test('BTLocoBridge som parad serieport går över USB-vägen, och en adress kräver RFCOMM', () => {
+  const { c, s } = make({ platform: 'darwin' });
+  c.setAdapter({ adapter: 'btlocobridge', btlocobridge: { target: 'AA:BB:CC:DD:EE:FF' } });
+  assert.match(c.liveReason(), /På Mac paras BTLocoBridge/);
+  c.setAdapter({ adapter: 'btlocobridge', btlocobridge: { target: '/dev/cu.BTLocoBridge-SPP' } });
+  assert.equal(c.liveReason(), '');
+  c.switch('live');
+  assert.deepEqual(s.calls[0].args.slice(1), ['--adapter', 'btlocobridge', '--address', '/dev/cu.BTLocoBridge-SPP', '--channel', '1', '--port', '8913']);
+  assert.match(c.target(profile).label, /BTLocoBridge \(\/dev\/cu\.BTLocoBridge-SPP\)/);
+});
+
+test('en sparad fil från före BTLocoBridge läses som USB-anslutning', () => {
+  const files = { 'connection.json': { schema: 1, mode: 'live', locobuffer: { device: '/dev/ttyACM0', baud: '57600', flow: 'rtscts' } } };
+  const storage = { files, load: (n, f) => n in files ? structuredClone(files[n]) : f, save: (n, v) => { files[n] = structuredClone(v); } };
+  const { c } = make({ storage });
+  assert.equal(c.adapter, 'locobuffer');
+  assert.equal(c.mode, 'live');
+  assert.deepEqual(c.view().btlocobridge, { target: '', channel: 1 });
+  c.setLocobuffer({ device: '/dev/ttyACM1', baud: '57600', flow: 'rtscts' });
+  assert.equal(files['connection.json'].schema, 2, 'filen skrivs om till schema 2 först när något ändras');
 });

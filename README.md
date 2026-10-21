@@ -34,6 +34,48 @@ sig själva när Pi:n startar:
 På en Pi med skrivbord öppnar Chromium ställverket i helskärm efter nästa omstart (`sudo reboot`), och genvägen
 *Träkvista TKL* finns på skrivbordet. Stream Deck kopplas upp av sig själv.
 
+## Installera på en Mac
+
+macOS 13 Ventura eller senare, Apple Silicon eller Intel. Google Chrome eller Microsoft Edge behövs bara om en
+Stream Deck ska användas; Safari saknar WebHID. Kör i **Terminal**, **utan** `sudo`:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/beahead-ab/Tk-TKL/main/install.sh | sh
+```
+
+Med privat förråd, som på Pi:n: `T=TOKEN; curl -fsSL -H "Authorization: Bearer $T" https://raw.githubusercontent.com/beahead-ab/Tk-TKL/main/install.sh | TKL_TOKEN=$T sh`.
+Installationen sparar token i installationens mapp (`github-token`, bara för den egna användaren), så att
+Uppdatering i panelen ser nya versioner.
+
+Installationen hämtar en egen Node.js 22, lägger allt under `~/Library/Application Support/Träkvista TKL/` och
+startar TKL när du loggar in (en launchd-agent, `se.beahead.tk-tkl`). Appen **Träkvista TKL** hamnar i mappen
+*Program* och öppnar ställverket i ett eget fönster. Driftdata ligger i `state/` och inställningarna i `app.env`,
+båda i samma mapp, och de ligger kvar vid uppdatering. Hos TrainMeet heter macen `tk-tkl-mac`.
+
+## Installera på en PC (Windows 10/11)
+
+64-bitars Windows, inga administratörsrättigheter. Kör i **PowerShell** (inte som administratör):
+
+```powershell
+irm https://raw.githubusercontent.com/beahead-ab/Tk-TKL/main/install.ps1 | iex
+```
+
+Med privat förråd: `$env:TKL_TOKEN='TOKEN'; irm -Headers @{Authorization="Bearer $env:TKL_TOKEN"} https://raw.githubusercontent.com/beahead-ab/Tk-TKL/main/install.ps1 | iex`.
+Token sparas i installationsmappen som `github-token`, så att Uppdatering i panelen ser nya versioner.
+
+Allt hamnar under `%LOCALAPPDATA%\Träkvista TKL\`: programmet, en egen Node.js 22, `app.env`, `state\` och
+`logs\tkl.log`. TKL startar dolt när du loggar in (genväg i `shell:startup`), och genvägen **Träkvista TKL** på
+skrivbordet öppnar ställverket i Edge eller Chrome. TKL lyssnar bara på den egna datorn, så brandväggen behöver
+inte öppnas. Hos TrainMeet heter datorn `tk-tkl-pc`.
+
+### Träkvista och Charlottendal på samma dator
+
+Båda installationerna är egna program med egna mappar och driftdata, men de använder samma portar (8910 ställverket,
+8911 anläggningen, 8912 LocoNet). Ska båda köras samtidigt på en och samma dator: ändra portarna i den ena
+installationens `app.env` (`CHARLOTTENDAL_PORT`, `CHARLOTTENDAL_SIM_PORT`, `CHARLOTTENDAL_WIRE_PORT`,
+`CHARLOTTENDAL_FIELD_URL`, `CHARLOTTENDAL_TKL_URL`) och starta om den. Skrivbordsgenvägen och appen öppnar
+fortfarande `127.0.0.1:8910`, så den flyttade installationen nås på sin egen adress i webbläsaren.
+
 ## Uppdatera
 
 I ställverket: när en ny version finns visar statusraden `● Uppdatering` med versionen. Tryck på den, eller gå till
@@ -50,6 +92,11 @@ sudo tk-tkl-update
 
 Inställningar och driftdata ligger kvar, och svarar den nya versionen inte återställs den föregående. Att köra
 installationsraden igen gör detsamma.
+
+På Mac och PC uppdaterar panelen sig själv på samma sätt sedan 0.84.0: **Uppdatera nu** hämtar versionen, installerar
+den bredvid den nuvarande och startar om TKL, med den sparade token om förrådet är privat. Går det fel återställs den
+föregående versionen, och loggen ligger i `logs/update.log` i installationens mapp. Att köra installationsraden igen
+i Terminal eller PowerShell fungerar lika bra.
 
 ## Webbdrift på Render
 
@@ -70,8 +117,11 @@ LocoNet: TKL svarar själv och kör trafikspelets tåg, och TrainMeet parkopplas
 
 ## Koppla till anläggningen och grannarna
 
-- **LocoNet.** Installationen startar mot simulatorn. *Anslut till LocoNet* i panelen kopplar till en LocoBuffer på
-  USB; se [LocoNet ansluten eller ej ansluten](docs/loconet-anslutning.md).
+- **LocoNet.** Installationen startar mot simulatorn. *Anslut till LocoNet* i panelen kopplar till banan, antingen
+  över en LocoBuffer på USB eller över Träkvistas **BTLocoBridge** (Möllehems Bluetooth-kort). Välj anslutning under
+  Inställningar → Banan (LocoNet): para kortet i datorn först och ange dess adress `AA:BB:CC:DD:EE:FF` på en
+  Raspberry Pi, eller dess parade serieport `/dev/cu.…` på en Mac. Se
+  [LocoNet ansluten eller ej ansluten](docs/loconet-anslutning.md).
 - **TrainMeet.** Parkoppla stationen i panelen, som för Charlottendal. Linjerna A (Bilbo), B (Charlottendal) och C
   är ännu inte kopplade till TrainMeet i panelen; se [Kvar för Träkvista](docs/trakvista.md#kvar-för-träkvista).
 - **Från en annan dator eller en iPad:** se [docs/raspberry-pi.md](docs/raspberry-pi.md), avsnitt 10.

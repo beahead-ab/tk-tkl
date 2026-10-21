@@ -12,3 +12,5 @@ node_modules/
 __pycache__/
 # Production host and key (see deploy/publish-release.sh)
 deploy/production.env
+# Claude Codes lokala körinställningar; hör inte till förrådet
+.claude/settings.local.json
