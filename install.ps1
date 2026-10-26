@@ -135,11 +135,24 @@ try {
   # Stop a running copy, then start the new one the way login does.
   Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -and $_.CommandLine -like "*$App*" -and $_.ProcessId -ne $PID } |
     ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }
-  function Start-Tkl { Start-Process -FilePath $PowerShell -WindowStyle Hidden -ArgumentList '-NoProfile', '-WindowStyle', 'Hidden', '-ExecutionPolicy', 'Bypass', '-File', (Join-Path $App 'run.ps1') }
+  function Start-Tkl {
+    # Start-Process joins -ArgumentList entries with spaces. Quote the full -File path explicitly:
+    # installation folders like "Träkvista TKL" otherwise get split before PowerShell starts.
+    $RunScript = Join-Path $App 'run.ps1'
+    $Args = '-NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File "' + $RunScript + '"'
+    Start-Process -FilePath $PowerShell -WindowStyle Hidden -ArgumentList $Args
+  }
   function Wait-Tkl { for ($i = 0; $i -lt 40; $i++) { try { Invoke-WebRequest -UseBasicParsing -TimeoutSec 2 http://127.0.0.1:8910/api/config | Out-Null; return $true } catch { Start-Sleep 1 } }; return $false }
   Start-Tkl
   if (-not (Wait-Tkl)) {
-    Write-Host "TKL svarar inte. Loggen finns i: $(Join-Path $App 'logs')"
+    Write-Host "TKL svarar inte på http://127.0.0.1:8910. Loggen finns i: $(Join-Path $App 'logs')" -ForegroundColor Red
+    $TklLog = Join-Path $App 'logs\tkl.log'
+    if (Test-Path $TklLog) {
+      Write-Host 'Senaste loggrader:'
+      Get-Content -Path $TklLog -Tail 25 | ForEach-Object { Write-Host $_ }
+    } else {
+      Write-Host 'Ingen TKL-logg skapades. Kontrollera att bakgrundsprocessen kunde startas.'
+    }
     if ($Previous -and (Test-Path $Previous)) {
       Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -and $_.CommandLine -like "*$App*" -and $_.ProcessId -ne $PID } |
         ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }
