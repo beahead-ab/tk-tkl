@@ -93,6 +93,7 @@ function connectionModeStatus(mode){
   if(recorder.active||recorder.pending)return deny('Avsluta och spara telegraminspelningen först.');
   return {allowed:true,reason:mode==='live'?'TKL ansluter till banan över LocoNet.':'TKL kopplar från LocoNet och svarar själv; inget går ut på LocoNet.'};
 }
+async function connectionDevicesView(){await connection.refreshDevices();return connectionView({devices:true});}
 function connectionView(options){const v=connection.view(options);return {...v,label:connectionInfo(profile).label,switch:{live:connectionModeStatus('live'),offline:connectionModeStatus('offline')}};}
 function switchConnection(mode){
   const check=connectionModeStatus(mode);if(!check.allowed)throw Object.assign(Error(check.reason),{status:409});
@@ -237,7 +238,7 @@ const server = http.createServer(async (req, res) => {
     if (!hasStudio && url.pathname.startsWith('/api/studio')) return json(res, { error: `${station.title} saknar sin JMRI-fil; Studio har inget att läsa.` }, 404);
     if (req.method === 'GET' || req.method === 'HEAD') {
       if (url.pathname === '/api/state') return json(res, snapshot());
-      if(url.pathname==='/api/connection')return json(res,connectionView({devices:true}));
+      if(url.pathname==='/api/connection')return json(res,await connectionDevicesView());
       if(url.pathname==='/api/installation/station'){auth.requireRole(req,'admin');return json(res,installationStation.view(stationRuntime()));}
       if(url.pathname==='/api/communication')return json(res,{connection:connectionInfo(profile),connectionState:engine.connected?'connected':'disconnected',expectations:commandExpectations(profile,engine.snapshot()),trace:protocolTrace});
       if(url.pathname==='/api/studio'){const measured=studioMeasure.measured(profile);return json(res,{...studioData(studioSources,studioDrafts.activeRules(),measured),drafts:studioDrafts.view(bindings.profile()),review:studioReview.view(),
@@ -329,14 +330,14 @@ const server = http.createServer(async (req, res) => {
     }
     // Anslut till eller koppla från LocoNet: vem som helst vid panelen (samma villkor för alla); LocoBuffern ställer ägaren eller en administratör in.
     if(url.pathname==='/api/connection/mode'){switchConnection(data?.mode);dirty=true;return json(res,{connection:connectionView(),state:snapshot()});}
-    if(url.pathname==='/api/connection/locobuffer'){connection.setLocobuffer(data);engine.log('connection-mode',`LocoBuffer inställd: ${data.device||'ingen'} · ${data.baud} baud · ${data.flow==='rtscts'?'RTS/CTS':'ingen flödeskontroll'}.`);dirty=true;return json(res,connectionView({devices:true}));}
+    if(url.pathname==='/api/connection/locobuffer'){connection.setLocobuffer(data);engine.log('connection-mode',`LocoBuffer inställd: ${data.device||'ingen'} · ${data.baud} baud · ${data.flow==='rtscts'?'RTS/CTS':'ingen flödeskontroll'}.`);dirty=true;return json(res,await connectionDevicesView());}
     // Vilken anslutning banan nås genom: LocoBuffern på USB eller BTLocoBridge över Bluetooth.
     if(url.pathname==='/api/connection/adapter'){
       const view=connection.setAdapter(data);
       engine.log('connection-mode',view.adapter==='btlocobridge'
-        ?`BTLocoBridge inställd: ${view.btlocobridge.target||'ingen'}${view.btlocobridge.target&&!view.btlocobridge.target.startsWith('/dev/')?' · kanal '+view.btlocobridge.channel:''}.`
+        ?`BTLocoBridge inställd: ${view.btlocobridge.target||'ingen'}${view.btlocobridge.target&&!view.btlocobridge.target.startsWith('/dev/')&&!/^COM/i.test(view.btlocobridge.target)?' · kanal '+view.btlocobridge.channel:''}.`
         :`LocoBuffer inställd: ${view.locobuffer.device||'ingen'} · ${view.locobuffer.baud} baud · ${view.locobuffer.flow==='rtscts'?'RTS/CTS':'ingen flödeskontroll'}.`);
-      dirty=true;return json(res,connectionView({devices:true}));
+      dirty=true;return json(res,await connectionDevicesView());
     }
     if(url.pathname==='/api/destinations'){const result=destinations.save(data,trainMeet.context?.stations||[]);dirty=true;return json(res,result);}
     if(url.pathname.startsWith('/api/trainmeet/')){

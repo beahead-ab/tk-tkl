@@ -36,7 +36,7 @@ test('LocoBuffern sparas och prövas; live startar gatewayen, offline stoppar de
   c.switch('live');
   assert.equal(c.mode, 'live'); assert.equal(c.storage.files['connection.json'].mode, 'live');
   assert.deepEqual(s.calls[0].args.slice(1), ['--device', '/dev/serial/by-id/usb-RR-CirKits_LocoBuffer-USB-if00', '--baud', '57600', '--flow', 'rtscts', '--port', '8913']);
-  assert.match(s.calls[0].args[0], /scripts\/locobuffer-gateway\.mjs$/);
+  assert.match(s.calls[0].args[0], /scripts[\\/]locobuffer-gateway\.mjs$/);
   assert.deepEqual(c.target(profile), { mode: 'hardware', host: '127.0.0.1', port: 8913, label: 'LocoNet ansluten via LocoBuffer (/dev/serial/by-id/usb-RR-CirKits_LocoBuffer-USB-if00)' });
   s.calls[0].child.stdout.emit('data', 'LocoNet-gateway: 127.0.0.1:8913\n'); assert.equal(c.view().gateway.state, 'running');
   assert.throws(() => c.setLocobuffer({ device: '', baud: '57600', flow: 'rtscts' }), /Koppla från LocoNet innan/);
