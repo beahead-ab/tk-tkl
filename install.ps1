@@ -88,6 +88,13 @@ try {
   try { & (Join-Path $NodeDir 'npm.cmd') ci --omit=dev --no-audit --no-fund --no-update-notifier --loglevel=error; if ($LASTEXITCODE) { throw 'npm ci misslyckades.' } }
   finally { Pop-Location }
   & (Join-Path $NodeDir 'node.exe') --check (Join-Path $Release 'src\server.mjs'); if ($LASTEXITCODE) { throw 'Programmet kunde inte läsas.' }
+  # Windows-COM stöds av det versionslåsta Node-paketet; ingen separat Python-installation krävs.
+  # Kontrollera native-modulen före versionsbytet, även om npm hoppade över ett optional-beroende.
+  Push-Location $Release
+  try {
+    & (Join-Path $NodeDir 'node.exe') --input-type=module -e "import('serialport').then(m => { if (typeof m.SerialPort !== 'function') process.exit(1); }).catch(() => process.exit(1));"
+    if ($LASTEXITCODE) { throw 'Windows-stödet för COM-portar kunde inte laddas. Den föregående versionen är kvar. Kör installationen igen och spara felutskriften om felet återkommer.' }
+  } finally { Pop-Location }
   $Pointer = Join-Path $App 'current.txt'
   $Previous = if (Test-Path $Pointer) { (Get-Content $Pointer -Raw).Trim() } else { '' }
   Set-Content -Path $Pointer -Value $Release -Encoding UTF8
@@ -135,7 +142,7 @@ try {
   # Stop a running copy, then start the new one the way login does.
   Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -and $_.CommandLine -like "*$App*" -and $_.ProcessId -ne $PID } |
     ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }
-  function Start-Tkl { Start-Process -FilePath $PowerShell -WindowStyle Hidden -ArgumentList '-NoProfile', '-WindowStyle', 'Hidden', '-ExecutionPolicy', 'Bypass', '-File', (Join-Path $App 'run.ps1') }
+  function Start-Tkl { Start-Process -FilePath $PowerShell -WindowStyle Hidden -ArgumentList '-NoProfile', '-WindowStyle', 'Hidden', '-ExecutionPolicy', 'Bypass', '-File', ('"' + (Join-Path $App 'run.ps1') + '"') }
   function Wait-Tkl { for ($i = 0; $i -lt 40; $i++) { try { Invoke-WebRequest -UseBasicParsing -TimeoutSec 2 http://127.0.0.1:8910/api/config | Out-Null; return $true } catch { Start-Sleep 1 } }; return $false }
   Start-Tkl
   if (-not (Wait-Tkl)) {

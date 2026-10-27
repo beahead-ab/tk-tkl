@@ -1,5 +1,13 @@
 [
   {
+    "version": "0.85.0",
+    "date": "2026-10-27",
+    "notes": [
+      "BTLocoBridge kan anslutas på Windows via kortets utgående Bluetooth-COM-port. Välj porten under Inställningar → Banan (LocoNet); MAC-adress och kanal behövs inte.",
+      "Windows visar tillgängliga COM-portar och fel vid upptagen eller bruten anslutning. Automatisk återanslutning behåller samma port; order skickas aldrig om automatiskt. Fysiskt banprov återstår."
+    ]
+  },
+  {
     "version": "0.84.0",
     "date": "2026-10-20",
     "notes": [

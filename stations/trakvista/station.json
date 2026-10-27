@@ -10,7 +10,8 @@
       "docs/trakvista.md",
       "docs/trakvista-tkl.png",
       "docs/raspberry-pi.md",
-      "docs/loconet-anslutning.md"
+      "docs/loconet-anslutning.md",
+      "docs/benny-windows-bluetooth-prov.md"
     ]
   },
   "source": "Trakvista.xml",

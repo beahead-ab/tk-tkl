@@ -100,9 +100,13 @@ och kan väljas tillbaka utan att skrivas om.
 | Hur TKL pratar | `scripts/serial-port.py`, 8N1 över serieporten | `scripts/bluetooth-port.py`, en RFCOMM-förbindelse till kortets serieprofil |
 | Raspberry Pi | Ja | Ja: para kortet med `bluetoothctl` först, ange sedan adressen |
 | Mac | Ja | Ja, men kortet paras i Bluetooth-inställningarna och anges som sin serieport, `/dev/cu.…`; kanalen används då inte |
-| Windows | Inte än | Inte än |
+| Windows | Inte än | Från 0.85.0: kortets utgående Bluetooth-COM-port, t.ex. `COM7`; fysiskt prov återstår |
 
-Kortet paras alltid i datorn först; TKL ansluter bara till det och gör ingen egen parkoppling eller sökning. Över
+På Windows väljs kortets **utgående** COM-port under Inställningar → Banan (LocoNet), till exempel `COM7`.
+Listan kan innehålla andra serieportar; stäm av porten i Windows Bluetooth-inställningar. MAC-adress och kanal används
+inte. Stäng JMRI och andra anslutna appar innan TKL ansluter. Se [provguide och återgång](benny-windows-bluetooth-prov.md).
+
+Kortet paras alltid i datorn först; TKL gör ingen egen parkoppling. På Windows listas systemets COM-portar; Bluetooth-enheter söks inte trådlöst. Över
 Bluetooth finns ingen hastighet eller flödeskontroll att ställa in — kortet sköter LocoNets timing, precis som
 LocoBuffern gör på USB. I övrigt är allt detsamma: samma telegramgräns, samma gateway på port 8913, samma avfrågning
 av spårledningarna och samma villkor för att byta läge.
@@ -122,7 +126,7 @@ Därefter: Inställningar → Banan (LocoNet) → **BTLocoBridge (Bluetooth)**, 
   BTLocoBridge nås över RFCOMM när kortet är parat i systemet.
 - **Mac:** ja, med LocoBuffern som `/dev/cu.usbserial-…` eller `/dev/cu.usbmodem…`, och BTLocoBridge som sin parade
   serieport `/dev/cu.…`.
-- **Windows:** inte än; serieporten läses med POSIX-verktyg.
+- **Windows:** BTLocoBridge via utgående Bluetooth-COM-port från 0.85.0. Node läser porten direkt; Python krävs inte. USB-LocoBuffer stöds inte än. Fysisk verifiering återstår, se [Bennys provguide](benny-windows-bluetooth-prov.md).
 - **Webbdriften (Render):** nej, den har ingen LocoNet; TKL svarar alltid själv.
 
 Med `CHARLOTTENDAL_CONNECTION_MODE=hardware` (den fristående vägen, `npm run backend` mot en egen gateway) ansluter TKL
