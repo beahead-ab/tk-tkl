@@ -1,5 +1,5 @@
 {
-  "sourceHash": "3e7b63c95d05e7c152304dd24b27cc3286cb66e9b6e89e9932aba73edff97e79",
+  "sourceHash": "421a92235d0d9ca6c977c74ba740e484e8f4971998987aefac9245bf673eb6e2",
   "fields": [
     {
       "key": "block:SIIIa",
@@ -377,7 +377,7 @@
       "key": "block:SC2",
       "block": "SC2",
       "x": 805,
-      "y": 325,
+      "y": 370,
       "sourceHidden": false,
       "duplicate": false
     },
@@ -385,7 +385,7 @@
       "id": "block-icon-4",
       "key": "block:SB2",
       "block": "SB2",
-      "x": 915,
+      "x": 940,
       "y": 125,
       "sourceHidden": false,
       "duplicate": false
@@ -394,7 +394,7 @@
       "id": "block-icon-5",
       "key": "block:SA2",
       "block": "SA2",
-      "x": 40,
+      "x": 20,
       "y": 125,
       "sourceHidden": false,
       "duplicate": false
@@ -421,7 +421,7 @@
       "id": "block-icon-8",
       "key": "block:SIIIc",
       "block": "SIIIc",
-      "x": 105,
+      "x": 117,
       "y": 89,
       "sourceHidden": false,
       "duplicate": false

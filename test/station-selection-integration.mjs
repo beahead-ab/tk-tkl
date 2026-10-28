@@ -139,7 +139,7 @@ for (const mapped of [true, false]) test('två stationer byts med kontrollerad o
       const config = (await call('config')).answer;
       if (config.station?.id !== id) return false;
       const state = (await call('state')).answer;
-      return state.connection === 'connected' && Object.values(state.blocks).every(block => block.occupied === false) && { config, state };
+      return state.connection === 'connected' && Object.entries(state.blocks).every(([name, block]) => block.occupied === (config.blocks[name].internal ? null : false)) && { config, state };
     }, 'Stationen ' + id + ' fick inte fri återrapport');
     await ready('charlottendal');
     const cdaCookie = await login(call, 'cda@example.test');

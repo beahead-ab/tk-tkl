@@ -198,7 +198,12 @@ async function stationProcess(id, base) {
   const post = async (command, data, options) => (await request('/api/' + command, data, options)).body;
   const state = () => get('/api/state'), field = async () => (await request('/api/state', undefined, { simulator: true })).body;
   const wait = (fn, label, timeout) => until(fn, id + ': ' + label, timeout).catch(error => { error.message += '\n' + output.slice(-3500); throw error; });
-  const ready = () => wait(async () => { const s = await state(); return s.connection === 'connected' && Object.values(s.blocks).every(b => b.occupied === false) && s; }, 'fria återrapporter', 30000);
+  const freeBlocks = async s => {
+    const config = await get('/api/config');
+    // Interna grafik-/logikblock saknar sensor och får aldrig någon fysisk återrapport.
+    return Object.entries(s.blocks).every(([name, b]) => b.occupied === (config.blocks[name].internal ? null : false));
+  };
+  const ready = () => wait(async () => { const s = await state(); return s.connection === 'connected' && await freeBlocks(s) && s; }, 'fria återrapporter', 30000);
   const refresh = () => wait(async () => {
     const meet = (await state()).trainMeet;
     if (meet.busy) return false;
@@ -210,7 +215,7 @@ async function stationProcess(id, base) {
     try { return await post('trainmeet/' + name, { ...meet, ...data }); } catch (error) { if (/409/.test(error.message)) return false; throw error; }
   }, 'TrainMeet ' + name);
   simulator = launch('src/simulator.mjs'); backend = launch('src/server.mjs');
-  return { id, dir, port, state, field, get, post, request, wait, ready, refresh, command,
+  return { id, dir, port, state, field, get, post, request, wait, ready, freeBlocks, refresh, command,
     get cookie() { return cookie; },
     async login(setup = false) {
       const response = await request('/api/auth/' + (setup ? 'setup' : 'login'), {
@@ -343,7 +348,7 @@ test('stationernas manuella trafik, ortskopplingar och sparade lås fungerar i o
       await rig.restart();
       const restored = await rig.wait(async () => {
         const s = await rig.state(); return s.connection === 'connected' && s.routes.some(r => r.id === locked.id && r.state === 'held') &&
-          s.trainMeet.status === 'connected' && Object.values(s.blocks).every(b => b.occupied === false) && s;
+          s.trainMeet.status === 'connected' && await rig.freeBlocks(s) && s;
       }, 'omstart återläser inställningar och håller tågvägen');
       assert.deepEqual(restored.destinations, savedDestinations); assert.equal(game.pairs.length, pairCount, 'parkopplingen återanvänds');
       assert.equal((await rig.get('/api/config')).notes['traffic-process'], 'Bara ' + rig.id);
@@ -443,7 +448,7 @@ test('Träkvistas automat följer tidtabellsspår I och verkliga A/B-klareringar
         const to = s.trainMeet.context.lines.find(l => l.id === train.to.connection);
         return game.posts.some(p => p.path === '/v1/tkl/movement' && p.departure === 'departed') &&
           s.routes.length === 0 && f.trains.length === 0 && s.trainTracking.trains.length === 0 &&
-          Object.values(s.blocks).every(b => b.occupied === false) &&
+          await rig.freeBlocks(s) &&
           movement?.departure === 'departed' && from?.state === 'free' && to?.direction === 'out' && s;
       }, 'automatens A → spår I → B inklusive verklig väntetid och avgångsanmälan', 120000);
       assert.equal(finished.automation.enabled, true, 'automaten kör vidare efter tågets passage');

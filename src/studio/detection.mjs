@@ -35,8 +35,8 @@ export function detectionInventory({ profile, xml }) {
     // bound: profilen använder redan exakt dessa LS-nummer som adresser, så ingen detekteringsregel behöver föreslås.
     const bound = inputs.length > 0 && JSON.stringify((b.inputs || [b]).map(i => i.address)) === JSON.stringify(inputs.map(p => Number(p.slice(2))));
     return { name, sourceSensor: src, shape: src ? shapeOf(src, b) : 'noSensor', inputs, inputDetails: inputs.map(p => ({ system: p, user: sensors[p]?.user || null, module: moduleOf(sensors[p]?.comment)?.name || null })),
-      address: b.address, activeMeansOccupied: b.activeMeansOccupied, bound,
-      blockedByButton: !!(src && (rules[src] || []).some(r => r.variables.some(isButton))), track: !TRACKLESS(name) };
+      address: b.internal ? null : b.address, activeMeansOccupied: b.activeMeansOccupied, bound,
+      blockedByButton: !!(src && (rules[src] || []).some(r => r.variables.some(isButton))), track: !b.internal && !TRACKLESS(name) };
   });
   const bySource = {}; for (const s of sections) if (s.sourceSensor) bySource[s.sourceSensor] = (bySource[s.sourceSensor] || 0) + 1;
   for (const s of sections) s.sharedWith = s.sourceSensor ? bySource[s.sourceSensor] : 0;

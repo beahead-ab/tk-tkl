@@ -22,7 +22,8 @@ export function deviations(sources, measured = {}) {
   add('signal-virtual', 'Virtuella signaler i JMRI utan utgång', virtualSignals.length, 'Beslut: panelbesked som i JMRI, eller fysisk dvärg', { items: virtualSignals.map(s => s.id), note: 'kärnan bekräftar beskedet själv' });
   const benchBlocks = registry.blocks.filter(b => /bänkadress/.test(b.status));
   add('block-bench', 'Spårledningar utan verklig ingång', benchBlocks.length, 'detection och mätning', { blocking: true, items: benchBlocks.map(b => b.id), note: `${new Set(benchBlocks.map(b => b.loconet.report)).size} bänkadresser` });
-  add('turnout-unmeasured', 'Växeladresser ej uppmätta i fält', registry.turnouts.filter(t => !t.measured?.field).length, 'Mät objekt', { blocking: true, items: registry.turnouts.filter(t => !t.measured?.field).map(t => t.id) });
+  const unmeasuredTurnouts = registry.turnouts.filter(t => t.loconet.order != null && !t.measured?.field);
+  add('turnout-unmeasured', 'Växeladresser ej uppmätta i fält', unmeasuredTurnouts.length, 'Mät objekt', { blocking: true, items: unmeasuredTurnouts.map(t => t.id) });
   add('signal-relations', 'Signalrelationer i JMRI utan tågväg', rel.unmatched.length, 'Tågväg eller uttryckligt undantag', { items: rel.unmatched.map(r => `${r.from} → ${r.to}`) });
   const nxWithout = coverage.nx.filter(n => !n.routes.length);
   add('nx-without-route', 'NX-definitioner utan tågväg', nxWithout.length, 'Beslut per par', { items: nxWithout.map(n => `${n.fromSensor} → ${n.toSensor}`) });
