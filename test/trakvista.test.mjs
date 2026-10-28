@@ -10,7 +10,7 @@ import net from 'node:net';
 import http from 'node:http';
 import { Engine } from '../src/engine.mjs';
 import { Field } from '../src/field.mjs';
-import { decode, sensorReport, switchReport } from '../src/protocol.mjs';
+import { decode, sensorReport, switchReport, switchOrder } from '../src/protocol.mjs';
 import { Topology } from '../src/topology.mjs';
 const read=p=>JSON.parse(fs.readFileSync(new URL('../'+p,import.meta.url)));
 const profile=read('stations/trakvista/profiles/network.json'),fieldProfile=read('stations/trakvista/profiles/field.json');
@@ -46,7 +46,7 @@ test('C-linjen är lodrät: 1/2 är infart och 1/9 utfart enligt stationens rikt
   const inn=profile.routes.find(r=>r.id==='htvC--htvII'),out=profile.routes.find(r=>r.id==='htvII--htvC');
   assert.equal(inn.signals[0],'1/2');assert.equal(out.exitSignal,'1/9');assert.equal(out.blocks.at(-1),'SC2');
 });
-test('blocklistorna stämmer med Bennys tågvägstabeller utom 2/3 → 3/7 (kopieringsfel) och 2/6 → 4v (signalen flyttad till före växel 13)',()=>{
+test('rättade tågvägstabeller: XML:s gräns vid A7 gäller för 2/6 → 4v enligt besked 28 oktober',()=>{
   const all=[...profile.routes,...profile.routeAlternatives],sensor=x=>'tvs'+(/^\d\d$/.test(x)?x[0]+'/'+x[1]:/^\d\d\d$/.test(x)?x[0]+'/'+x.slice(1):x);
   const wrong=[];
   for(const [name,blocks] of Object.entries(source.tables)){
@@ -54,7 +54,9 @@ test('blocklistorna stämmer med Bennys tågvägstabeller utom 2/3 → 3/7 (kopi
     if(!rs.length)continue;   // 2/1 → 2/3 och 2/2 → 2/4 är inre steg i huvudtågvägarna
     if(!rs.some(r=>JSON.stringify([...r.blocks].sort())===JSON.stringify([...blocks].sort())))wrong.push(name);
   }
-  assert.deepEqual(wrong.sort(),['23-37','26-4v']);
+  assert.deepEqual(wrong,['26-4v'],'CSV tar med S4/7 efter målgränsen; användaren har bekräftat XML:s placering vid A7');
+  assert.deepEqual(source.tables['23-37'],['S21a','S21b','SIII']);
+  assert.deepEqual(source.tables['26-4v'],['S32','S34','S4/7']);
 });
 test('alla Träkvistas tågvägar läggs, klareras och löses upp efter tågets passage',{timeout:120000},()=>{
   for(const def of profile.routes){
@@ -106,18 +108,19 @@ test('Bennys ofyllda spår är lokala; 22a och 23 är det inte',()=>{
   assert.equal(profile.turnouts.Vx22a.address,1);assert.equal(profile.turnouts.Vx23.address,2);
 });
 
-test('Bennys rättelse: 4v står före växel 13, och 2/6 → 4v går varken genom 13 eller in på Timmerlossningen',()=>{
+test('rättad XML: 4v vid A7, och 2/6 → 4v går varken genom 13 eller in på Timmerlossningen',()=>{
   const r=profile.routes.find(r=>r.id==='vtv2.6--vtv4v');
-  assert.deepEqual(r.blocks,['S32','S34','S4/7']);assert.ok(!('Vx13' in r.turnouts));assert.ok(r.guardSignals.includes('S4v'));
-  assert.deepEqual(source.corrections.map(c=>c.id),['4v-fore-vaxel-13']);
-  assert.ok(source.turnoutEnds.some(e=>e.id==='TO9'&&e.leg==='C'&&e.mast==='S4v'&&e.sensor==='tvs4v'));
+  assert.deepEqual(r.blocks,['S32','S34']);assert.ok(!('Vx13' in r.turnouts));assert.ok(r.guardSignals.includes('S4v'));
+  assert.ok(!r.segments.includes('T32'),'S4/7 ligger efter målgränsen vid A7');
+  assert.deepEqual(source.corrections,[]);
+  assert.ok(source.anchors.some(a=>a.ident==='A7'&&a.westboundsignalmast==='S4v'&&a.westboundsensor==='tvs4v'));
   assert.ok(!source.anchors.some(a=>a.ident==='EB4'));
   for(const t of ['Vx10','Vx11','Vx12','Vx13'])assert.equal(profile.manualPolicies.byTurnout[t].status,'unresolved');
   assert.ok([...profile.routes,...profile.routeAlternatives].every(r=>!Object.keys(r.turnouts).some(n=>profile.turnouts[n].local)));
 });
 test('växelmotorns två givare: läget när exakt en är aktiv, okänt medan växeln går, bekräftat direkt om den redan ligger rätt',()=>{
   const r=rig(),f=profile.turnouts.Vx22b.feedbackSensors;
-  assert.deepEqual([f.thrown,f.closed],[255,256]);
+  assert.deepEqual([f.thrown,f.closed],[223,224]);
   // Simulatorn: alla växlar ligger rakt och rapporterar via givarna, inte växelrapporten.
   assert.equal(r.engine.turnouts.Vx22b.position,'C');
   const before=r.commands.length;r.engine.turnoutOrder('Vx22b','C');
@@ -125,10 +128,45 @@ test('växelmotorns två givare: läget när exakt en är aktiv, okänt medan v�
   assert.equal(r.commands.length,before+1,'ordern skickas ändå');r.drain();
   r.engine.turnoutOrder('Vx22b','T');r.drain();assert.equal(r.engine.turnouts.Vx22b.position,'unknown');
   r.advance(800);assert.equal(r.engine.turnouts.Vx22b.position,'T');assert.ok(r.engine.turnoutConfirmed('Vx22b','T'));
-  r.engine.receive(sensorReport(256,true));assert.equal(r.engine.turnouts.Vx22b.position,'unknown','båda aktiva = fel');
-  r.engine.receive(sensorReport(255,false));assert.equal(r.engine.turnouts.Vx22b.position,'C');
+  r.engine.receive(sensorReport(224,true));assert.equal(r.engine.turnouts.Vx22b.position,'unknown','båda aktiva = fel');
+  r.engine.receive(sensorReport(223,false));assert.equal(r.engine.turnouts.Vx22b.position,'C');
   r.engine.receive(switchReport(3,'T'));assert.equal(r.engine.turnouts.Vx22b.position,'C','växelrapporten räknas inte för en växel med givare');
-  assert.equal(profile.turnouts.Vx21a.feedbackSensors,undefined,'21a saknar givare i XML');
+  assert.deepEqual(profile.turnouts.Vx21a.feedbackSensors,{thrown:263,closed:262,thrownSensor:'vx21a-t',closedSensor:'vx21a-c'});
+});
+
+test('rättade LS-adresser: varje sektion av spår I, II och III håller hela blocket belagt',()=>{
+  const r=rig();
+  for(const [name,addresses] of Object.entries({SI:[254,239],SII:[255,236],SIII:[256,237]})){
+    assert.deepEqual(profile.blocks[name].inputs.map(i=>i.address),addresses);
+    assert.equal(r.engine.blocks[name].occupied,false);
+    for(const a of addresses){
+      r.engine.receive(sensorReport(a,true));assert.equal(r.engine.blocks[name].occupied,true);
+      r.engine.receive(sensorReport(a,false));assert.equal(r.engine.blocks[name].occupied,false);
+    }
+    for(const a of addresses)r.engine.receive(sensorReport(a,true));
+    r.engine.receive(sensorReport(addresses[0],false));assert.equal(r.engine.blocks[name].occupied,true);
+    r.engine.receive(sensorReport(addresses[1],false));assert.equal(r.engine.blocks[name].occupied,false);
+  }
+});
+
+test('IT-växlar och block utan sensor har ingen trafik på LocoNet',()=>{
+  const r=rig(),frames=[];r.field.on('frame',b=>frames.push(decode(b)));
+  const internals=Object.entries(profile.blocks).filter(([,b])=>b.internal);
+  assert.equal(internals.length,11);
+  assert.ok(panel.lblocks.every(b=>Boolean(profile.blocks[b.user].internal)===!b.sensor));
+  r.field.allReports();for(let g=0;g<8;g++)r.field.interrogate(g);
+  assert.ok(frames.filter(f=>f.kind==='sensor').every(f=>f.address<3000));
+  for(const [name,b] of internals){
+    r.engine.receive(sensorReport(b.address,true));assert.equal(r.engine.blocks[name].occupied,null);
+  }
+  for(const name of ['Vx10','Vx11','Vx12','Vx13']){
+    const b=profile.turnouts[name],before=r.commands.length;
+    assert.throws(()=>r.engine.turnoutOrder(name,'T'),/Manuell växel/);
+    assert.equal(r.commands.length,before);
+    r.engine.receive(switchReport(b.address,'T'));assert.equal(r.engine.turnouts[name].position,'unknown');
+    r.field.accept(switchOrder(b.address,'T'));r.advance(800);
+    assert.equal(r.field.turnouts[name].position,'C');
+  }
 });
 
 test('Tk-TKL: make-station-repository gives Träkvista its own installation, and a second run changes nothing',()=>{
@@ -202,13 +240,23 @@ test('Träkvistas Studio: källorna ur stationens katalog och Trakvista.xml, Log
   assert.deepEqual({...data.counts,measured:undefined},{turnouts:13,signals:25,blocks:36,routes:57,modules:0,measured:undefined});
   // LogixNG: importören har följt reglerna till ingångarna, så varje spårledning med sensor har sina LS-ingångar.
   assert.deepEqual(data.detection.shapes,{single:22,any:3,noSensor:11});assert.deepEqual(data.detection.undetected.noRule,[]);
+  assert.deepEqual(data.detection.undetected.noSensor,[],'interna block räknas inte som spår utan detektering');
   assert.ok(data.detection.sections.filter(s=>s.sourceSensor).every(s=>s.inputs.length&&s.inputs.every(i=>/^LS\d+$/.test(i))));
   // Regler härledda ur profilen ger exakt profilen tillbaka: en aktivering i Studio ändrar inget som inte ändrats i Studio.
   assert.equal(data.rules.compiledIdentical,true);assert.deepEqual(data.rules.baseDiff,{fragments:0,routes:0});assert.deepEqual(data.rules.problems,[]);
   // Inget i avvikelselistan förutsätter Charlottendal: rangerbangården, vändskivan och programmeringsspåret räknas som noll.
   const dev=Object.fromEntries(data.deviations.map(r=>[r.id,r.count]));
   assert.equal(dev['yard-boundaries'],0);assert.equal(dev.turntable,0);assert.equal(dev['programming-relay'],0);assert.equal(dev['nx-without-route'],0);
-  assert.equal(dev['turnout-unmeasured'],13);assert.equal(dev['manual-groups'],4,'de fyra lokala växlarna');
+  assert.equal(dev['turnout-unmeasured'],9);assert.equal(dev['manual-groups'],4,'de fyra lokala växlarna');
+  assert.equal(dev['block-bench'],0,'interna block saknar fysisk ingång avsiktligt');
+  for(const [name,b] of Object.entries(profile.blocks).filter(([,b])=>b.internal)){
+    const object=data.objects.blocks.find(o=>o.id===name);
+    assert.equal(object.loconet.report,null);assert.deepEqual(object.loconet.inputs,[]);
+    assert.equal(data.detection.sections.find(s=>s.name===name).address,null);
+  }
+  for(const name of ['Vx10','Vx11','Vx12','Vx13']){
+    assert.deepEqual(data.objects.turnouts.find(o=>o.id===name).loconet,{order:null,report:null});
+  }
 });
 
 test('webbdrift på Render för en ny station: ägaren skapas en gång, lösenordet byts, Träkvista svarar; flyttläget väntar som förut',{timeout:90000},async()=>{

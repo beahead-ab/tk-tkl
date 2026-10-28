@@ -1,5 +1,5 @@
 {
-  "sourceHash": "3e7b63c95d05e7c152304dd24b27cc3286cb66e9b6e89e9932aba73edff97e79",
+  "sourceHash": "421a92235d0d9ca6c977c74ba740e484e8f4971998987aefac9245bf673eb6e2",
   "endpoints": [
     {
       "sensor": "tvs4s",
@@ -50,6 +50,10 @@
       "mast": "4/7"
     },
     {
+      "sensor": "tvs4v",
+      "mast": "S4v"
+    },
+    {
       "sensor": "tvs2/5",
       "mast": "2/5"
     },
@@ -96,10 +100,6 @@
     {
       "sensor": "tvs2/4",
       "mast": "2/4"
-    },
-    {
-      "sensor": "tvs4v",
-      "mast": "S4v"
     }
   ]
 }

@@ -53,6 +53,7 @@ export class Field extends EventEmitter {
   reportBlock(name) {
     if (this.faults.sensor && this.profile.blocks[this.faults.sensor].address === this.profile.blocks[name].address) return;
     const b = this.profile.blocks[name];
+    if (b.internal) return;
     // Flera ingångar rapporterar alla samma beläggning; simulatorn har ingen egen bild av var på spårledningen tåget står.
     for (const i of b.inputs || [b]) { const active = this.inputActive(i.address); this.emit('frame', sensorReport(i.address, i.activeMeansOccupied ? active : !active)); }
   }
@@ -67,7 +68,7 @@ export class Field extends EventEmitter {
   interrogate(group) {
     const sent = new Set(), faulty = this.faults.sensor ? this.profile.blocks[this.faults.sensor].address : null;
     for (const b of Object.values(this.profile.blocks)) for (const i of b.inputs || [b]) {
-      if (sent.has(i.address) || ((i.address - 1) >> 3 & 7) !== group) continue; sent.add(i.address);
+      if (b.internal || sent.has(i.address) || ((i.address - 1) >> 3 & 7) !== group) continue; sent.add(i.address);
       if (i.address === faulty) continue;
       const active = this.inputActive(i.address); this.emit('frame', sensorReport(i.address, i.activeMeansOccupied ? active : !active));
     }
@@ -99,7 +100,7 @@ export class Field extends EventEmitter {
     // Reläet som redan står i det begärda läget rapporterar direkt, som en växel; annars rör det sig först.
     if(this.programming&&d.address===this.profile.programming.relayAddress){const p=this.programming,target=d.position==='C';if(target===p.active&&p.relay!=='unknown'&&!p.due)this.reportProgramming();else{p.target=target;p.relay='unknown';p.due=this.now()+this.movementMs;this.reportProgramming();}}
     for (const [name, b] of Object.entries(this.profile.turnouts)) {
-      if (b.address !== d.address) continue;
+      if (b.local || b.address !== d.address) continue;
       const logical = b.inverted ? (d.position === 'C' ? 'T' : 'C') : d.position;
       const s = this.turnouts[name];
       // Ett MGP-kort svarar på ordern; en motor som redan ligger rätt ändrar inga givare och rapporterar inget.

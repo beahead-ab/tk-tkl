@@ -1,14 +1,17 @@
 # Träkvista TKL
 
-17 oktober 2026. Träkvista i TKL: underlaget, vad som är gjort och vad som är kvar. Underlag: Bennys `Trakvista.xml`
+28 oktober 2026. Träkvista i TKL: underlaget, vad som är gjort och vad som är kvar. Underlag: Bennys `Trakvista.xml`
 (JMRI 5.10.0), 38 CSV-tabeller ur hans JMRI-profil och fem Jython-skript, alla i `stations/trakvista/`.
 
 ## Läget
 
 Träkvista körs med TKL:s kärna, anläggningssimulator och panel. Alla 27 huvudtågvägar och 30 växeltågvägar läggs,
-klareras och löses upp efter tågets passage, i proven och över servern med simulerad LocoNet. 29 av 32 CSV-tabeller
-stämmer exakt med TKL:s tågvägar; två är inre steg i huvudtågvägarna och `23-37.csv` ser ut att vara kopierad från
-2/4 → 2/6. Installationen på en Raspberry Pi står i [README](../README.md).
+klareras och löses upp efter tågets passage, i proven och över servern med simulerad LocoNet. De rättade filerna från
+[ärende #4](https://github.com/beahead-ab/tk-tkl/issues/4) används: XML-filen och samtliga 38 CSV-filer är hämtade
+ur Bennys bilagor från 27 oktober. Blocklistorna stämmer med TKL:s tågvägar med ett kvarstående undantag:
+`26-4v.csv` tar med S4/7, men XML:s målgräns vid A7 ligger före det blocket. Enligt bekräftat beslut den 28 oktober
+gäller XML:s placering vid A7; tågvägen omfattar därför S32 och S34. Två andra tabeller beskriver inre steg i
+huvudtågvägarna. Installationen på en Raspberry Pi står i [README](../README.md).
 
 ## Starta Träkvista
 
@@ -23,7 +26,8 @@ Träkvistas driftdata ligger i `var/trakvista/`.
 
 ![Träkvista i TKL](trakvista-tkl.png)
 
-Bilden: A → Spår II och växeltågvägen 2/6 → 4v lagda genom att klicka i panelen; 4v står före växel 13 efter Bennys rättelse. Lokspåren, Tankplatsen och
+Bilden visar panelen före XML-rättelsen den 27 oktober: A → Spår II och växeltågvägen 2/6 → 4v. I den nya källan
+ligger gränsen för 4v vid A7, före växel 13. Lokspåren, Tankplatsen och
 Timmerlossningen är ritade ofyllda, som i Bennys panel.
 
 ## Vad som gjordes
@@ -45,9 +49,9 @@ Timmerlossningen är ritade ofyllda, som i Bennys panel.
 | Fråga | Bennys svar | I TKL |
 |---|---|---|
 | 1. Jython-skripten | Bifogade | Sparade i `stations/trakvista/jython/` som källa. De körs inte; se nästa avsnitt. |
-| 2. Växlarnas återrapport | Motorerna har inbyggda lägesgivare; alla är inte inställda i JMRI | Kärnan läser läget från två givare per växel (`feedbackSensors`), tagna efter namn: vx<nr>-t avvikande, vx<nr>-c rakt. Åtta växlar har givare: 21b, 22a, 22b, 22c, 23, 31, 32 och 34. Vx21a saknar givare i XML och väntar på växelrapport. |
-| 3. Tabellen 23-37.csv | Troligen kopieringsfel | Står kvar som känt fel i provet. |
-| 4. Växel 13 och signal 4v | 13 och L2 ska inte vara med i tågvägen; 4v ska stå före växel 13. Lokala växlar läggs om elektriskt på plats och har givare | Rättelsen i `station.json` flyttar 4v och tvs4v till växel 13:s ben mot diagonalen. 2/6 → 4v går nu över S32, S34 och S4/7. Lokala växlar läggs aldrig av TKL. |
+| 2. Växlarnas återrapport | Motorerna har inbyggda lägesgivare; alla är inte inställda i JMRI | Kärnan läser läget från två givare per växel (`feedbackSensors`), tagna efter namn: vx<nr>-t avvikande, vx<nr>-c rakt. Den rättade XML-filen har LS-givare för alla nio LocoNet-växlar, även Vx21a (LS263/LS262). |
+| 3. Tabellen 23-37.csv | Kopieringsfel, rättat i ärende #4 | Blocken är nu S21a, S21b och SIII och stämmer med tågvägen. |
+| 4. Växel 13 och signal 4v | Rättad XML och CSV i ärende #4; IT-växlarna är helt manuella | Källan placerar S4v/tvs4v vid A7. Den äldre specialrättelsen i `station.json` är borttagen. Enligt bekräftat beslut 28 oktober gäller XML: tågvägen omfattar S32 och S34 fram till A7. CSV:s S4/7 ligger efter målgränsen och behålls oförändrat som källunderlag. IT-växlar läggs aldrig av TKL. |
 | 5. De lokala spåren | Listan stämmer | Oförändrad. |
 | 6. Linjerna | Konfigurationsservern är ersatt av TrainMeet; A, B och C är med när de har en anslutning, C hade ingen | Linjerna i stationsfilen hämtar sin anslutning från TrainMeet. Kopplingen till panelen återstår. |
 | 7. Bildsatserna | mod59 för relästyrda paneler, mod68 för skärm; båda finns i JMRI | Bennys panel växlar mellan mod68 (ljus) och mod59 (mörk). TKL:s panel är mörk och motsvarar hans mod59-modell, så mod59 används. |
@@ -75,7 +79,7 @@ skärmbild och med stationsfilen.
    Linjerna ska läsas ur stationsfilen och anslutningarna ur TrainMeet, med enkelspår, körriktning och Linjen fri.
 2. **Spärr för lokalt styrda spår.** Växlarna är spärrade för TKL, men tågvägar in på lokala spår är inte spärrade i
    fjärrläge. Ingen tågväg går dit i dag.
-3. **Givarna på plats.** Vx21a:s givare och de lokala växlarnas givare behöver ställas in och mätas.
+3. **Givarna på plats.** De nio LocoNet-växlarnas givare och spårledningarnas LS-adresser behöver verifieras på anläggningen. De fyra IT-växlarna är helt manuella och saknar LocoNet-anslutning.
 4. **Studio: Införandestatus och MGP-moduler.** Studio finns för Träkvista (se nedan), men Införandestatus bygger på
    Charlottendals Logix-migrering och visas inte, och modulerna kan inte läsas ur kommentarerna i Trakvista.xml.
 5. **Manöver av enskild växel.** Regeln är härledd ur grafen, inte översatt från gruppen *Spärra växlar*.
@@ -86,13 +90,17 @@ skärmbild och med stationsfilen.
 Studio (Inställningar → Studio, eller `/studio.html`) läser Träkvistas egna källor: driftprofilen, panelen och
 `Trakvista.xml`. Allt som räknas ur dem finns:
 
-- **Konfigurera:** stationsplanen ritad ur Bennys panel, med 13 växlar, 25 signaler, 36 spårledningar och lager för
+- **Konfigurera:** stationsplanen ritad ur Bennys panel, med 13 växlar, 25 signaler, 25 spårledningar, 11 interna block och lager för
   nummer, adresser och avvikelser; regelkorten (21, härledda ur profilen) och chatten; visning, orter och övriga delar.
 - **Data:** alla mängder och de 57 tågvägarna, och **Källa**, hela Trakvista.xml post för post med JMRI:s fält och
   referenser. Originalfilen kan hämtas oförändrad.
-- **Genomgång:** avvikelselistan, bland annat 13 växeladresser ej uppmätta, 11 spår utan detektering i källan och 21
+- **Genomgång:** avvikelselistan, bland annat 9 fysiska växeladresser ej uppmätta och 21
   signalrelationer i JMRI utan tågväg.
 - **Driftsättning:** utkast, aktivering, driftbindningar, mätning av objekt, lyssna och kort.
+
+Block utan sensor är interna JMRI-objekt. De behålls för panelens geometri men räknas inte som spår utan detektering
+och ger inga LocoNet-rapporter. Modellens interna id:n är inga fysiska adresser. IT-växlarna är manuella och tar varken
+emot order eller återrapport på LocoNet.
 
 Spåravkänningen läses ur LogixNG: importören har följt *Spårledningar* till ingångarna, så 22 spårledningar har en
 ingång och 3 någon av flera. Reglerna som Studio härleder ur profilen kompileras tillbaka till exakt samma profil, så en
