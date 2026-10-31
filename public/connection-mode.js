@@ -58,15 +58,20 @@ export function createConnectionSettings(root,{api}){
     <div data-locobuffer><label>Enhet<input data-device list="locobuffer-devices" placeholder="/dev/serial/by-id/…" autocomplete="off" spellcheck="false"></label><datalist id="locobuffer-devices"></datalist>
     <label>Hastighet<select data-baud>${['9600','19200','38400','57600','115200'].map(b=>`<option value="${b}">${b} baud</option>`).join('')}</select></label>
     <label>Flödeskontroll<select data-flow><option value="rtscts">RTS/CTS (LocoBuffer-USB)</option><option value="none">Ingen</option></select></label></div>
-    <div data-btlocobridge hidden><label>Kortets adress<input data-target list="locobuffer-devices" placeholder="AA:BB:CC:DD:EE:FF" autocomplete="off" spellcheck="false"></label>
-    <label>Kanal<input data-channel type="number" min="1" max="30" step="1"></label>
-    <p class="muted">Para kortet i datorns Bluetooth-inställningar först. På en Raspberry Pi anges adressen; på en Mac blir det parade kortet en serieport och anges som <code>/dev/cu.…</code>, och kanalen används då inte.</p></div>
+    <div data-btlocobridge hidden><label><span data-target-label>Kortets adress</span><input data-target list="locobuffer-devices" placeholder="AA:BB:CC:DD:EE:FF" autocomplete="off" spellcheck="false"></label>
+    <label data-channel-label>Kanal<input data-channel type="number" min="1" max="30" step="1"></label>
+    <p class="muted" data-bt-help>Para kortet i datorns Bluetooth-inställningar först. På en Raspberry Pi anges adressen; på en Mac blir det parade kortet en serieport och anges som <code>/dev/cu.…</code>, och kanalen används då inte.</p></div>
     <p><button type="submit" class="primary">Spara anslutningen</button> <button type="button" data-rescan>Sök enheter igen</button> <span data-found class="muted"></span></p>
     <p class="admin-form-error" role="alert" data-error hidden></p></form><dl class="connection-settings-gateway" data-gateway></dl>`;
   const $=s=>root.querySelector(s);let view=null,edited=false,devices=[];
-  async function load(){try{const r=await fetch('/api/connection');if(r.ok){const v=await r.json();devices=v.devices||[];paint(v,true);}}catch{}}
+  async function load({fill=false}={}){try{const r=await fetch('/api/connection');if(r.ok){const v=await r.json();devices=v.devices||[];paint(v,fill);}}catch{}}
   function paint(next,fill=false){
     if(!next)return;view=next;
+    const windows=view.platform==='win32';
+    $('[data-target-label]').textContent=windows?'Utgående Bluetooth-COM-port':'Kortets adress';
+    $('[data-target]').placeholder=windows?'COM7':'AA:BB:CC:DD:EE:FF';
+    $('[data-channel-label]').hidden=windows;
+    if(windows)$('[data-bt-help]').textContent='Para kortet i Windows och välj dess utgående COM-port i Fler Bluetooth-inställningar → COM-portar. Kanal och MAC-adress används inte. Stäng JMRI före anslutning. Listan kan även innehålla andra serieportar.';
     const modes=$('.connection-settings-modes');modes.replaceChildren(choices(view));
     const target=view.mode==='live'?'offline':'live',check=view.switch?.[target];
     $('[data-switch]').textContent=ACTION[target];$('[data-switch]').disabled=view.locked||!check?.allowed;
@@ -75,7 +80,7 @@ export function createConnectionSettings(root,{api}){
       $('[data-target]').value=view.btlocobridge.target;$('[data-channel]').value=view.btlocobridge.channel;}
     showAdapter($('[data-adapter]').value);
     $('#locobuffer-devices').innerHTML=devices.map(d=>`<option value="${esc(d.path)}">${esc(d.label)}</option>`).join('');
-    $('[data-found]').textContent=devices.length?devices.length+' USB-serieportar hittade':'Ingen USB-serieport hittad';
+    $('[data-found]').textContent=view.devicesError|| (devices.length?devices.length+' serieportar hittade':'Ingen serieport hittad');
     for(const n of root.querySelectorAll('[data-form] input,[data-form] select,[data-form] button'))n.disabled=view.locked;
     const g=view.gateway,state={running:'Igång',starting:'Startar',failed:'Fel',stopped:'Stoppad'}[g.state]||g.state;
     $('[data-gateway]').innerHTML=view.locked?'':`<dt>Gateway</dt><dd>${esc(state)}${view.mode==='live'?' · 127.0.0.1:'+esc(view.port):' · används bara när LocoNet är ansluten'}</dd>${g.error?`<dt>Senaste fel</dt><dd>${esc(g.error)}</dd>`:''}`;
@@ -84,7 +89,7 @@ export function createConnectionSettings(root,{api}){
   function showAdapter(adapter){$('[data-locobuffer]').hidden=adapter!=='locobuffer';$('[data-btlocobridge]').hidden=adapter!=='btlocobridge';}
   root.addEventListener('input',e=>{if(e.target.closest('[data-form]'))edited=true;});
   $('[data-adapter]').onchange=()=>showAdapter($('[data-adapter]').value);
-  $('[data-rescan]').onclick=load;
+  $('[data-rescan]').onclick=()=>load();
   $('[data-switch]').onclick=async()=>{if(!view)return;const target=view.mode==='live'?'offline':'live';$('[data-switch]').disabled=true;const answer=await api('connection/mode',{mode:target});if(answer?.connection)paint(answer.connection);};
   $('[data-form]').onsubmit=async e=>{
     e.preventDefault();$('[data-error]').hidden=true;
@@ -94,6 +99,6 @@ export function createConnectionSettings(root,{api}){
       const answer=await r.json().catch(()=>null);if(!r.ok)throw Error(answer?.error||'Servern svarade med fel '+r.status+'.');edited=false;devices=answer.devices||devices;paint(answer,true);}
     catch(error){$('[data-error]').textContent=error.message;$('[data-error]').hidden=false;}
   };
-  load();
+  load({fill:true});
   return {update(state){if(state?.connectionMode)paint(state.connectionMode);},load};
 }

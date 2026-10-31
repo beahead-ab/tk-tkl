@@ -3,7 +3,7 @@
 import { moduleOf } from './sources.mjs';
 import { signalReportKind } from '../signal-report.mjs';
 const STATUS = { xml: 'ur XML, ej uppmätt', bench: 'bänkadress i simulatorn', virtual: 'virtuell i JMRI, ingen utgång', none: 'ingen bindning' };
-const statusOf = (binding, provenance) => binding.virtual ? STATUS.virtual : /bench|bänkadress/i.test(provenance) ? STATUS.bench : /ej uppmätt|not measured/i.test(provenance) ? STATUS.xml : provenance;
+const statusOf = (binding, provenance) => binding.internal ? 'internt block, ingen spårledning' : binding.local ? 'manuell växel, ingen LocoNet-anslutning' : binding.virtual ? STATUS.virtual : /bench|bänkadress/i.test(provenance) ? STATUS.bench : /ej uppmätt|not measured/i.test(provenance) ? STATUS.xml : provenance;
 
 // measured: nyckel kind:namn → giltig mätning (samma adress som profilen). Fältmätning räknas för drift, bänkmätning bara i simulatorn.
 export function buildRegistry({ profile, panel, xml }, measured = {}) {
@@ -13,7 +13,7 @@ export function buildRegistry({ profile, panel, xml }, measured = {}) {
   const trace = (system, comment) => ({ system, comment, module: moduleOf(comment) });
   const turnouts = Object.entries(profile.turnouts).map(([id, t]) => {
     const src = lt[id];
-    return { id, kind: 'turnout', inPlan: panelTurnouts.has(id), loconet: { order: t.address, report: t.address }, block: t.block,
+    return { id, kind: 'turnout', inPlan: panelTurnouts.has(id), loconet: { order: t.local ? null : t.address, report: t.local ? null : t.address }, block: t.block,
       companions: (profile.coupled[id] || [id]).filter(x => x !== id), status: statusOf(t, t.provenance),
       measured: measure('turnout', id), source: src ? trace(src.system, src.comment) : null };
   });
@@ -23,7 +23,7 @@ export function buildRegistry({ profile, panel, xml }, measured = {}) {
   const signals = Object.entries(profile.signals).map(([id, s]) => ({ id, kind: 'signal', mastType: s.sourceType, inPlan: !!masts[id], virtual: !!s.virtual,
     loconet: s.virtual ? { order: null, report: null, reportKind: null, stopCodes: [], goCodes: [] } : { order: s.address, report: s.reportAddress, reportKind: signalReportKind(profile, s), stopCodes: s.stopCodes, goCodes: s.goCodes }, status: statusOf(s, s.provenance),
     measured: measure('signal', id), source: signalOutputs[id] || [], output: s.sourceOutput || null, swedishAspects: false }));
-  const blocks = Object.entries(profile.blocks).map(([id, b]) => ({ id, kind: 'block', loconet: { report: b.address, inputs: (b.inputs || [b]).map(i => i.address), logic: b.logic || null, activeMeansOccupied: b.activeMeansOccupied },
+  const blocks = Object.entries(profile.blocks).map(([id, b]) => ({ id, kind: 'block', loconet: { report: b.internal ? null : b.address, inputs: b.internal ? [] : (b.inputs || [b]).map(i => i.address), logic: b.logic || null, activeMeansOccupied: b.activeMeansOccupied },
     sourceSensor: b.sourceSensor, sourceInputs: b.sourceInputs || [], status: statusOf(b, b.provenance), measured: measure('block', id) }));
   const modules = {};
   for (const item of [...xml.turnouts.map(t => ({ ...t, io: 'out' })), ...ls.map(s => ({ ...s, io: 'in' }))]) {

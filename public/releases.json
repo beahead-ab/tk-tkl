@@ -1,5 +1,21 @@
 [
   {
+    "version": "0.85.1",
+    "date": "2026-10-28",
+    "notes": [
+      "Träkvistas rättade XML- och CSV-filer används med nya LS-adresser och lägesgivare även för växel 21a. Signal 4v följer XML-placeringen vid A7.",
+      "Manuella IT-växlar och interna block utan sensor har ingen LocoNet-trafik och visas utan fysisk adress i Studio."
+    ]
+  },
+  {
+    "version": "0.85.0",
+    "date": "2026-10-27",
+    "notes": [
+      "BTLocoBridge kan anslutas på Windows via kortets utgående Bluetooth-COM-port. Välj porten under Inställningar → Banan (LocoNet); MAC-adress och kanal behövs inte.",
+      "Windows visar tillgängliga COM-portar och fel vid upptagen eller bruten anslutning. Automatisk återanslutning behåller samma port; order skickas aldrig om automatiskt. Fysiskt banprov återstår."
+    ]
+  },
+  {
     "version": "0.84.0",
     "date": "2026-10-20",
     "notes": [

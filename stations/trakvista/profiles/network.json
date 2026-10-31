@@ -4,7 +4,7 @@
   "title": "Träkvista",
   "signature": "Tk",
   "commissioned": false,
-  "sourceHash": "3e7b63c95d05e7c152304dd24b27cc3286cb66e9b6e89e9932aba73edff97e79",
+  "sourceHash": "421a92235d0d9ca6c977c74ba740e484e8f4971998987aefac9245bf673eb6e2",
   "signalReport": {
     "kind": "switch",
     "provenance": "Växelrapport B1 som i Charlottendal (MGP-korten enligt Bennys monitorering 9 oktober 2026). Ej uppmätt på stationen."
@@ -26,7 +26,7 @@
       "source": "IT4",
       "block": "S10",
       "local": true,
-      "provenance": "Intern JMRI-växel IT4 utan LocoNet-adress. Läggs om elektriskt på plats; motorns givare är inte inställda i JMRI än. Bänkadress som TKL aldrig beordrar."
+      "provenance": "Intern JMRI-växel IT4, helt manuell utan LocoNet-anslutning. Modellens interna id är ingen fysisk adress. TKL varken beordrar eller läser återrapport för växeln."
     },
     "Vx11": {
       "address": 1002,
@@ -34,7 +34,7 @@
       "source": "IT3",
       "block": "S11",
       "local": true,
-      "provenance": "Intern JMRI-växel IT3 utan LocoNet-adress. Läggs om elektriskt på plats; motorns givare är inte inställda i JMRI än. Bänkadress som TKL aldrig beordrar."
+      "provenance": "Intern JMRI-växel IT3, helt manuell utan LocoNet-anslutning. Modellens interna id är ingen fysisk adress. TKL varken beordrar eller läser återrapport för växeln."
     },
     "Vx12": {
       "address": 1003,
@@ -42,7 +42,7 @@
       "source": "IT2",
       "block": "S12",
       "local": true,
-      "provenance": "Intern JMRI-växel IT2 utan LocoNet-adress. Läggs om elektriskt på plats; motorns givare är inte inställda i JMRI än. Bänkadress som TKL aldrig beordrar."
+      "provenance": "Intern JMRI-växel IT2, helt manuell utan LocoNet-anslutning. Modellens interna id är ingen fysisk adress. TKL varken beordrar eller läser återrapport för växeln."
     },
     "Vx13": {
       "address": 1004,
@@ -50,14 +50,20 @@
       "source": "IT1",
       "block": "S13",
       "local": true,
-      "provenance": "Intern JMRI-växel IT1 utan LocoNet-adress. Läggs om elektriskt på plats; motorns givare är inte inställda i JMRI än. Bänkadress som TKL aldrig beordrar."
+      "provenance": "Intern JMRI-växel IT1, helt manuell utan LocoNet-anslutning. Modellens interna id är ingen fysisk adress. TKL varken beordrar eller läser återrapport för växeln."
     },
     "Vx21a": {
       "address": 12,
       "inverted": false,
       "source": "LT12",
       "block": "S21a",
-      "provenance": "JMRI LT12 (Sektion 3 Växelkort 1-2). Givare vx21a-t och vx21a-c saknas i XML; läget väntas som växelrapport tills givarna är inställda. Ej uppmätt."
+      "feedbackSensors": {
+        "thrown": 263,
+        "closed": 262,
+        "thrownSensor": "vx21a-t",
+        "closedSensor": "vx21a-c"
+      },
+      "provenance": "JMRI LT12 (Sektion 3 Växelkort 1-02). Läget från motorns givare vx21a-t (LS263) och vx21a-c (LS262). Ej uppmätt."
     },
     "Vx21b": {
       "address": 13,
@@ -65,12 +71,12 @@
       "source": "LT13",
       "block": "S21b",
       "feedbackSensors": {
-        "thrown": 214,
-        "closed": 215,
+        "thrown": 257,
+        "closed": 258,
         "thrownSensor": "vx21b-t",
         "closedSensor": "vx21b-c"
       },
-      "provenance": "JMRI LT13 (Sektion 3 Växelkort 1-3). Läget från motorns givare vx21b-t (LS214) och vx21b-c (LS215); XML anger ir21a/ir21b, som Benny säger inte är färdigställt. Ej uppmätt."
+      "provenance": "JMRI LT13 (Sektion 3 Växelkort 1-03). Läget från motorns givare vx21b-t (LS257) och vx21b-c (LS258). Ej uppmätt."
     },
     "Vx22a": {
       "address": 1,
@@ -78,12 +84,12 @@
       "source": "LT1",
       "block": "S22a",
       "feedbackSensors": {
-        "thrown": 251,
-        "closed": 252,
+        "thrown": 219,
+        "closed": 220,
         "thrownSensor": "vx22a-t",
         "closedSensor": "vx22a-c"
       },
-      "provenance": "JMRI LT1 (Sektion 1 Växelkort 1-1). Läget från motorns givare vx22a-t (LS251) och vx22a-c (LS252). Ej uppmätt."
+      "provenance": "JMRI LT1 (Sektion 1 Växelkort 1-01). Läget från motorns givare vx22a-t (LS219) och vx22a-c (LS220). Ej uppmätt."
     },
     "Vx22b": {
       "address": 3,
@@ -91,12 +97,12 @@
       "source": "LT3",
       "block": "S22b",
       "feedbackSensors": {
-        "thrown": 255,
-        "closed": 256,
+        "thrown": 223,
+        "closed": 224,
         "thrownSensor": "vx22b-t",
         "closedSensor": "vx22b-c"
       },
-      "provenance": "JMRI LT3 (Sektion 1 Växelkort 1-3). Läget från motorns givare vx22b-t (LS255) och vx22b-c (LS256). Ej uppmätt."
+      "provenance": "JMRI LT3 (Sektion 1 Växelkort 1-03). Läget från motorns givare vx22b-t (LS223) och vx22b-c (LS224). Ej uppmätt."
     },
     "Vx22c": {
       "address": 4,
@@ -104,12 +110,12 @@
       "source": "LT4",
       "block": "S22c",
       "feedbackSensors": {
-        "thrown": 258,
-        "closed": 257,
+        "thrown": 226,
+        "closed": 225,
         "thrownSensor": "vx22c-t",
         "closedSensor": "vx22c-c"
       },
-      "provenance": "JMRI LT4 (Sektion 1 Växelkort 1-4). Läget från motorns givare vx22c-t (LS258) och vx22c-c (LS257). Ej uppmätt."
+      "provenance": "JMRI LT4 (Sektion 1 Växelkort 1-04). Läget från motorns givare vx22c-t (LS226) och vx22c-c (LS225). Ej uppmätt."
     },
     "Vx23": {
       "address": 2,
@@ -117,25 +123,25 @@
       "source": "LT2",
       "block": "S22a",
       "feedbackSensors": {
-        "thrown": 254,
-        "closed": 253,
+        "thrown": 222,
+        "closed": 221,
         "thrownSensor": "vx23-t",
         "closedSensor": "vx23-c"
       },
-      "provenance": "JMRI LT2 (Sektion 1 Växelkort 1-2). Läget från motorns givare vx23-t (LS254) och vx23-c (LS253). Ej uppmätt."
+      "provenance": "JMRI LT2 (Sektion 1 Växelkort 1-02). Läget från motorns givare vx23-t (LS222) och vx23-c (LS221). Ej uppmätt."
     },
     "Vx31": {
       "address": 11,
-      "inverted": true,
+      "inverted": false,
       "source": "LT11",
       "block": "S31",
       "feedbackSensors": {
-        "thrown": 212,
-        "closed": 213,
+        "thrown": 261,
+        "closed": 260,
         "thrownSensor": "vx31-t",
         "closedSensor": "vx31-c"
       },
-      "provenance": "JMRI LT11 (Sektion 3 Växelkort 1-1). Läget från motorns givare vx31-t (LS212) och vx31-c (LS213); XML anger vx31-c/vx31-t, som Benny säger inte är färdigställt. Ej uppmätt."
+      "provenance": "JMRI LT11 (Sektion 3 Växelkort 1-01). Läget från motorns givare vx31-t (LS261) och vx31-c (LS260). Ej uppmätt."
     },
     "Vx32": {
       "address": 6,
@@ -143,12 +149,12 @@
       "source": "LT6",
       "block": "S32",
       "feedbackSensors": {
-        "thrown": 225,
-        "closed": 224,
+        "thrown": 241,
+        "closed": 240,
         "thrownSensor": "vx32-t",
         "closedSensor": "vx32-c"
       },
-      "provenance": "JMRI LT6 (Sektion 2 Växelkort 1-1). Läget från motorns givare vx32-t (LS225) och vx32-c (LS224). Ej uppmätt."
+      "provenance": "JMRI LT6 (Sektion 2 Växelkort 1-01). Läget från motorns givare vx32-t (LS241) och vx32-c (LS240). Ej uppmätt."
     },
     "Vx34": {
       "address": 7,
@@ -156,521 +162,367 @@
       "source": "LT7",
       "block": "S34",
       "feedbackSensors": {
-        "thrown": 226,
-        "closed": 227,
+        "thrown": 242,
+        "closed": 243,
         "thrownSensor": "vx34-t",
         "closedSensor": "vx34-c"
       },
-      "provenance": "JMRI LT7 (Sektion 2 Växelkort 1-2). Läget från motorns givare vx34-t (LS226) och vx34-c (LS227). Ej uppmätt."
+      "provenance": "JMRI LT7 (Sektion 2 Växelkort 1-02). Läget från motorns givare vx34-t (LS242) och vx34-c (LS243). Ej uppmätt."
     }
   },
   "blocks": {
     "SIIIa": {
-      "address": 234,
+      "address": 202,
       "activeMeansOccupied": true,
       "sourceSensor": "SIIIa",
       "sourceInputs": [
-        "LS234"
+        "LS202"
       ],
-      "provenance": "SIIIa: slIIIa (LS234) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+      "provenance": "SIIIa: slIIIa (LS202) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
     },
     "SC1": {
-      "address": 235,
+      "address": 203,
       "activeMeansOccupied": true,
       "sourceSensor": "SC1",
       "sourceInputs": [
-        "LS235"
+        "LS203"
       ],
-      "provenance": "SC1: slC1 (LS235) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+      "provenance": "SC1: slC1 (LS203) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
     },
     "SB2": {
-      "address": 243,
+      "address": 211,
       "activeMeansOccupied": true,
       "sourceSensor": "SB2",
       "sourceInputs": [
-        "LS243"
+        "LS211"
       ],
-      "provenance": "SB2: slB2 (LS243) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+      "provenance": "SB2: slB2 (LS211) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
     },
     "S22c": {
-      "address": 237,
+      "address": 205,
       "activeMeansOccupied": true,
       "sourceSensor": "S22c",
       "sourceInputs": [
-        "LS237"
+        "LS205"
       ],
-      "provenance": "S22c: sl22c (LS237) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+      "provenance": "S22c: sl22c (LS205) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
     },
     "S22b": {
-      "address": 238,
+      "address": 206,
       "activeMeansOccupied": true,
       "sourceSensor": "S22b",
       "sourceInputs": [
-        "LS238"
+        "LS206"
       ],
-      "provenance": "S22b: sl22b (LS238) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+      "provenance": "S22b: sl22b (LS206) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
     },
     "S32": {
-      "address": 219,
+      "address": 235,
       "activeMeansOccupied": true,
       "sourceSensor": "S32",
       "sourceInputs": [
-        "LS219"
+        "LS235"
       ],
-      "provenance": "S32: sl32 (LS219) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+      "provenance": "S32: sl32 (LS235) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
     },
     "S34": {
-      "address": 218,
+      "address": 234,
       "activeMeansOccupied": true,
       "sourceSensor": "S34",
       "sourceInputs": [
-        "LS218"
+        "LS234"
       ],
-      "provenance": "S34: sl34 (LS218) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+      "provenance": "S34: sl34 (LS234) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
     },
     "SI": {
-      "address": 206,
+      "address": 254,
       "activeMeansOccupied": true,
       "inputs": [
         {
-          "address": 206,
+          "address": 254,
           "activeMeansOccupied": true
         },
         {
-          "address": 223,
+          "address": 239,
           "activeMeansOccupied": true
         }
       ],
       "logic": "any",
       "sourceSensor": "SI",
       "sourceInputs": [
-        "LS206",
-        "LS223"
+        "LS254",
+        "LS239"
       ],
-      "provenance": "SI: slI-a eller slI-b (LS206, LS223) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+      "provenance": "SI: slI-a eller slI-b (LS254, LS239) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
     },
     "SII": {
-      "address": 207,
+      "address": 255,
       "activeMeansOccupied": true,
       "inputs": [
         {
-          "address": 207,
+          "address": 255,
           "activeMeansOccupied": true
         },
         {
-          "address": 220,
+          "address": 236,
           "activeMeansOccupied": true
         }
       ],
       "logic": "any",
       "sourceSensor": "SII",
       "sourceInputs": [
-        "LS207",
-        "LS220"
+        "LS255",
+        "LS236"
       ],
-      "provenance": "SII: slII-a eller slII-b (LS207, LS220) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+      "provenance": "SII: slII-a eller slII-b (LS255, LS236) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
     },
     "SIII": {
-      "address": 208,
+      "address": 256,
       "activeMeansOccupied": true,
       "inputs": [
         {
-          "address": 208,
+          "address": 256,
           "activeMeansOccupied": true
         },
         {
-          "address": 221,
+          "address": 237,
           "activeMeansOccupied": true
         }
       ],
       "logic": "any",
       "sourceSensor": "SIII",
       "sourceInputs": [
-        "LS208",
-        "LS221"
+        "LS256",
+        "LS237"
       ],
-      "provenance": "SIII: slIII-a eller slIII-b (LS208, LS221) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+      "provenance": "SIII: slIII-a eller slIII-b (LS256, LS237) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
     },
     "SA1": {
-      "address": 201,
+      "address": 249,
       "activeMeansOccupied": true,
       "sourceSensor": "SA1",
       "sourceInputs": [
-        "LS201"
+        "LS249"
       ],
-      "provenance": "SA1: slA1 (LS201) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+      "provenance": "SA1: slA1 (LS249) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
     },
     "SIIIc": {
-      "address": 203,
+      "address": 251,
       "activeMeansOccupied": true,
       "sourceSensor": "SIIIc",
       "sourceInputs": [
-        "LS203"
+        "LS251"
       ],
-      "provenance": "SIIIc: slIIIc (LS203) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+      "provenance": "SIIIc: slIIIc (LS251) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
     },
     "S21b": {
-      "address": 204,
+      "address": 252,
       "activeMeansOccupied": true,
       "sourceSensor": "S21b",
       "sourceInputs": [
-        "LS204"
+        "LS252"
       ],
-      "provenance": "S21b: sl21b (LS204) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+      "provenance": "S21b: sl21b (LS252) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
     },
     "S31": {
-      "address": 205,
+      "address": 253,
       "activeMeansOccupied": true,
       "sourceSensor": "S31",
       "sourceInputs": [
-        "LS205"
+        "LS253"
       ],
-      "provenance": "S31: sl31 (LS205) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+      "provenance": "S31: sl31 (LS253) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
     },
     "S21a": {
-      "address": 202,
+      "address": 250,
       "activeMeansOccupied": true,
       "sourceSensor": "S21a",
       "sourceInputs": [
-        "LS202"
+        "LS250"
       ],
-      "provenance": "S21a: sl21a (LS202) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+      "provenance": "S21a: sl21a (LS250) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
     },
     "line": {
       "address": 3001,
       "activeMeansOccupied": true,
+      "internal": true,
       "sourceSensor": null,
-      "provenance": "Bänkadress: ingen spårledningsregel i källan."
+      "provenance": "Internt JMRI-block utan sensor, inte ett spårblock. Modellens interna id är ingen fysisk adress."
     },
     "SB1": {
-      "address": 236,
+      "address": 204,
       "activeMeansOccupied": true,
       "sourceSensor": "SB1",
       "sourceInputs": [
-        "LS236"
+        "LS204"
       ],
-      "provenance": "SB1: slB1 (LS236) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+      "provenance": "SB1: slB1 (LS204) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
     },
     "S22a": {
-      "address": 239,
+      "address": 207,
       "activeMeansOccupied": true,
       "sourceSensor": "S22a",
       "sourceInputs": [
-        "LS239"
+        "LS207"
       ],
-      "provenance": "S22a: sl22a (LS239) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+      "provenance": "S22a: sl22a (LS207) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
     },
     "Aut": {
       "address": 3002,
       "activeMeansOccupied": true,
+      "internal": true,
       "sourceSensor": null,
-      "provenance": "Bänkadress: ingen spårledningsregel i källan."
+      "provenance": "Internt JMRI-block utan sensor, inte ett spårblock. Modellens interna id är ingen fysisk adress."
     },
     "L2": {
       "address": 3003,
       "activeMeansOccupied": true,
+      "internal": true,
       "sourceSensor": null,
-      "provenance": "Bänkadress: ingen spårledningsregel i källan.",
+      "provenance": "Internt JMRI-block utan sensor, inte ett spårblock. Modellens interna id är ingen fysisk adress.",
       "local": true
     },
     "S13": {
       "address": 3004,
       "activeMeansOccupied": true,
+      "internal": true,
       "sourceSensor": null,
-      "provenance": "Bänkadress: ingen spårledningsregel i källan.",
+      "provenance": "Internt JMRI-block utan sensor, inte ett spårblock. Modellens interna id är ingen fysisk adress.",
       "local": true
     },
     "S12": {
       "address": 3005,
       "activeMeansOccupied": true,
+      "internal": true,
       "sourceSensor": null,
-      "provenance": "Bänkadress: ingen spårledningsregel i källan.",
+      "provenance": "Internt JMRI-block utan sensor, inte ett spårblock. Modellens interna id är ingen fysisk adress.",
       "local": true
     },
     "S11": {
       "address": 3006,
       "activeMeansOccupied": true,
+      "internal": true,
       "sourceSensor": null,
-      "provenance": "Bänkadress: ingen spårledningsregel i källan.",
+      "provenance": "Internt JMRI-block utan sensor, inte ett spårblock. Modellens interna id är ingen fysisk adress.",
       "local": true
     },
     "S10": {
       "address": 3007,
       "activeMeansOccupied": true,
+      "internal": true,
       "sourceSensor": null,
-      "provenance": "Bänkadress: ingen spårledningsregel i källan.",
+      "provenance": "Internt JMRI-block utan sensor, inte ett spårblock. Modellens interna id är ingen fysisk adress.",
       "local": true
     },
     "L3": {
       "address": 3008,
       "activeMeansOccupied": true,
+      "internal": true,
       "sourceSensor": null,
-      "provenance": "Bänkadress: ingen spårledningsregel i källan.",
+      "provenance": "Internt JMRI-block utan sensor, inte ett spårblock. Modellens interna id är ingen fysisk adress.",
       "local": true
     },
     "TP": {
       "address": 3009,
       "activeMeansOccupied": true,
+      "internal": true,
       "sourceSensor": null,
-      "provenance": "Bänkadress: ingen spårledningsregel i källan.",
+      "provenance": "Internt JMRI-block utan sensor, inte ett spårblock. Modellens interna id är ingen fysisk adress.",
       "local": true
     },
     "LS1": {
-      "address": 233,
+      "address": 201,
       "activeMeansOccupied": true,
       "sourceSensor": "SLI",
       "sourceInputs": [
-        "LS233"
+        "LS201"
       ],
-      "provenance": "SLI: slLI (LS233) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt.",
+      "provenance": "SLI: slLI (LS201) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt.",
       "local": true
     },
     "LS2": {
-      "address": 232,
+      "address": 200,
       "activeMeansOccupied": true,
       "sourceSensor": "SLII",
       "sourceInputs": [
-        "LS232"
+        "LS200"
       ],
-      "provenance": "SLII: slLII (LS232) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt.",
+      "provenance": "SLII: slLII (LS200) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt.",
       "local": true
     },
     "But": {
       "address": 3010,
       "activeMeansOccupied": true,
+      "internal": true,
       "sourceSensor": null,
-      "provenance": "Bänkadress: ingen spårledningsregel i källan."
+      "provenance": "Internt JMRI-block utan sensor, inte ett spårblock. Modellens interna id är ingen fysisk adress."
     },
     "SIV": {
-      "address": 240,
+      "address": 208,
       "activeMeansOccupied": true,
       "sourceSensor": "SIV",
       "sourceInputs": [
-        "LS240"
+        "LS208"
       ],
-      "provenance": "SIV: slIV (LS240) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+      "provenance": "SIV: slIV (LS208) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
     },
     "Cut": {
       "address": 3011,
       "activeMeansOccupied": true,
+      "internal": true,
       "sourceSensor": null,
-      "provenance": "Bänkadress: ingen spårledningsregel i källan."
+      "provenance": "Internt JMRI-block utan sensor, inte ett spårblock. Modellens interna id är ingen fysisk adress."
     },
     "S4/7": {
-      "address": 222,
+      "address": 238,
       "activeMeansOccupied": true,
       "sourceSensor": "S4/7",
       "sourceInputs": [
-        "LS222"
+        "LS238"
       ],
-      "provenance": "S4/7: sl47 (LS222) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+      "provenance": "S4/7: sl47 (LS238) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
     },
     "SA2": {
-      "address": 200,
+      "address": 248,
       "activeMeansOccupied": true,
       "sourceSensor": "SA2",
       "sourceInputs": [
-        "LS200"
+        "LS248"
       ],
-      "provenance": "SA2: slA2 (LS200) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+      "provenance": "SA2: slA2 (LS248) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
     },
     "SC2": {
-      "address": 242,
+      "address": 210,
       "activeMeansOccupied": true,
       "sourceSensor": "SC2",
       "sourceInputs": [
-        "LS242"
+        "LS210"
       ],
-      "provenance": "SC2: slC2 (LS242) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
+      "provenance": "SC2: slC2 (LS210) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt."
     },
     "SSI": {
-      "address": 244,
+      "address": 212,
       "activeMeansOccupied": true,
       "sourceSensor": "SSI",
       "sourceInputs": [
-        "LS244"
+        "LS212"
       ],
-      "provenance": "SSI: slSI (LS244) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt.",
+      "provenance": "SSI: slSI (LS212) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt.",
       "local": true
     },
     "SSII": {
-      "address": 245,
+      "address": 213,
       "activeMeansOccupied": true,
       "sourceSensor": "SSII",
       "sourceInputs": [
-        "LS245"
+        "LS213"
       ],
-      "provenance": "SSII: slSII (LS245) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt.",
+      "provenance": "SSII: slSII (LS213) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt.",
       "local": true
     }
   },
   "signals": {
     "1/2": {
-      "address": 131,
-      "reportAddress": 131,
-      "stopCodes": [
-        0
-      ],
-      "goCodes": [
-        8,
-        18
-      ],
-      "sourceType": "hsi_5",
-      "sourceOutput": "LT131",
-      "sourceOutputName": "1/2",
-      "provenance": "Utgången LT131 (Sektion 3 Signalkort 2-2): Stop = THROWN, kör = CLOSED. Ej uppmätt."
-    },
-    "1/4": {
-      "address": 124,
-      "reportAddress": 124,
-      "stopCodes": [
-        0
-      ],
-      "goCodes": [
-        8,
-        18
-      ],
-      "sourceType": "dvsi_4",
-      "sourceOutput": "LT124",
-      "sourceOutputName": "1/4",
-      "provenance": "Utgången LT124 (Sektion 3 Signalkort 1-5): Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
-    },
-    "1/7": {
-      "address": 113,
-      "reportAddress": 113,
-      "stopCodes": [
-        0
-      ],
-      "goCodes": [
-        8,
-        18
-      ],
-      "sourceType": "hdvsi_5",
-      "sourceOutput": "LT113",
-      "sourceOutputName": "1/7",
-      "provenance": "Utgången LT113 (Sektion 2 Signalkort 1-4): Stop and Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
-    },
-    "1/8": {
-      "address": 117,
-      "reportAddress": 117,
-      "stopCodes": [
-        0
-      ],
-      "goCodes": [
-        8,
-        18
-      ],
-      "sourceType": "hdvsi_5",
-      "sourceOutput": "LT117",
-      "sourceOutputName": "1/8",
-      "provenance": "Utgången LT117 (Sektion 2 Signalkort 1-8): Stop and Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
-    },
-    "1/9": {
-      "address": 132,
-      "reportAddress": 132,
-      "stopCodes": [
-        0
-      ],
-      "goCodes": [
-        8,
-        18
-      ],
-      "sourceType": "hsi_7",
-      "sourceOutput": "LT132",
-      "sourceOutputName": "1/9",
-      "provenance": "Utgången LT132 (Sektion 3 Signalkort 2-3): Stop = THROWN, kör = CLOSED. Ej uppmätt."
-    },
-    "2/1": {
-      "address": 100,
-      "reportAddress": 100,
-      "stopCodes": [
-        0
-      ],
-      "goCodes": [
-        8,
-        18
-      ],
-      "sourceType": "hsi_5",
-      "sourceOutput": "LT100",
-      "sourceOutputName": "2/1",
-      "provenance": "Utgången LT100 (Sektion 1 Signalkort 1-1): Stop = THROWN, kör = CLOSED. Ej uppmätt."
-    },
-    "2/10": {
-      "address": 101,
-      "reportAddress": 101,
-      "stopCodes": [
-        0
-      ],
-      "goCodes": [
-        8,
-        18
-      ],
-      "sourceType": "hsi_7",
-      "sourceOutput": "LT101",
-      "sourceOutputName": "2/10",
-      "provenance": "Utgången LT101 (Sektion 1 Signalkort 1-2): Stop = THROWN, kör = CLOSED. Ej uppmätt."
-    },
-    "2/2": {
-      "address": 126,
-      "reportAddress": 126,
-      "stopCodes": [
-        0
-      ],
-      "goCodes": [
-        8,
-        18
-      ],
-      "sourceType": "hsi_5",
-      "sourceOutput": "LT126",
-      "sourceOutputName": "2/2",
-      "provenance": "Utgången LT126 (Sektion 3 Signalkort 1-7): Stop = THROWN, kör = CLOSED. Ej uppmätt."
-    },
-    "2/3": {
-      "address": 103,
-      "reportAddress": 103,
-      "stopCodes": [
-        0
-      ],
-      "goCodes": [
-        8,
-        18
-      ],
-      "sourceType": "dvsi_4",
-      "sourceOutput": "LT103",
-      "sourceOutputName": "2/3",
-      "provenance": "Utgången LT103 (Sektion 1 Signalkort 1-4): Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
-    },
-    "2/4": {
-      "address": 125,
-      "reportAddress": 125,
-      "stopCodes": [
-        0
-      ],
-      "goCodes": [
-        8,
-        18
-      ],
-      "sourceType": "dvsi_4",
-      "sourceOutput": "LT125",
-      "sourceOutputName": "2/4",
-      "provenance": "Utgången LT125 (Sektion 3 Signalkort 1-6): Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
-    },
-    "2/5": {
-      "address": 119,
-      "reportAddress": 119,
-      "stopCodes": [
-        0
-      ],
-      "goCodes": [
-        8,
-        18
-      ],
-      "sourceType": "dvsi_4",
-      "sourceOutput": "LT119",
-      "sourceOutputName": "2/5",
-      "provenance": "Utgången LT119 (Sektion 2 Signalkort 1-10): Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
-    },
-    "2/6": {
       "address": 110,
       "reportAddress": 110,
       "stopCodes": [
@@ -680,59 +532,14 @@
         8,
         18
       ],
-      "sourceType": "dvsi_4",
+      "sourceType": "hsi_3",
       "sourceOutput": "LT110",
-      "sourceOutputName": "2/6",
-      "provenance": "Utgången LT110 (Sektion 2 Signalkort 1-1): Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
+      "sourceOutputName": "1/2",
+      "provenance": "Utgången LT110 (Sektion 1 Signalkort 2-01): Stop = THROWN, kör = CLOSED. Ej uppmätt."
     },
-    "2/7": {
-      "address": 111,
-      "reportAddress": 111,
-      "stopCodes": [
-        0
-      ],
-      "goCodes": [
-        8,
-        18
-      ],
-      "sourceType": "hdvsi_5",
-      "sourceOutput": "LT111",
-      "sourceOutputName": "2/7",
-      "provenance": "Utgången LT111 (Sektion 2 Signalkort 1-2): Stop and Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
-    },
-    "2/8": {
-      "address": 107,
-      "reportAddress": 107,
-      "stopCodes": [
-        0
-      ],
-      "goCodes": [
-        8,
-        18
-      ],
-      "sourceType": "hdvsi_5",
-      "sourceOutput": "LT107",
-      "sourceOutputName": "2/8",
-      "provenance": "Utgången LT107 (Sektion 1 Signalkort 1-8): Stop and Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
-    },
-    "2/9": {
-      "address": 122,
-      "reportAddress": 122,
-      "stopCodes": [
-        0
-      ],
-      "goCodes": [
-        8,
-        18
-      ],
-      "sourceType": "hsi_7",
-      "sourceOutput": "LT122",
-      "sourceOutputName": "2/9",
-      "provenance": "Utgången LT122 (Sektion 3 Signalkort 1-3): Stop = THROWN, kör = CLOSED. Ej uppmätt."
-    },
-    "3/4": {
-      "address": 129,
-      "reportAddress": 129,
+    "1/4": {
+      "address": 102,
+      "reportAddress": 102,
       "stopCodes": [
         0
       ],
@@ -741,26 +548,11 @@
         18
       ],
       "sourceType": "dvsi_4",
-      "sourceOutput": "LT129",
-      "sourceOutputName": "3/4",
-      "provenance": "Utgången LT129 (Sektion 3 Signalkort 1-10): Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
+      "sourceOutput": "LT102",
+      "sourceOutputName": "1/4",
+      "provenance": "Utgången LT102 (Sektion 1 Signalkort 1-03): Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
     },
-    "3/5": {
-      "address": 106,
-      "reportAddress": 106,
-      "stopCodes": [
-        0
-      ],
-      "goCodes": [
-        8,
-        18
-      ],
-      "sourceType": "dvsi_4",
-      "sourceOutput": "LT106",
-      "sourceOutputName": "3/5",
-      "provenance": "Utgången LT106 (Sektion 1 Signalkort 1-7): Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
-    },
-    "3/7": {
+    "1/7": {
       "address": 120,
       "reportAddress": 120,
       "stopCodes": [
@@ -772,85 +564,10 @@
       ],
       "sourceType": "hdvsi_5",
       "sourceOutput": "LT120",
-      "sourceOutputName": "3/7",
-      "provenance": "Utgången LT120 (Sektion 3 Signalkort 1-1): Stop and Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
+      "sourceOutputName": "1/7",
+      "provenance": "Utgången LT120 (Sektion 2 Signalkort 1-01): Stop and Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
     },
-    "3/8": {
-      "address": 104,
-      "reportAddress": 104,
-      "stopCodes": [
-        0
-      ],
-      "goCodes": [
-        8,
-        18
-      ],
-      "sourceType": "hdvsi_5",
-      "sourceOutput": "LT104",
-      "sourceOutputName": "3/8",
-      "provenance": "Utgången LT104 (Sektion 1 Signalkort 1-5): Stop and Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
-    },
-    "4/4": {
-      "address": 116,
-      "reportAddress": 116,
-      "stopCodes": [
-        0
-      ],
-      "goCodes": [
-        8,
-        18
-      ],
-      "sourceType": "dvsi_4",
-      "sourceOutput": "LT116",
-      "sourceOutputName": "4/4",
-      "provenance": "Utgången LT116 (Sektion 2 Signalkort 1-7): Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
-    },
-    "4/7": {
-      "address": 115,
-      "reportAddress": 115,
-      "stopCodes": [
-        0
-      ],
-      "goCodes": [
-        8,
-        18
-      ],
-      "sourceType": "dvsi_4",
-      "sourceOutput": "LT115",
-      "sourceOutputName": "4/7",
-      "provenance": "Utgången LT115 (Sektion 2 Signalkort 1-6): Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
-    },
-    "S3v": {
-      "address": 102,
-      "reportAddress": 102,
-      "stopCodes": [
-        0
-      ],
-      "goCodes": [
-        8,
-        18
-      ],
-      "sourceType": "ssi_2",
-      "sourceOutput": "LT102",
-      "sourceOutputName": "S3v",
-      "provenance": "Utgången LT102 (Sektion 1 Signalkort 1-3): Lit = THROWN, kör = CLOSED. Ej uppmätt."
-    },
-    "S3ö": {
-      "address": 128,
-      "reportAddress": 128,
-      "stopCodes": [
-        0
-      ],
-      "goCodes": [
-        8,
-        18
-      ],
-      "sourceType": "ssi_2",
-      "sourceOutput": "LT128",
-      "sourceOutputName": "S3ö",
-      "provenance": "Utgången LT128 (Sektion 3 Signalkort 1-9): Lit = THROWN, kör = CLOSED. Ej uppmätt."
-    },
-    "S4s": {
+    "1/8": {
       "address": 130,
       "reportAddress": 130,
       "stopCodes": [
@@ -860,12 +577,282 @@
         8,
         18
       ],
-      "sourceType": "ssi_2",
+      "sourceType": "hsi_3+dvsi",
       "sourceOutput": "LT130",
-      "sourceOutputName": "S4s",
-      "provenance": "Utgången LT130 (Sektion 3 Signalkort 2-1): Lit = THROWN, kör = CLOSED. Ej uppmätt."
+      "sourceOutputName": "1/8",
+      "provenance": "Utgången LT130 (Sektion 3 Signalkort 1-01): Stop and Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
     },
-    "S4v": {
+    "1/9": {
+      "address": 111,
+      "reportAddress": 111,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "hsi_2",
+      "sourceOutput": "LT111",
+      "sourceOutputName": "1/9",
+      "provenance": "Utgången LT111 (Sektion 1 Signalkort 2-02): Stop = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "2/1": {
+      "address": 140,
+      "reportAddress": 140,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "hsi_7",
+      "sourceOutput": "LT140",
+      "sourceOutputName": "2/1",
+      "provenance": "Utgången LT140 (Sektion 3 Signalkort 1-01): Stop = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "2/10": {
+      "address": 141,
+      "reportAddress": 141,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "hsi_2",
+      "sourceOutput": "LT141",
+      "sourceOutputName": "2/10",
+      "provenance": "Utgången LT141 (Sektion 3 Signalkort 1-02): Stop = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "2/2": {
+      "address": 113,
+      "reportAddress": 113,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "hsi_5",
+      "sourceOutput": "LT113",
+      "sourceOutputName": "2/2",
+      "provenance": "Utgången LT113 (Sektion 1 Signalkort 2-04): Stop = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "2/3": {
+      "address": 136,
+      "reportAddress": 136,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "dvsi_4",
+      "sourceOutput": "LT136",
+      "sourceOutputName": "2/3",
+      "provenance": "Utgången LT136 (Sektion 3 Signalkort 1-07): Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "2/4": {
+      "address": 103,
+      "reportAddress": 103,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "dvsi_4",
+      "sourceOutput": "LT103",
+      "sourceOutputName": "2/4",
+      "provenance": "Utgången LT103 (Sektion 1 Signalkort 1-04): Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "2/5": {
+      "address": 134,
+      "reportAddress": 134,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "dvsi_4",
+      "sourceOutput": "LT134",
+      "sourceOutputName": "2/5",
+      "provenance": "Utgången LT134 (Sektion 3 Signalkort 1-05): Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "2/6": {
+      "address": 105,
+      "reportAddress": 105,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "dvsi_4",
+      "sourceOutput": "LT105",
+      "sourceOutputName": "2/6",
+      "provenance": "Utgången LT105 (Sektion 1 Signalkort 1-06): Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "2/7": {
+      "address": 123,
+      "reportAddress": 123,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "hdvsi_5",
+      "sourceOutput": "LT123",
+      "sourceOutputName": "2/7",
+      "provenance": "Utgången LT123 (Sektion 2 Signalkort 1-04): Stop and Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "2/8": {
+      "address": 132,
+      "reportAddress": 132,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "hdvsi_5",
+      "sourceOutput": "LT132",
+      "sourceOutputName": "2/8",
+      "provenance": "Utgången LT132 (Sektion 3 Signalkort 1-03): Stop and Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "2/9": {
+      "address": 114,
+      "reportAddress": 114,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "hsi_2",
+      "sourceOutput": "LT114",
+      "sourceOutputName": "2/9",
+      "provenance": "Utgången LT114 (Sektion 1 Signalkort 2-05): Stop = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "3/4": {
+      "address": 104,
+      "reportAddress": 104,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "dvsi_4",
+      "sourceOutput": "LT104",
+      "sourceOutputName": "3/4",
+      "provenance": "Utgången LT104 (Sektion 1 Signalkort 1-05): Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "3/5": {
+      "address": 135,
+      "reportAddress": 135,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "dvsi_4",
+      "sourceOutput": "LT135",
+      "sourceOutputName": "3/5",
+      "provenance": "Utgången LT135 (Sektion 3 Signalkort 1-06): Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "3/7": {
+      "address": 124,
+      "reportAddress": 124,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "hdvsi_5",
+      "sourceOutput": "LT124",
+      "sourceOutputName": "3/7",
+      "provenance": "Utgången LT124 (Sektion 2 Signalkort 1-05): Stop and Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "3/8": {
+      "address": 133,
+      "reportAddress": 133,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "hdvsi_5",
+      "sourceOutput": "LT133",
+      "sourceOutputName": "3/8",
+      "provenance": "Utgången LT133 (Sektion 3 Signalkort 1-04): Stop and Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "4/4": {
+      "address": 106,
+      "reportAddress": 106,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "dvsi_4",
+      "sourceOutput": "LT106",
+      "sourceOutputName": "4/4",
+      "provenance": "Utgången LT106 (Sektion 1 Signalkort 1-07): Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "4/7": {
+      "address": 122,
+      "reportAddress": 122,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "dvsi_4",
+      "sourceOutput": "LT122",
+      "sourceOutputName": "4/7",
+      "provenance": "Utgången LT122 (Sektion 2 Signalkort 1-03): Sh0 = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "S3v": {
+      "address": 137,
+      "reportAddress": 137,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "ssi_2",
+      "sourceOutput": "LT137",
+      "sourceOutputName": "S3v",
+      "provenance": "Utgången LT137 (Sektion 3 Signalkort 1-08): Unlit = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "S3ö": {
       "address": 109,
       "reportAddress": 109,
       "stopCodes": [
@@ -877,8 +864,38 @@
       ],
       "sourceType": "ssi_2",
       "sourceOutput": "LT109",
+      "sourceOutputName": "S3ö",
+      "provenance": "Utgången LT109 (Sektion A1 Signalkort 1-06): Unlit = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "S4s": {
+      "address": 112,
+      "reportAddress": 112,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "ssi_2",
+      "sourceOutput": "LT112",
+      "sourceOutputName": "S4s",
+      "provenance": "Utgången LT112 (Sitter i anpassningsmodul A2): Unlit = THROWN, kör = CLOSED. Ej uppmätt."
+    },
+    "S4v": {
+      "address": 142,
+      "reportAddress": 142,
+      "stopCodes": [
+        0
+      ],
+      "goCodes": [
+        8,
+        18
+      ],
+      "sourceType": "ssi_2",
+      "sourceOutput": "LT142",
       "sourceOutputName": "S4v",
-      "provenance": "Utgången LT109 (Sektion 1 Signalkort 1-10): Lit = THROWN, kör = CLOSED. Ej uppmätt."
+      "provenance": "Utgången LT142 (Sektion 3 Signalkort 1-03): Unlit = THROWN, kör = CLOSED. Ej uppmätt."
     }
   },
   "routes": [
@@ -2860,31 +2877,31 @@
           "id": "T18",
           "x1": 205,
           "y1": 100,
-          "x2": 165,
+          "x2": 178,
           "y2": 100,
           "block": "SIIIc",
-          "length": 40,
+          "length": 27,
           "distance": 646.5685424949238
         },
         {
           "id": "T57",
-          "x1": 165,
+          "x1": 178,
           "y1": 100,
-          "x2": 135,
+          "x2": 148,
           "y2": 100,
           "block": "SIIIc",
           "length": 30,
-          "distance": 686.5685424949238
+          "distance": 673.5685424949238
         },
         {
           "id": "T56",
-          "x1": 135,
+          "x1": 148,
           "y1": 100,
-          "x2": 90,
+          "x2": 111,
           "y2": 100,
           "block": "SIIIc",
-          "length": 45,
-          "distance": 716.5685424949238
+          "length": 37,
+          "distance": 703.5685424949238
         }
       ],
       "signals": [
@@ -2981,7 +2998,7 @@
       "routePreference": {
         "blockedMovements": 31,
         "divergentLegs": 2,
-        "length": 761.5685424949238,
+        "length": 740.5685424949238,
         "alternatives": 1
       },
       "autoRelease": true,
@@ -3052,11 +3069,11 @@
         {
           "id": "T9",
           "x1": 800,
-          "y1": 265,
+          "y1": 255,
           "x2": 800,
           "y2": 220,
           "block": "SC1",
-          "length": 45,
+          "length": 35,
           "distance": 0
         },
         {
@@ -3067,7 +3084,7 @@
           "y2": 160,
           "block": "SC1",
           "length": 84.8528137423857,
-          "distance": 45
+          "distance": 35
         },
         {
           "id": "VX:Vx22a:A",
@@ -3077,7 +3094,7 @@
           "y2": 140,
           "block": "S22a",
           "length": 28.284271247461902,
-          "distance": 129.8528137423857
+          "distance": 119.8528137423857
         },
         {
           "id": "VX:Vx22a:D",
@@ -3087,7 +3104,7 @@
           "y2": 140,
           "block": "S22a",
           "length": 30,
-          "distance": 158.1370849898476
+          "distance": 148.1370849898476
         },
         {
           "id": "T6",
@@ -3097,7 +3114,7 @@
           "y2": 140,
           "block": "S22c",
           "length": 10,
-          "distance": 188.1370849898476
+          "distance": 178.1370849898476
         },
         {
           "id": "VX:Vx22c:B",
@@ -3107,7 +3124,7 @@
           "y2": 140,
           "block": "S22c",
           "length": 20,
-          "distance": 198.1370849898476
+          "distance": 188.1370849898476
         },
         {
           "id": "VX:Vx22c:A",
@@ -3117,7 +3134,7 @@
           "y2": 140,
           "block": "S22c",
           "length": 20,
-          "distance": 218.1370849898476
+          "distance": 208.1370849898476
         },
         {
           "id": "T2",
@@ -3127,7 +3144,7 @@
           "y2": 140,
           "block": "S22c",
           "length": 45,
-          "distance": 238.1370849898476
+          "distance": 228.1370849898476
         },
         {
           "id": "T1",
@@ -3137,7 +3154,7 @@
           "y2": 140,
           "block": "S32",
           "length": 20,
-          "distance": 283.1370849898476
+          "distance": 273.1370849898476
         },
         {
           "id": "VX:Vx32:A",
@@ -3147,7 +3164,7 @@
           "y2": 140,
           "block": "S32",
           "length": 25,
-          "distance": 303.1370849898476
+          "distance": 293.1370849898476
         },
         {
           "id": "VX:Vx32:C",
@@ -3157,7 +3174,7 @@
           "y2": 160,
           "block": "S32",
           "length": 28.284271247461902,
-          "distance": 328.1370849898476
+          "distance": 318.1370849898476
         },
         {
           "id": "T19",
@@ -3167,7 +3184,7 @@
           "y2": 175,
           "block": "S34",
           "length": 21.213203435596427,
-          "distance": 356.4213562373095
+          "distance": 346.4213562373095
         },
         {
           "id": "VX:Vx34:A",
@@ -3177,7 +3194,7 @@
           "y2": 190,
           "block": "S34",
           "length": 21.213203435596427,
-          "distance": 377.63455967290594
+          "distance": 367.63455967290594
         },
         {
           "id": "VX:Vx34:C",
@@ -3187,7 +3204,7 @@
           "y2": 190,
           "block": "S34",
           "length": 25,
-          "distance": 398.84776310850236
+          "distance": 388.84776310850236
         },
         {
           "id": "T20",
@@ -3197,7 +3214,7 @@
           "y2": 190,
           "block": "SI",
           "length": 73,
-          "distance": 423.84776310850236
+          "distance": 413.84776310850236
         },
         {
           "id": "T41",
@@ -3207,7 +3224,7 @@
           "y2": 190,
           "block": "SI",
           "length": 29,
-          "distance": 496.84776310850236
+          "distance": 486.84776310850236
         },
         {
           "id": "T40",
@@ -3217,7 +3234,7 @@
           "y2": 190,
           "block": "SI",
           "length": 63,
-          "distance": 525.8477631085024
+          "distance": 515.8477631085024
         }
       ],
       "signals": [
@@ -3325,7 +3342,7 @@
       "routePreference": {
         "blockedMovements": 32,
         "divergentLegs": 2,
-        "length": 588.8477631085024,
+        "length": 578.8477631085024,
         "alternatives": 1
       },
       "autoRelease": true,
@@ -3393,11 +3410,11 @@
         {
           "id": "T9",
           "x1": 800,
-          "y1": 265,
+          "y1": 255,
           "x2": 800,
           "y2": 220,
           "block": "SC1",
-          "length": 45,
+          "length": 35,
           "distance": 0
         },
         {
@@ -3408,7 +3425,7 @@
           "y2": 160,
           "block": "SC1",
           "length": 84.8528137423857,
-          "distance": 45
+          "distance": 35
         },
         {
           "id": "VX:Vx22a:A",
@@ -3418,7 +3435,7 @@
           "y2": 140,
           "block": "S22a",
           "length": 28.284271247461902,
-          "distance": 129.8528137423857
+          "distance": 119.8528137423857
         },
         {
           "id": "VX:Vx22a:D",
@@ -3428,7 +3445,7 @@
           "y2": 140,
           "block": "S22a",
           "length": 30,
-          "distance": 158.1370849898476
+          "distance": 148.1370849898476
         },
         {
           "id": "T6",
@@ -3438,7 +3455,7 @@
           "y2": 140,
           "block": "S22c",
           "length": 10,
-          "distance": 188.1370849898476
+          "distance": 178.1370849898476
         },
         {
           "id": "VX:Vx22c:B",
@@ -3448,7 +3465,7 @@
           "y2": 140,
           "block": "S22c",
           "length": 20,
-          "distance": 198.1370849898476
+          "distance": 188.1370849898476
         },
         {
           "id": "VX:Vx22c:A",
@@ -3458,7 +3475,7 @@
           "y2": 140,
           "block": "S22c",
           "length": 20,
-          "distance": 218.1370849898476
+          "distance": 208.1370849898476
         },
         {
           "id": "T2",
@@ -3468,7 +3485,7 @@
           "y2": 140,
           "block": "S22c",
           "length": 45,
-          "distance": 238.1370849898476
+          "distance": 228.1370849898476
         },
         {
           "id": "T1",
@@ -3478,7 +3495,7 @@
           "y2": 140,
           "block": "S32",
           "length": 20,
-          "distance": 283.1370849898476
+          "distance": 273.1370849898476
         },
         {
           "id": "VX:Vx32:A",
@@ -3488,7 +3505,7 @@
           "y2": 140,
           "block": "S32",
           "length": 25,
-          "distance": 303.1370849898476
+          "distance": 293.1370849898476
         },
         {
           "id": "VX:Vx32:B",
@@ -3498,7 +3515,7 @@
           "y2": 140,
           "block": "S32",
           "length": 25,
-          "distance": 328.1370849898476
+          "distance": 318.1370849898476
         },
         {
           "id": "T13",
@@ -3508,7 +3525,7 @@
           "y2": 140,
           "block": "SII",
           "length": 123,
-          "distance": 353.1370849898476
+          "distance": 343.1370849898476
         },
         {
           "id": "T39",
@@ -3518,7 +3535,7 @@
           "y2": 140,
           "block": "SII",
           "length": 29,
-          "distance": 476.1370849898476
+          "distance": 466.1370849898476
         },
         {
           "id": "T38",
@@ -3528,7 +3545,7 @@
           "y2": 140,
           "block": "SII",
           "length": 88,
-          "distance": 505.1370849898476
+          "distance": 495.1370849898476
         }
       ],
       "signals": [
@@ -3624,7 +3641,7 @@
       "routePreference": {
         "blockedMovements": 32,
         "divergentLegs": 0,
-        "length": 593.1370849898476,
+        "length": 583.1370849898476,
         "alternatives": 1
       },
       "autoRelease": true,
@@ -3687,11 +3704,11 @@
         {
           "id": "T9",
           "x1": 800,
-          "y1": 265,
+          "y1": 255,
           "x2": 800,
           "y2": 220,
           "block": "SC1",
-          "length": 45,
+          "length": 35,
           "distance": 0
         },
         {
@@ -3702,7 +3719,7 @@
           "y2": 160,
           "block": "SC1",
           "length": 84.8528137423857,
-          "distance": 45
+          "distance": 35
         },
         {
           "id": "VX:Vx22a:A",
@@ -3712,7 +3729,7 @@
           "y2": 140,
           "block": "S22a",
           "length": 28.284271247461902,
-          "distance": 129.8528137423857
+          "distance": 119.8528137423857
         },
         {
           "id": "VX:Vx22a:C",
@@ -3722,7 +3739,7 @@
           "y2": 120,
           "block": "S22a",
           "length": 28.284271247461902,
-          "distance": 158.1370849898476
+          "distance": 148.1370849898476
         },
         {
           "id": "T30",
@@ -3732,7 +3749,7 @@
           "y2": 120,
           "block": "S22b",
           "length": 0,
-          "distance": 186.4213562373095
+          "distance": 176.4213562373095
         },
         {
           "id": "VX:Vx22b:C",
@@ -3742,7 +3759,7 @@
           "y2": 100,
           "block": "S22b",
           "length": 28.284271247461902,
-          "distance": 186.4213562373095
+          "distance": 176.4213562373095
         },
         {
           "id": "VX:Vx22b:A",
@@ -3752,7 +3769,7 @@
           "y2": 100,
           "block": "S22b",
           "length": 25,
-          "distance": 214.7056274847714
+          "distance": 204.7056274847714
         },
         {
           "id": "T11",
@@ -3762,7 +3779,7 @@
           "y2": 100,
           "block": "SIII",
           "length": 253,
-          "distance": 239.7056274847714
+          "distance": 229.7056274847714
         },
         {
           "id": "T37",
@@ -3772,7 +3789,7 @@
           "y2": 100,
           "block": "SIII",
           "length": 29,
-          "distance": 492.7056274847714
+          "distance": 482.7056274847714
         },
         {
           "id": "T36",
@@ -3782,7 +3799,7 @@
           "y2": 100,
           "block": "SIII",
           "length": 118,
-          "distance": 521.7056274847714
+          "distance": 511.7056274847714
         }
       ],
       "signals": [
@@ -3856,7 +3873,7 @@
       "routePreference": {
         "blockedMovements": 29,
         "divergentLegs": 2,
-        "length": 639.7056274847714,
+        "length": 629.7056274847714,
         "alternatives": 1
       },
       "autoRelease": true,
@@ -3922,11 +3939,11 @@
         {
           "id": "T9",
           "x1": 800,
-          "y1": 265,
+          "y1": 255,
           "x2": 800,
           "y2": 220,
           "block": "SC1",
-          "length": 45,
+          "length": 35,
           "distance": 0
         },
         {
@@ -3937,7 +3954,7 @@
           "y2": 160,
           "block": "SC1",
           "length": 84.8528137423857,
-          "distance": 45
+          "distance": 35
         },
         {
           "id": "VX:Vx22a:A",
@@ -3947,7 +3964,7 @@
           "y2": 140,
           "block": "S22a",
           "length": 28.284271247461902,
-          "distance": 129.8528137423857
+          "distance": 119.8528137423857
         },
         {
           "id": "VX:Vx22a:C",
@@ -3957,7 +3974,7 @@
           "y2": 120,
           "block": "S22a",
           "length": 28.284271247461902,
-          "distance": 158.1370849898476
+          "distance": 148.1370849898476
         },
         {
           "id": "T30",
@@ -3967,7 +3984,7 @@
           "y2": 120,
           "block": "S22b",
           "length": 0,
-          "distance": 186.4213562373095
+          "distance": 176.4213562373095
         },
         {
           "id": "VX:Vx22b:C",
@@ -3977,7 +3994,7 @@
           "y2": 100,
           "block": "S22b",
           "length": 28.284271247461902,
-          "distance": 186.4213562373095
+          "distance": 176.4213562373095
         },
         {
           "id": "VX:Vx22b:A",
@@ -3987,7 +4004,7 @@
           "y2": 100,
           "block": "S22b",
           "length": 25,
-          "distance": 214.7056274847714
+          "distance": 204.7056274847714
         },
         {
           "id": "T11",
@@ -3997,7 +4014,7 @@
           "y2": 100,
           "block": "SIII",
           "length": 253,
-          "distance": 239.7056274847714
+          "distance": 229.7056274847714
         },
         {
           "id": "T37",
@@ -4007,7 +4024,7 @@
           "y2": 100,
           "block": "SIII",
           "length": 29,
-          "distance": 492.7056274847714
+          "distance": 482.7056274847714
         },
         {
           "id": "T36",
@@ -4017,7 +4034,7 @@
           "y2": 100,
           "block": "SIII",
           "length": 118,
-          "distance": 521.7056274847714
+          "distance": 511.7056274847714
         },
         {
           "id": "VX:Vx21b:A",
@@ -4027,7 +4044,7 @@
           "y2": 100,
           "block": "S21b",
           "length": 25,
-          "distance": 639.7056274847714
+          "distance": 629.7056274847714
         },
         {
           "id": "VX:Vx21b:B",
@@ -4037,37 +4054,37 @@
           "y2": 100,
           "block": "S21b",
           "length": 25,
-          "distance": 664.7056274847714
+          "distance": 654.7056274847714
         },
         {
           "id": "T18",
           "x1": 205,
           "y1": 100,
-          "x2": 165,
+          "x2": 178,
           "y2": 100,
           "block": "SIIIc",
-          "length": 40,
-          "distance": 689.7056274847714
+          "length": 27,
+          "distance": 679.7056274847714
         },
         {
           "id": "T57",
-          "x1": 165,
+          "x1": 178,
           "y1": 100,
-          "x2": 135,
+          "x2": 148,
           "y2": 100,
           "block": "SIIIc",
           "length": 30,
-          "distance": 729.7056274847714
+          "distance": 706.7056274847714
         },
         {
           "id": "T56",
-          "x1": 135,
+          "x1": 148,
           "y1": 100,
-          "x2": 90,
+          "x2": 111,
           "y2": 100,
           "block": "SIIIc",
-          "length": 45,
-          "distance": 759.7056274847714
+          "length": 37,
+          "distance": 736.7056274847714
         }
       ],
       "signals": [
@@ -4169,7 +4186,7 @@
       "routePreference": {
         "blockedMovements": 31,
         "divergentLegs": 2,
-        "length": 804.7056274847714,
+        "length": 773.7056274847714,
         "alternatives": 1
       },
       "autoRelease": true,
@@ -4312,10 +4329,10 @@
           "id": "T4",
           "x1": 115,
           "y1": 140,
-          "x2": 90,
+          "x2": 70,
           "y2": 140,
           "block": "SA2",
-          "length": 25,
+          "length": 45,
           "distance": 215.71067811865476
         }
       ],
@@ -4579,10 +4596,10 @@
           "id": "T45",
           "x1": 835,
           "y1": 140,
-          "x2": 880,
+          "x2": 905,
           "y2": 140,
           "block": "SB2",
-          "length": 45,
+          "length": 70,
           "distance": 380.71067811865476
         }
       ],
@@ -4868,20 +4885,20 @@
           "x1": 800,
           "y1": 220,
           "x2": 800,
-          "y2": 265,
+          "y2": 255,
           "block": "SC1",
-          "length": 45,
+          "length": 35,
           "distance": 378.84776310850236
         },
         {
           "id": "T15",
           "x1": 800,
-          "y1": 265,
+          "y1": 255,
           "x2": 800,
-          "y2": 290,
+          "y2": 330,
           "block": "SC2",
-          "length": 25,
-          "distance": 423.84776310850236
+          "length": 75,
+          "distance": 413.84776310850236
         }
       ],
       "exitSignal": "1/9",
@@ -4974,7 +4991,7 @@
       "routePreference": {
         "blockedMovements": 30,
         "divergentLegs": 2,
-        "length": 423.84776310850236,
+        "length": 413.84776310850236,
         "alternatives": 1
       },
       "autoRelease": true,
@@ -5102,10 +5119,10 @@
           "id": "T4",
           "x1": 115,
           "y1": 140,
-          "x2": 90,
+          "x2": 70,
           "y2": 140,
           "block": "SA2",
-          "length": 25,
+          "length": 45,
           "distance": 170
         }
       ],
@@ -5330,10 +5347,10 @@
           "id": "T45",
           "x1": 835,
           "y1": 140,
-          "x2": 880,
+          "x2": 905,
           "y2": 140,
           "block": "SB2",
-          "length": 45,
+          "length": 70,
           "distance": 310
         }
       ],
@@ -5574,20 +5591,20 @@
           "x1": 800,
           "y1": 220,
           "x2": 800,
-          "y2": 265,
+          "y2": 255,
           "block": "SC1",
-          "length": 45,
+          "length": 35,
           "distance": 308.1370849898476
         },
         {
           "id": "T15",
           "x1": 800,
-          "y1": 265,
+          "y1": 255,
           "x2": 800,
-          "y2": 290,
+          "y2": 330,
           "block": "SC2",
-          "length": 25,
-          "distance": 353.1370849898476
+          "length": 75,
+          "distance": 343.1370849898476
         }
       ],
       "exitSignal": "1/9",
@@ -5668,7 +5685,7 @@
       "routePreference": {
         "blockedMovements": 30,
         "divergentLegs": 0,
-        "length": 353.1370849898476,
+        "length": 343.1370849898476,
         "alternatives": 1
       },
       "autoRelease": true,
@@ -5785,10 +5802,10 @@
           "id": "T4",
           "x1": 115,
           "y1": 140,
-          "x2": 90,
+          "x2": 70,
           "y2": 140,
           "block": "SA2",
-          "length": 25,
+          "length": 45,
           "distance": 156.5685424949238
         }
       ],
@@ -5964,10 +5981,10 @@
           "id": "T45",
           "x1": 835,
           "y1": 140,
-          "x2": 880,
+          "x2": 905,
           "y2": 140,
           "block": "SB2",
-          "length": 45,
+          "length": 70,
           "distance": 196.5685424949238
         }
       ],
@@ -6147,20 +6164,20 @@
           "x1": 800,
           "y1": 220,
           "x2": 800,
-          "y2": 265,
+          "y2": 255,
           "block": "SC1",
-          "length": 45,
+          "length": 35,
           "distance": 194.7056274847714
         },
         {
           "id": "T15",
           "x1": 800,
-          "y1": 265,
+          "y1": 255,
           "x2": 800,
-          "y2": 290,
+          "y2": 330,
           "block": "SC2",
-          "length": 25,
-          "distance": 239.7056274847714
+          "length": 75,
+          "distance": 229.7056274847714
         }
       ],
       "exitSignal": "1/9",
@@ -6224,7 +6241,7 @@
       "routePreference": {
         "blockedMovements": 26,
         "divergentLegs": 2,
-        "length": 239.7056274847714,
+        "length": 229.7056274847714,
         "alternatives": 1
       },
       "autoRelease": true,
@@ -6435,31 +6452,31 @@
           "id": "T18",
           "x1": 205,
           "y1": 100,
-          "x2": 165,
+          "x2": 178,
           "y2": 100,
           "block": "SIIIc",
-          "length": 40,
+          "length": 27,
           "distance": 50
         },
         {
           "id": "T57",
-          "x1": 165,
+          "x1": 178,
           "y1": 100,
-          "x2": 135,
+          "x2": 148,
           "y2": 100,
           "block": "SIIIc",
           "length": 30,
-          "distance": 90
+          "distance": 77
         },
         {
           "id": "T56",
-          "x1": 135,
+          "x1": 148,
           "y1": 100,
-          "x2": 90,
+          "x2": 111,
           "y2": 100,
           "block": "SIIIc",
-          "length": 45,
-          "distance": 120
+          "length": 37,
+          "distance": 107
         }
       ],
       "signals": [
@@ -6502,7 +6519,7 @@
       "routePreference": {
         "blockedMovements": 7,
         "divergentLegs": 0,
-        "length": 165,
+        "length": 144,
         "alternatives": 1
       },
       "autoRelease": true,
@@ -6717,10 +6734,10 @@
           "id": "T45",
           "x1": 835,
           "y1": 140,
-          "x2": 880,
+          "x2": 905,
           "y2": 140,
           "block": "SB2",
-          "length": 45,
+          "length": 70,
           "distance": 753.1370849898476
         }
       ],
@@ -7061,20 +7078,20 @@
           "x1": 800,
           "y1": 220,
           "x2": 800,
-          "y2": 265,
+          "y2": 255,
           "block": "SC1",
-          "length": 45,
+          "length": 35,
           "distance": 751.2741699796952
         },
         {
           "id": "T15",
           "x1": 800,
-          "y1": 265,
+          "y1": 255,
           "x2": 800,
-          "y2": 290,
+          "y2": 330,
           "block": "SC2",
-          "length": 25,
-          "distance": 796.2741699796952
+          "length": 75,
+          "distance": 786.2741699796952
         }
       ],
       "exitSignal": "1/9",
@@ -7190,7 +7207,7 @@
       "routePreference": {
         "blockedMovements": 36,
         "divergentLegs": 4,
-        "length": 796.2741699796952,
+        "length": 786.2741699796952,
         "alternatives": 3
       },
       "autoRelease": true,
@@ -7417,10 +7434,10 @@
           "id": "T4",
           "x1": 115,
           "y1": 140,
-          "x2": 90,
+          "x2": 70,
           "y2": 140,
           "block": "SA2",
-          "length": 25,
+          "length": 45,
           "distance": 753.1370849898476
         }
       ],
@@ -7609,11 +7626,11 @@
         {
           "id": "T9",
           "x1": 800,
-          "y1": 265,
+          "y1": 255,
           "x2": 800,
           "y2": 220,
           "block": "SC1",
-          "length": 45,
+          "length": 35,
           "distance": 0
         },
         {
@@ -7624,7 +7641,7 @@
           "y2": 160,
           "block": "SC1",
           "length": 84.8528137423857,
-          "distance": 45
+          "distance": 35
         },
         {
           "id": "VX:Vx22a:A",
@@ -7634,7 +7651,7 @@
           "y2": 140,
           "block": "S22a",
           "length": 28.284271247461902,
-          "distance": 129.8528137423857
+          "distance": 119.8528137423857
         },
         {
           "id": "VX:Vx22a:C",
@@ -7644,7 +7661,7 @@
           "y2": 120,
           "block": "S22a",
           "length": 28.284271247461902,
-          "distance": 158.1370849898476
+          "distance": 148.1370849898476
         },
         {
           "id": "T30",
@@ -7654,7 +7671,7 @@
           "y2": 120,
           "block": "S22b",
           "length": 0,
-          "distance": 186.4213562373095
+          "distance": 176.4213562373095
         },
         {
           "id": "VX:Vx22b:C",
@@ -7664,7 +7681,7 @@
           "y2": 100,
           "block": "S22b",
           "length": 28.284271247461902,
-          "distance": 186.4213562373095
+          "distance": 176.4213562373095
         },
         {
           "id": "VX:Vx22b:A",
@@ -7674,7 +7691,7 @@
           "y2": 100,
           "block": "S22b",
           "length": 25,
-          "distance": 214.7056274847714
+          "distance": 204.7056274847714
         },
         {
           "id": "T11",
@@ -7684,7 +7701,7 @@
           "y2": 100,
           "block": "SIII",
           "length": 253,
-          "distance": 239.7056274847714
+          "distance": 229.7056274847714
         },
         {
           "id": "T37",
@@ -7694,7 +7711,7 @@
           "y2": 100,
           "block": "SIII",
           "length": 29,
-          "distance": 492.7056274847714
+          "distance": 482.7056274847714
         },
         {
           "id": "T36",
@@ -7704,7 +7721,7 @@
           "y2": 100,
           "block": "SIII",
           "length": 118,
-          "distance": 521.7056274847714
+          "distance": 511.7056274847714
         },
         {
           "id": "VX:Vx21b:A",
@@ -7714,7 +7731,7 @@
           "y2": 100,
           "block": "S21b",
           "length": 25,
-          "distance": 639.7056274847714
+          "distance": 629.7056274847714
         },
         {
           "id": "VX:Vx21b:C",
@@ -7724,7 +7741,7 @@
           "y2": 120,
           "block": "S21b",
           "length": 28.284271247461902,
-          "distance": 664.7056274847714
+          "distance": 654.7056274847714
         },
         {
           "id": "T12",
@@ -7734,7 +7751,7 @@
           "y2": 120,
           "block": "S21a",
           "length": 0,
-          "distance": 692.9898987322333
+          "distance": 682.9898987322333
         },
         {
           "id": "VX:Vx21a:C",
@@ -7744,7 +7761,7 @@
           "y2": 140,
           "block": "S21a",
           "length": 28.284271247461902,
-          "distance": 692.9898987322333
+          "distance": 682.9898987322333
         },
         {
           "id": "VX:Vx21a:A",
@@ -7754,7 +7771,7 @@
           "y2": 140,
           "block": "S21a",
           "length": 20,
-          "distance": 721.2741699796952
+          "distance": 711.2741699796952
         },
         {
           "id": "T17",
@@ -7764,17 +7781,17 @@
           "y2": 140,
           "block": "SA1",
           "length": 55,
-          "distance": 741.2741699796952
+          "distance": 731.2741699796952
         },
         {
           "id": "T4",
           "x1": 115,
           "y1": 140,
-          "x2": 90,
+          "x2": 70,
           "y2": 140,
           "block": "SA2",
-          "length": 25,
-          "distance": 796.2741699796952
+          "length": 45,
+          "distance": 786.2741699796952
         }
       ],
       "exitSignal": "2/10",
@@ -7890,7 +7907,7 @@
       "routePreference": {
         "blockedMovements": 36,
         "divergentLegs": 4,
-        "length": 796.2741699796952,
+        "length": 786.2741699796952,
         "alternatives": 3
       },
       "autoRelease": true,
@@ -8244,9 +8261,9 @@
           "x1": 800,
           "y1": 220,
           "x2": 800,
-          "y2": 265,
+          "y2": 255,
           "block": "SC1",
-          "length": 45,
+          "length": 35,
           "distance": 378.84776310850236
         }
       ],
@@ -8329,7 +8346,7 @@
       "routePreference": {
         "blockedMovements": 30,
         "divergentLegs": 2,
-        "length": 423.84776310850236,
+        "length": 413.84776310850236,
         "alternatives": 1
       },
       "autoRelease": true,
@@ -10329,8 +10346,7 @@
       ],
       "blocks": [
         "S32",
-        "S34",
-        "S4/7"
+        "S34"
       ],
       "turnouts": {
         "Vx32": "T",
@@ -10340,8 +10356,7 @@
       "segments": [
         "T1",
         "T19",
-        "T21",
-        "T32"
+        "T21"
       ],
       "flow": [
         {
@@ -10413,16 +10428,6 @@
           "block": "S34",
           "length": 14.142135623730951,
           "distance": 136.92388155425118
-        },
-        {
-          "id": "T32",
-          "x1": 475,
-          "y1": 215,
-          "x2": 365,
-          "y2": 325,
-          "block": "S4/7",
-          "length": 155.56349186104046,
-          "distance": 151.06601717798213
         }
       ],
       "signals": [
@@ -10468,17 +10473,12 @@
           "kind": "segment",
           "id": "T21",
           "end": 1
-        },
-        {
-          "kind": "segment",
-          "id": "T32",
-          "end": 1
         }
       ],
       "routePreference": {
         "blockedMovements": 15,
         "divergentLegs": 1,
-        "length": 306.6295090390226,
+        "length": 151.06601717798213,
         "alternatives": 1
       },
       "autoRelease": true,
@@ -10636,9 +10636,9 @@
           "x1": 800,
           "y1": 220,
           "x2": 800,
-          "y2": 265,
+          "y2": 255,
           "block": "SC1",
-          "length": 45,
+          "length": 35,
           "distance": 308.1370849898476
         }
       ],
@@ -10709,7 +10709,7 @@
       "routePreference": {
         "blockedMovements": 30,
         "divergentLegs": 0,
-        "length": 353.1370849898476,
+        "length": 343.1370849898476,
         "alternatives": 1
       },
       "autoRelease": true,
@@ -11661,9 +11661,9 @@
           "x1": 800,
           "y1": 220,
           "x2": 800,
-          "y2": 265,
+          "y2": 255,
           "block": "SC1",
-          "length": 45,
+          "length": 35,
           "distance": 194.7056274847714
         }
       ],
@@ -11717,7 +11717,7 @@
       "routePreference": {
         "blockedMovements": 26,
         "divergentLegs": 2,
-        "length": 239.7056274847714,
+        "length": 229.7056274847714,
         "alternatives": 1
       },
       "autoRelease": true,
@@ -12229,31 +12229,31 @@
           "id": "T18",
           "x1": 205,
           "y1": 100,
-          "x2": 165,
+          "x2": 178,
           "y2": 100,
           "block": "SIIIc",
-          "length": 40,
+          "length": 27,
           "distance": 50
         },
         {
           "id": "T57",
-          "x1": 165,
+          "x1": 178,
           "y1": 100,
-          "x2": 135,
+          "x2": 148,
           "y2": 100,
           "block": "SIIIc",
           "length": 30,
-          "distance": 90
+          "distance": 77
         },
         {
           "id": "T56",
-          "x1": 135,
+          "x1": 148,
           "y1": 100,
-          "x2": 90,
+          "x2": 111,
           "y2": 100,
           "block": "SIIIc",
-          "length": 45,
-          "distance": 120
+          "length": 37,
+          "distance": 107
         }
       ],
       "signals": [
@@ -12296,7 +12296,7 @@
       "routePreference": {
         "blockedMovements": 7,
         "divergentLegs": 0,
-        "length": 165,
+        "length": 144,
         "alternatives": 1
       },
       "autoRelease": true,
@@ -12601,9 +12601,9 @@
           "x1": 800,
           "y1": 220,
           "x2": 800,
-          "y2": 265,
+          "y2": 255,
           "block": "SC1",
-          "length": 45,
+          "length": 35,
           "distance": 389.20310216782974
         }
       ],
@@ -12611,6 +12611,7 @@
         "4/7"
       ],
       "guardSignals": [
+        "S4v",
         "1/7",
         "2/7",
         "2/6",
@@ -12692,7 +12693,7 @@
       "routePreference": {
         "blockedMovements": 30,
         "divergentLegs": 1,
-        "length": 434.20310216782974,
+        "length": 424.20310216782974,
         "alternatives": 1
       },
       "autoRelease": true,
@@ -12893,6 +12894,7 @@
         "4/7"
       ],
       "guardSignals": [
+        "S4v",
         "1/7",
         "2/7",
         "2/6",
@@ -13147,6 +13149,7 @@
         "4/7"
       ],
       "guardSignals": [
+        "S4v",
         "1/7",
         "2/7",
         "2/6",
@@ -13672,10 +13675,10 @@
           "id": "T45",
           "x1": 835,
           "y1": 140,
-          "x2": 880,
+          "x2": 905,
           "y2": 140,
           "block": "SB2",
-          "length": 45,
+          "length": 70,
           "distance": 720
         }
       ],
@@ -14146,10 +14149,10 @@
           "id": "T45",
           "x1": 835,
           "y1": 140,
-          "x2": 880,
+          "x2": 905,
           "y2": 140,
           "block": "SB2",
-          "length": 45,
+          "length": 70,
           "distance": 761.4213562373095
         }
       ],
@@ -14596,20 +14599,20 @@
           "x1": 800,
           "y1": 220,
           "x2": 800,
-          "y2": 265,
+          "y2": 255,
           "block": "SC1",
-          "length": 45,
+          "length": 35,
           "distance": 718.1370849898476
         },
         {
           "id": "T15",
           "x1": 800,
-          "y1": 265,
+          "y1": 255,
           "x2": 800,
-          "y2": 290,
+          "y2": 330,
           "block": "SC2",
-          "length": 25,
-          "distance": 763.1370849898476
+          "length": 75,
+          "distance": 753.1370849898476
         }
       ],
       "exitSignal": "1/9",
@@ -14752,7 +14755,7 @@
       "routePreference": {
         "blockedMovements": 41,
         "divergentLegs": 0,
-        "length": 763.1370849898476,
+        "length": 753.1370849898476,
         "alternatives": 3
       },
       "autoRelease": true,
@@ -15086,20 +15089,20 @@
           "x1": 800,
           "y1": 220,
           "x2": 800,
-          "y2": 265,
+          "y2": 255,
           "block": "SC1",
-          "length": 45,
+          "length": 35,
           "distance": 759.5584412271571
         },
         {
           "id": "T15",
           "x1": 800,
-          "y1": 265,
+          "y1": 255,
           "x2": 800,
-          "y2": 290,
+          "y2": 330,
           "block": "SC2",
-          "length": 25,
-          "distance": 804.5584412271571
+          "length": 75,
+          "distance": 794.5584412271571
         }
       ],
       "exitSignal": "1/9",
@@ -15260,7 +15263,7 @@
       "routePreference": {
         "blockedMovements": 41,
         "divergentLegs": 3,
-        "length": 804.5584412271571,
+        "length": 794.5584412271571,
         "alternatives": 3
       },
       "autoRelease": true,
@@ -15548,10 +15551,10 @@
           "id": "T4",
           "x1": 115,
           "y1": 140,
-          "x2": 90,
+          "x2": 70,
           "y2": 140,
           "block": "SA2",
-          "length": 25,
+          "length": 45,
           "distance": 720
         }
       ],
@@ -16022,10 +16025,10 @@
           "id": "T4",
           "x1": 115,
           "y1": 140,
-          "x2": 90,
+          "x2": 70,
           "y2": 140,
           "block": "SA2",
-          "length": 25,
+          "length": 45,
           "distance": 761.4213562373095
         }
       ],
@@ -16270,11 +16273,11 @@
         {
           "id": "T9",
           "x1": 800,
-          "y1": 265,
+          "y1": 255,
           "x2": 800,
           "y2": 220,
           "block": "SC1",
-          "length": 45,
+          "length": 35,
           "distance": 0
         },
         {
@@ -16285,7 +16288,7 @@
           "y2": 160,
           "block": "SC1",
           "length": 84.8528137423857,
-          "distance": 45
+          "distance": 35
         },
         {
           "id": "VX:Vx22a:A",
@@ -16295,7 +16298,7 @@
           "y2": 140,
           "block": "S22a",
           "length": 28.284271247461902,
-          "distance": 129.8528137423857
+          "distance": 119.8528137423857
         },
         {
           "id": "VX:Vx22a:D",
@@ -16305,7 +16308,7 @@
           "y2": 140,
           "block": "S22a",
           "length": 30,
-          "distance": 158.1370849898476
+          "distance": 148.1370849898476
         },
         {
           "id": "T6",
@@ -16315,7 +16318,7 @@
           "y2": 140,
           "block": "S22c",
           "length": 10,
-          "distance": 188.1370849898476
+          "distance": 178.1370849898476
         },
         {
           "id": "VX:Vx22c:B",
@@ -16325,7 +16328,7 @@
           "y2": 140,
           "block": "S22c",
           "length": 20,
-          "distance": 198.1370849898476
+          "distance": 188.1370849898476
         },
         {
           "id": "VX:Vx22c:A",
@@ -16335,7 +16338,7 @@
           "y2": 140,
           "block": "S22c",
           "length": 20,
-          "distance": 218.1370849898476
+          "distance": 208.1370849898476
         },
         {
           "id": "T2",
@@ -16345,7 +16348,7 @@
           "y2": 140,
           "block": "S22c",
           "length": 45,
-          "distance": 238.1370849898476
+          "distance": 228.1370849898476
         },
         {
           "id": "T1",
@@ -16355,7 +16358,7 @@
           "y2": 140,
           "block": "S32",
           "length": 20,
-          "distance": 283.1370849898476
+          "distance": 273.1370849898476
         },
         {
           "id": "VX:Vx32:A",
@@ -16365,7 +16368,7 @@
           "y2": 140,
           "block": "S32",
           "length": 25,
-          "distance": 303.1370849898476
+          "distance": 293.1370849898476
         },
         {
           "id": "VX:Vx32:B",
@@ -16375,7 +16378,7 @@
           "y2": 140,
           "block": "S32",
           "length": 25,
-          "distance": 328.1370849898476
+          "distance": 318.1370849898476
         },
         {
           "id": "T13",
@@ -16385,7 +16388,7 @@
           "y2": 140,
           "block": "SII",
           "length": 123,
-          "distance": 353.1370849898476
+          "distance": 343.1370849898476
         },
         {
           "id": "T39",
@@ -16395,7 +16398,7 @@
           "y2": 140,
           "block": "SII",
           "length": 29,
-          "distance": 476.1370849898476
+          "distance": 466.1370849898476
         },
         {
           "id": "T38",
@@ -16405,7 +16408,7 @@
           "y2": 140,
           "block": "SII",
           "length": 88,
-          "distance": 505.1370849898476
+          "distance": 495.1370849898476
         },
         {
           "id": "VX:Vx31:B",
@@ -16415,7 +16418,7 @@
           "y2": 140,
           "block": "S31",
           "length": 25,
-          "distance": 593.1370849898476
+          "distance": 583.1370849898476
         },
         {
           "id": "VX:Vx31:A",
@@ -16425,7 +16428,7 @@
           "y2": 140,
           "block": "S31",
           "length": 25,
-          "distance": 618.1370849898476
+          "distance": 608.1370849898476
         },
         {
           "id": "T14",
@@ -16435,7 +16438,7 @@
           "y2": 140,
           "block": "S31",
           "length": 5,
-          "distance": 643.1370849898476
+          "distance": 633.1370849898476
         },
         {
           "id": "T35",
@@ -16445,7 +16448,7 @@
           "y2": 140,
           "block": "S21a",
           "length": 20,
-          "distance": 648.1370849898476
+          "distance": 638.1370849898476
         },
         {
           "id": "VX:Vx21a:B",
@@ -16455,7 +16458,7 @@
           "y2": 140,
           "block": "S21a",
           "length": 20,
-          "distance": 668.1370849898476
+          "distance": 658.1370849898476
         },
         {
           "id": "VX:Vx21a:A",
@@ -16465,7 +16468,7 @@
           "y2": 140,
           "block": "S21a",
           "length": 20,
-          "distance": 688.1370849898476
+          "distance": 678.1370849898476
         },
         {
           "id": "T17",
@@ -16475,17 +16478,17 @@
           "y2": 140,
           "block": "SA1",
           "length": 55,
-          "distance": 708.1370849898476
+          "distance": 698.1370849898476
         },
         {
           "id": "T4",
           "x1": 115,
           "y1": 140,
-          "x2": 90,
+          "x2": 70,
           "y2": 140,
           "block": "SA2",
-          "length": 25,
-          "distance": 763.1370849898476
+          "length": 45,
+          "distance": 753.1370849898476
         }
       ],
       "exitSignal": "2/10",
@@ -16628,7 +16631,7 @@
       "routePreference": {
         "blockedMovements": 41,
         "divergentLegs": 0,
-        "length": 763.1370849898476,
+        "length": 753.1370849898476,
         "alternatives": 3
       },
       "autoRelease": true,
@@ -16720,11 +16723,11 @@
         {
           "id": "T9",
           "x1": 800,
-          "y1": 265,
+          "y1": 255,
           "x2": 800,
           "y2": 220,
           "block": "SC1",
-          "length": 45,
+          "length": 35,
           "distance": 0
         },
         {
@@ -16735,7 +16738,7 @@
           "y2": 160,
           "block": "SC1",
           "length": 84.8528137423857,
-          "distance": 45
+          "distance": 35
         },
         {
           "id": "VX:Vx22a:A",
@@ -16745,7 +16748,7 @@
           "y2": 140,
           "block": "S22a",
           "length": 28.284271247461902,
-          "distance": 129.8528137423857
+          "distance": 119.8528137423857
         },
         {
           "id": "VX:Vx22a:D",
@@ -16755,7 +16758,7 @@
           "y2": 140,
           "block": "S22a",
           "length": 30,
-          "distance": 158.1370849898476
+          "distance": 148.1370849898476
         },
         {
           "id": "T6",
@@ -16765,7 +16768,7 @@
           "y2": 140,
           "block": "S22c",
           "length": 10,
-          "distance": 188.1370849898476
+          "distance": 178.1370849898476
         },
         {
           "id": "VX:Vx22c:B",
@@ -16775,7 +16778,7 @@
           "y2": 140,
           "block": "S22c",
           "length": 20,
-          "distance": 198.1370849898476
+          "distance": 188.1370849898476
         },
         {
           "id": "VX:Vx22c:A",
@@ -16785,7 +16788,7 @@
           "y2": 140,
           "block": "S22c",
           "length": 20,
-          "distance": 218.1370849898476
+          "distance": 208.1370849898476
         },
         {
           "id": "T2",
@@ -16795,7 +16798,7 @@
           "y2": 140,
           "block": "S22c",
           "length": 45,
-          "distance": 238.1370849898476
+          "distance": 228.1370849898476
         },
         {
           "id": "T1",
@@ -16805,7 +16808,7 @@
           "y2": 140,
           "block": "S32",
           "length": 20,
-          "distance": 283.1370849898476
+          "distance": 273.1370849898476
         },
         {
           "id": "VX:Vx32:A",
@@ -16815,7 +16818,7 @@
           "y2": 140,
           "block": "S32",
           "length": 25,
-          "distance": 303.1370849898476
+          "distance": 293.1370849898476
         },
         {
           "id": "VX:Vx32:C",
@@ -16825,7 +16828,7 @@
           "y2": 160,
           "block": "S32",
           "length": 28.284271247461902,
-          "distance": 328.1370849898476
+          "distance": 318.1370849898476
         },
         {
           "id": "T19",
@@ -16835,7 +16838,7 @@
           "y2": 175,
           "block": "S34",
           "length": 21.213203435596427,
-          "distance": 356.4213562373095
+          "distance": 346.4213562373095
         },
         {
           "id": "VX:Vx34:A",
@@ -16845,7 +16848,7 @@
           "y2": 190,
           "block": "S34",
           "length": 21.213203435596427,
-          "distance": 377.63455967290594
+          "distance": 367.63455967290594
         },
         {
           "id": "VX:Vx34:C",
@@ -16855,7 +16858,7 @@
           "y2": 190,
           "block": "S34",
           "length": 25,
-          "distance": 398.84776310850236
+          "distance": 388.84776310850236
         },
         {
           "id": "T20",
@@ -16865,7 +16868,7 @@
           "y2": 190,
           "block": "SI",
           "length": 73,
-          "distance": 423.84776310850236
+          "distance": 413.84776310850236
         },
         {
           "id": "T41",
@@ -16875,7 +16878,7 @@
           "y2": 190,
           "block": "SI",
           "length": 29,
-          "distance": 496.84776310850236
+          "distance": 486.84776310850236
         },
         {
           "id": "T40",
@@ -16885,7 +16888,7 @@
           "y2": 190,
           "block": "SI",
           "length": 63,
-          "distance": 525.8477631085024
+          "distance": 515.8477631085024
         },
         {
           "id": "T16",
@@ -16895,7 +16898,7 @@
           "y2": 160,
           "block": "S31",
           "length": 42.42640687119285,
-          "distance": 588.8477631085024
+          "distance": 578.8477631085024
         },
         {
           "id": "VX:Vx31:C",
@@ -16905,7 +16908,7 @@
           "y2": 140,
           "block": "S31",
           "length": 28.284271247461902,
-          "distance": 631.2741699796952
+          "distance": 621.2741699796952
         },
         {
           "id": "VX:Vx31:A",
@@ -16915,7 +16918,7 @@
           "y2": 140,
           "block": "S31",
           "length": 25,
-          "distance": 659.5584412271571
+          "distance": 649.5584412271571
         },
         {
           "id": "T14",
@@ -16925,7 +16928,7 @@
           "y2": 140,
           "block": "S31",
           "length": 5,
-          "distance": 684.5584412271571
+          "distance": 674.5584412271571
         },
         {
           "id": "T35",
@@ -16935,7 +16938,7 @@
           "y2": 140,
           "block": "S21a",
           "length": 20,
-          "distance": 689.5584412271571
+          "distance": 679.5584412271571
         },
         {
           "id": "VX:Vx21a:B",
@@ -16945,7 +16948,7 @@
           "y2": 140,
           "block": "S21a",
           "length": 20,
-          "distance": 709.5584412271571
+          "distance": 699.5584412271571
         },
         {
           "id": "VX:Vx21a:A",
@@ -16955,7 +16958,7 @@
           "y2": 140,
           "block": "S21a",
           "length": 20,
-          "distance": 729.5584412271571
+          "distance": 719.5584412271571
         },
         {
           "id": "T17",
@@ -16965,17 +16968,17 @@
           "y2": 140,
           "block": "SA1",
           "length": 55,
-          "distance": 749.5584412271571
+          "distance": 739.5584412271571
         },
         {
           "id": "T4",
           "x1": 115,
           "y1": 140,
-          "x2": 90,
+          "x2": 70,
           "y2": 140,
           "block": "SA2",
-          "length": 25,
-          "distance": 804.5584412271571
+          "length": 45,
+          "distance": 794.5584412271571
         }
       ],
       "exitSignal": "2/10",
@@ -17136,7 +17139,7 @@
       "routePreference": {
         "blockedMovements": 41,
         "divergentLegs": 3,
-        "length": 804.5584412271571,
+        "length": 794.5584412271571,
         "alternatives": 3
       },
       "autoRelease": true,
@@ -18229,7 +18232,7 @@
     },
     "vtv4v": {
       "label": "4v",
-      "segment": "T32"
+      "segment": "T21"
     },
     "vtv3.4": {
       "label": "3/4",

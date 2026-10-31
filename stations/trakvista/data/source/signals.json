@@ -15,7 +15,9 @@
         "Sh3"
       ],
       "turnoutRefs": [
-        "3/5"
+        "3/5",
+        "3/5s1",
+        "3/5s2"
       ],
       "x": 205,
       "y": 79,
@@ -36,7 +38,9 @@
         "Sh3"
       ],
       "turnoutRefs": [
-        "3/4"
+        "3/4",
+        "3/4s1",
+        "3/4s2"
       ],
       "x": 680,
       "y": 103,
@@ -57,7 +61,9 @@
         "Sh3"
       ],
       "turnoutRefs": [
-        "2/3"
+        "2/3",
+        "2/3s1",
+        "2/3s2"
       ],
       "x": 170,
       "y": 119,
@@ -78,7 +84,9 @@
         "Sh3"
       ],
       "turnoutRefs": [
-        "2/4"
+        "2/4",
+        "2/4s1",
+        "2/4s2"
       ],
       "x": 725,
       "y": 143,
@@ -99,7 +107,9 @@
         "Sh3"
       ],
       "turnoutRefs": [
-        "1/4"
+        "1/4",
+        "1/4s1",
+        "1/4s2"
       ],
       "x": 705,
       "y": 145,
@@ -120,7 +130,9 @@
         "Sh3"
       ],
       "turnoutRefs": [
-        "4/7"
+        "4/7",
+        "4/7s1",
+        "4/7s2"
       ],
       "x": 456,
       "y": 182,
@@ -141,7 +153,9 @@
         "Sh3"
       ],
       "turnoutRefs": [
-        "4/4"
+        "4/4",
+        "4/4s1",
+        "4/4s2"
       ],
       "x": 647,
       "y": 147,
@@ -162,7 +176,9 @@
         "Sh3"
       ],
       "turnoutRefs": [
-        "2/6"
+        "2/6",
+        "2/6s1",
+        "2/6s2"
       ],
       "x": 570,
       "y": 143,
@@ -183,7 +199,9 @@
         "Sh3"
       ],
       "turnoutRefs": [
-        "2/5"
+        "2/5",
+        "2/5s1",
+        "2/5s2"
       ],
       "x": 231,
       "y": 119,
@@ -207,7 +225,9 @@
       ],
       "turnoutRefs": [
         "2/7",
-        "2/7d"
+        "2/7s1",
+        "2/7s2",
+        "2/7s3"
       ],
       "x": 524,
       "y": 119,
@@ -224,14 +244,14 @@
         "Stop and Sh1",
         "Stop and Sh2",
         "Stop and Sh3",
-        "Clear 80",
-        "Clear 80 Caution",
         "Clear 40",
         "Clear 40 Caution"
       ],
       "turnoutRefs": [
         "3/7",
-        "3/3d"
+        "3/7s1",
+        "3/7s2",
+        "3/7s3"
       ],
       "x": 654,
       "y": 79,
@@ -253,33 +273,13 @@
       ],
       "turnoutRefs": [
         "1/7",
-        "1/7d"
+        "1/7s1",
+        "1/7s2",
+        "1/7s3"
       ],
       "x": 475,
       "y": 169,
       "deg": 90
-    },
-    {
-      "id": "1/8",
-      "sys": "IF$tsm:SE-TSFS-2010:hdvsi_5($0007)",
-      "type": "hdvsi_5",
-      "comment": null,
-      "cls": "TurnoutSignalMastXml",
-      "aspects": [
-        "Stop and Sh0",
-        "Stop and Sh1",
-        "Stop and Sh2",
-        "Stop and Sh3",
-        "Clear 40",
-        "Clear 40 Caution"
-      ],
-      "turnoutRefs": [
-        "1/8",
-        "1/8d"
-      ],
-      "x": 280,
-      "y": 194,
-      "deg": 270
     },
     {
       "id": "2/8",
@@ -292,12 +292,14 @@
         "Stop and Sh1",
         "Stop and Sh2",
         "Stop and Sh3",
-        "Clear 40",
-        "Clear 40 Caution"
+        "Clear 80",
+        "Clear 80 Caution"
       ],
       "turnoutRefs": [
         "2/8",
-        "2/8d"
+        "2/8s1",
+        "2/8s2",
+        "2/8s3"
       ],
       "x": 255,
       "y": 143,
@@ -314,17 +316,108 @@
         "Stop and Sh1",
         "Stop and Sh2",
         "Stop and Sh3",
-        "Clear 80",
-        "Clear 80 Caution",
         "Clear 40",
         "Clear 40 Caution"
       ],
       "turnoutRefs": [
         "3/8",
-        "3/8d"
+        "3/8s1",
+        "3/8s2",
+        "3/8s3"
       ],
       "x": 225,
       "y": 102,
+      "deg": 270
+    },
+    {
+      "id": "2/10",
+      "sys": "IF$tsm:SE-TSFS-2010:hsi_2($0017)",
+      "type": "hsi_2",
+      "comment": null,
+      "cls": "TurnoutSignalMastXml",
+      "aspects": [
+        "Stop",
+        "Clear 80"
+      ],
+      "turnoutRefs": [
+        "2/10"
+      ],
+      "x": 85,
+      "y": 147,
+      "deg": 270
+    },
+    {
+      "id": "2/9",
+      "sys": "IF$tsm:SE-TSFS-2010:hsi_2($0018)",
+      "type": "hsi_2",
+      "comment": null,
+      "cls": "TurnoutSignalMastXml",
+      "aspects": [
+        "Stop",
+        "Clear 80"
+      ],
+      "turnoutRefs": [
+        "2/9"
+      ],
+      "x": 835,
+      "y": 121,
+      "deg": 90
+    },
+    {
+      "id": "1/9",
+      "sys": "IF$tsm:SE-TSFS-2010:hsi_2($0019)",
+      "type": "hsi_2",
+      "comment": null,
+      "cls": "TurnoutSignalMastXml",
+      "aspects": [
+        "Stop",
+        "Clear 80"
+      ],
+      "turnoutRefs": [
+        "1/9"
+      ],
+      "x": 807,
+      "y": 253,
+      "deg": 180
+    },
+    {
+      "id": "1/2",
+      "sys": "IF$tsm:SE-TSFS-2010:hsi_3($0010)",
+      "type": "hsi_3",
+      "comment": null,
+      "cls": "TurnoutSignalMastXml",
+      "aspects": [
+        "Stop",
+        "Clear 40"
+      ],
+      "turnoutRefs": [
+        "1/2"
+      ],
+      "x": 781,
+      "y": 220,
+      "deg": 0
+    },
+    {
+      "id": "1/8",
+      "sys": "IF$tsm:SE-TSFS-2010:hsi_3+dvsi($0007)",
+      "type": "hsi_3+dvsi",
+      "comment": null,
+      "cls": "TurnoutSignalMastXml",
+      "aspects": [
+        "Stop and Sh0",
+        "Stop and Sh1",
+        "Stop and Sh2",
+        "Stop and Sh3",
+        "Clear 40"
+      ],
+      "turnoutRefs": [
+        "1/8",
+        "1/8d",
+        "1/8ds1",
+        "1/8ds2"
+      ],
+      "x": 280,
+      "y": 197,
       "deg": 270
     },
     {
@@ -349,8 +442,8 @@
     },
     {
       "id": "2/1",
-      "sys": "IF$tsm:SE-TSFS-2010:hsi_5($0006)",
-      "type": "hsi_5",
+      "sys": "IF$tsm:SE-TSFS-2010:hsi_7($0006)",
+      "type": "hsi_7",
       "comment": null,
       "cls": "TurnoutSignalMastXml",
       "aspects": [
@@ -358,6 +451,7 @@
         "Clear 80",
         "Clear 80 Expect Stop",
         "Clear 80 Expect 80",
+        "Clear 80 Expect 40",
         "Clear 40"
       ],
       "turnoutRefs": [
@@ -366,92 +460,6 @@
       "x": 114,
       "y": 122,
       "deg": 90
-    },
-    {
-      "id": "1/2",
-      "sys": "IF$tsm:SE-TSFS-2010:hsi_5($0010)",
-      "type": "hsi_5",
-      "comment": null,
-      "cls": "TurnoutSignalMastXml",
-      "aspects": [
-        "Stop",
-        "Clear 80",
-        "Clear 80 Expect Stop",
-        "Clear 80 Expect 80",
-        "Clear 40"
-      ],
-      "turnoutRefs": [
-        "1/2"
-      ],
-      "x": 781,
-      "y": 230,
-      "deg": 0
-    },
-    {
-      "id": "2/10",
-      "sys": "IF$tsm:SE-TSFS-2010:hsi_7($0017)",
-      "type": "hsi_7",
-      "comment": null,
-      "cls": "TurnoutSignalMastXml",
-      "aspects": [
-        "Stop",
-        "Clear 80",
-        "Clear 80 Expect Stop",
-        "Clear 80 Expect 80",
-        "Clear 80 Expect 40",
-        "Clear 40",
-        "Clear 40 Short Entry Route"
-      ],
-      "turnoutRefs": [
-        "2/10"
-      ],
-      "x": 85,
-      "y": 147,
-      "deg": 270
-    },
-    {
-      "id": "2/9",
-      "sys": "IF$tsm:SE-TSFS-2010:hsi_7($0018)",
-      "type": "hsi_7",
-      "comment": null,
-      "cls": "TurnoutSignalMastXml",
-      "aspects": [
-        "Stop",
-        "Clear 80",
-        "Clear 80 Expect Stop",
-        "Clear 80 Expect 80",
-        "Clear 80 Expect 40",
-        "Clear 40",
-        "Clear 40 Short Entry Route"
-      ],
-      "turnoutRefs": [
-        "2/9"
-      ],
-      "x": 835,
-      "y": 121,
-      "deg": 90
-    },
-    {
-      "id": "1/9",
-      "sys": "IF$tsm:SE-TSFS-2010:hsi_7($0019)",
-      "type": "hsi_7",
-      "comment": null,
-      "cls": "TurnoutSignalMastXml",
-      "aspects": [
-        "Stop",
-        "Clear 80",
-        "Clear 80 Expect Stop",
-        "Clear 80 Expect 80",
-        "Clear 80 Expect 40",
-        "Clear 40",
-        "Clear 40 Short Entry Route"
-      ],
-      "turnoutRefs": [
-        "1/9"
-      ],
-      "x": 807,
-      "y": 263,
-      "deg": 180
     },
     {
       "id": "S3v",
@@ -466,7 +474,7 @@
       "turnoutRefs": [
         "S3v"
       ],
-      "x": 70,
+      "x": 91,
       "y": 103,
       "deg": 270
     },
@@ -517,9 +525,9 @@
       "turnoutRefs": [
         "S4v"
       ],
-      "x": 375,
-      "y": 307,
-      "deg": 224
+      "x": 70,
+      "y": 343,
+      "deg": 270
     },
     {
       "id": "AInSignal",

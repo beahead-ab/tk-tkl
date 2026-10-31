@@ -81,8 +81,8 @@ for (const pair of policy.allowed()) {
 const allRoutes = [...routes, ...routeAlternatives];
 
 const lsOf = name => source.sensors.find(s => s.name === name)?.system;
-// Växlar: LT-adressen ur JMRI. Interna växlar (IT) är lokalt manövrerade och har ingen LocoNet-adress; de får en
-// bänkadress från 1001 så att simuleringen kan lägga dem, och märks local.
+// Växlar: LT-adressen ur JMRI. Interna växlar (IT) är manuella och har ingen LocoNet-adress; de får ett
+// internt id från 1001 för modellens kompatibilitet, och märks local. Id:t får aldrig skickas på LocoNet.
 const sourceTurnouts = Object.fromEntries(source.turnouts.filter(t => t.name).map(t => [t.name, t]));
 let localAddress = 1001;
 const turnouts = Object.fromEntries(Object.keys(topology.turnouts).sort().map(name => {
@@ -91,19 +91,20 @@ const turnouts = Object.fromEntries(Object.keys(topology.turnouts).sort().map(na
     // Växelmotorerna har inbyggda lägesgivare (Benny 17 oktober, svar 2), men alla är inte inställda i JMRI. Givarna tas
     // därför efter namn, vx<nr>-t för avvikande och vx<nr>-c för rakt, inte efter växelns sensor1/sensor2 i XML.
     const id = name.replace(/^Vx/, '').toLowerCase(), thrown = lsOf('vx' + id + '-t'), closed = lsOf('vx' + id + '-c');
-    const sensors = thrown && closed ? { thrown: Number(thrown.slice(2)), closed: Number(closed.slice(2)), thrownSensor: 'vx' + id + '-t', closedSensor: 'vx' + id + '-c' } : null;
+    const sensors = /^LS\d+$/.test(thrown) && /^LS\d+$/.test(closed) ? { thrown: Number(thrown.slice(2)), closed: Number(closed.slice(2)), thrownSensor: 'vx' + id + '-t', closedSensor: 'vx' + id + '-c' } : null;
     const xmlSensors = t.feedback === 'TWOSENSOR' ? t.sensors.join('/') : t.feedback;
     const differs = sensors && t.feedback === 'TWOSENSOR' && (t.sensors[0] !== sensors.thrownSensor || t.sensors[1] !== sensors.closedSensor);
     return [name, { address: Number(t.system.slice(2)), inverted: t.inverted, source: t.system, block, ...(sensors ? { feedbackSensors: sensors } : {}),
       provenance: `JMRI ${t.system} (${t.comment || 'utan kommentar'}). ` + (sensors ? `Läget från motorns givare ${sensors.thrownSensor} (${thrown}) och ${sensors.closedSensor} (${closed})` +
         (differs ? `; XML anger ${xmlSensors}, som Benny säger inte är färdigställt.` : '.') : `Givare vx${id}-t och vx${id}-c saknas i XML; läget väntas som växelrapport tills givarna är inställda.`) + ' Ej uppmätt.' }];
   }
-  if (station.localTurnouts?.[name]) return [name, { address: localAddress++, inverted: false, source: station.localTurnouts[name], block, local: true,
-    provenance: `Intern JMRI-växel ${station.localTurnouts[name]} utan LocoNet-adress. Läggs om elektriskt på plats; motorns givare är inte inställda i JMRI än. Bänkadress som TKL aldrig beordrar.` }];
+  if (t && /^IT\d+$/.test(t.system)) return [name, { address: localAddress++, inverted: t.inverted, source: t.system, block, local: true,
+    provenance: `Intern JMRI-växel ${t.system}, helt manuell utan LocoNet-anslutning. Modellens interna id är ingen fysisk adress. TKL varken beordrar eller läser återrapport för växeln.` }];
   throw Error('Växeln saknar adress i källan: ' + name);
 }));
 
-// Spårledningar: ingången ur gruppen för spårledningar (sl22a → LS239). Utan regel: bänkadress från 3001.
+// Spårledningar: LS-ingångarna ur LogixNG. Block utan sensor är interna objekt, inte spårledningar.
+// Interna id:n från 3001 behåller modellens blockreferenser men används aldrig som LocoNet-adresser.
 const blocks = {}; let bench = 3001;
 for (const b of panel.lblocks) {
   const rule = source.detection.find(d => d.sets.includes(b.sensor));
@@ -112,9 +113,11 @@ for (const b of panel.lblocks) {
     const list = inputs.map(s => ({ address: Number(s.slice(2)), activeMeansOccupied: true }));
     blocks[b.user] = { address: list[0].address, activeMeansOccupied: true, ...(list.length > 1 ? { inputs: list, logic: rule.logic } : {}), sourceSensor: b.sensor, sourceInputs: inputs,
       provenance: `${rule.name}: ${rule.inputs.join(rule.logic === 'all' ? ' och ' : ' eller ')} (${inputs.join(', ')}) ur LogixNG. Polaritet antagen (aktiv = belagd). Ej uppmätt.` };
-  } else blocks[b.user] = { address: bench++, activeMeansOccupied: true, sourceSensor: b.sensor || null, provenance: 'Bänkadress: ingen spårledningsregel i källan.' };
+  } else if (!b.sensor) blocks[b.user] = { address: bench++, activeMeansOccupied: true, internal: true, sourceSensor: null,
+    provenance: 'Internt JMRI-block utan sensor, inte ett spårblock. Modellens interna id är ingen fysisk adress.' };
+  else throw Error('Spårblockets sensor saknar LS-bindning i källan: ' + b.user);
 }
-for (const r of allRoutes) for (const b of r.blocks) if (!blocks[b]) throw Error('Spårledning utan bindning: ' + b);
+for (const r of allRoutes) for (const b of r.blocks) if (!blocks[b] || blocks[b].internal) throw Error('Spårledning utan fysisk bindning: ' + b);
 const blockOf = (route, part) => part.kind === 'segment' ? topology.segments[part.id].b : topology.turnouts[part.name].block;
 for (const route of allRoutes) {
   const addresses = [...new Set(route.blocks.map(b => blocks[b].address))];
