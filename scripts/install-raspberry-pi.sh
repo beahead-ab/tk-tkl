@@ -9,7 +9,7 @@ set -eu
 if [ "$(id -u)" -ne 0 ]; then echo "Kör installationen med sudo."; exit 1; fi
 SOURCE_DIR=$(CDPATH= cd -- "${1:-$(dirname -- "$0")/..}" && pwd)
 # Vilken installation paketet blir (packaging/identity.env): Charlottendal (cda-tkl) om inget annat anges.
-TKL_ID=cda-tkl TKL_NAME=Charlottendal TKL_STATION=charlottendal TKL_REPOSITORY=beahead-ab/cda-tkl-install
+TKL_ID=cda-tkl TKL_NAME=Charlottendal TKL_STATION=charlottendal TKL_REPOSITORY=beahead-ab/cda-tkl
 [ -f "$SOURCE_DIR/packaging/identity.env" ] && . "$SOURCE_DIR/packaging/identity.env"
 case "$TKL_ID" in *[!a-z0-9-]*|'') echo "Ogiltigt TKL_ID i packaging/identity.env."; exit 1 ;; esac
 if [ ! -f "$SOURCE_DIR/src/server.mjs" ] || [ ! -f "$SOURCE_DIR/packaging/raspberry-pi/cda-tkl.service" ]; then
@@ -21,7 +21,7 @@ BASE=/opt/$TKL_ID
 STATE_DIR=/var/lib/$TKL_ID
 CONFIG_DIR=/etc/$TKL_ID
 # Paketfilerna är skrivna för Charlottendal (cda-tkl); för en annan station byts namn, sökvägar och förråd vid installationen.
-render() { sed -e "s#beahead-ab/cda-tkl-install#$TKL_REPOSITORY#g" -e "s#cda-tkl#$TKL_ID#g" -e "s#Charlottendal#$TKL_NAME#g" "$1" > "$2"; chmod "$3" "$2"; }
+render() { sed -e "s#beahead-ab/cda-tkl#$TKL_REPOSITORY#g" -e "s#cda-tkl#$TKL_ID#g" -e "s#Charlottendal#$TKL_NAME#g" "$1" > "$2"; chmod "$3" "$2"; }
 NODE_DIR="$BASE/node"
 NODE_MAJOR=22
 DESKTOP_USER=${CDA_TKL_DESKTOP_USER:-${SUDO_USER:-}}
@@ -89,10 +89,11 @@ if [ ! -f "$CONFIG_DIR/app.env" ]; then
   render "$PACKAGING/app.env" "$CONFIG_DIR/app.env" 0644
 fi
 # En annan station än Charlottendal: stationen, förrådet för uppdateringar och Pi:ns uppdateringstjänst.
+sed -i -E 's|^CHARLOTTENDAL_INSTALL_REPOSITORY="?beahead-ab/cda-tkl-install"?$|CHARLOTTENDAL_INSTALL_REPOSITORY=beahead-ab/cda-tkl|' "$CONFIG_DIR/app.env"
 if [ "$TKL_STATION" != charlottendal ]; then
   grep -q '^CHARLOTTENDAL_STATION=' "$CONFIG_DIR/app.env" || printf '\nCHARLOTTENDAL_STATION=%s\n' "$TKL_STATION" >> "$CONFIG_DIR/app.env"
 fi
-if [ "$TKL_REPOSITORY" != beahead-ab/cda-tkl-install ]; then
+if [ "$TKL_REPOSITORY" != beahead-ab/cda-tkl ]; then
   grep -q '^CHARLOTTENDAL_INSTALL_REPOSITORY=' "$CONFIG_DIR/app.env" || printf 'CHARLOTTENDAL_INSTALL_REPOSITORY=%s\n' "$TKL_REPOSITORY" >> "$CONFIG_DIR/app.env"
 fi
 if [ "$TKL_ID" != cda-tkl ]; then
@@ -199,17 +200,24 @@ fi
 
 echo
 if [ -n "$KIOSK_URL" ]; then
-  echo "Rangerarens station är installerad. Chromium öppnar $KIOSK_URL i helskärm efter omstart:  sudo reboot"
+  echo "Rangerarens station är installerad. Chromium öppnar $KIOSK_URL i helskärm efter omstart."
   echo "Logga in med en användare som har rollen rangerare. Stream Deck kopplas upp av sig själv."
-  exit 0
-fi
-echo "$TKL_NAME TKL $VERSION är installerad och startar automatiskt."
-echo "Ställverket:  http://127.0.0.1:8910  (på den här datorn)"
-echo "Anläggningssimulatorn:  http://127.0.0.1:8911"
-if [ "$BROWSER_ENABLED" = true ]; then
-  echo "Chromium öppnar ställverket i helskärm efter nästa omstart:  sudo reboot"
-  echo "Genvägen '$TKL_NAME TKL' finns på skrivbordet. Stream Deck kopplas upp av sig själv."
 else
-  echo "Inget skrivbord hittades; TKL körs utan lokal webbläsare."
+  echo "$TKL_NAME TKL $VERSION är installerad och startar automatiskt."
+  echo "Ställverket:  http://127.0.0.1:8910  (på den här datorn)"
+  echo "Anläggningssimulatorn:  http://127.0.0.1:8911"
+  if [ "$BROWSER_ENABLED" = true ]; then
+    echo "Chromium öppnar ställverket i helskärm efter omstart."
+    echo "Genvägen '$TKL_NAME TKL' finns på skrivbordet. Stream Deck kopplas upp av sig själv."
+  else
+    echo "Inget skrivbord hittades; TKL körs utan lokal webbläsare."
+  fi
+  echo "Uppdatera senare med:  sudo $TKL_ID-update"
 fi
-echo "Uppdatera senare med:  sudo $TKL_ID-update"
+
+# Första installationen på en fysisk Pi: låt slutmeddelandet visas och yttersta install.sh städa upp
+# innan systemd startar om datorn. Uppdateringar och andra Debian/Ubuntu-datorer startas inte om.
+PI_MODEL=""
+[ ! -r /proc/device-tree/model ] || PI_MODEL=$(tr -d '\000' < /proc/device-tree/model)
+. "$SOURCE_DIR/scripts/raspberry-pi-reboot.sh"
+schedule_pi_reboot "$SYSTEMD" "$PI_MODEL" "$PREVIOUS"

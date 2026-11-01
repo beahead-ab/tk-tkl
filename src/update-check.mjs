@@ -2,11 +2,11 @@
 // newer release exists, at start, every hour, and when Uppdatering asks. Only reads one small file;
 // sends nothing about this installation. The web deployment checks too: on its own server
 // (charlottendal-update installed) and on Render (deploy/render sets the kind).
-// Förrådet är Charlottendals cda-tkl-install om installationen inte anger ett annat (CHARLOTTENDAL_INSTALL_REPOSITORY,
+// Förrådet är Charlottendals cda-tkl om installationen inte anger ett annat (CHARLOTTENDAL_INSTALL_REPOSITORY,
 // som installationen skriver för en annan station, till exempel beahead-ab/Tk-TKL för Träkvista).
 import fs from 'node:fs';
-export const DEFAULT_REPOSITORY='beahead-ab/cda-tkl-install';
-export const installRepository=(env=process.env)=>/^[\w.-]+\/[\w.-]+$/.test(env.CHARLOTTENDAL_INSTALL_REPOSITORY||'')?env.CHARLOTTENDAL_INSTALL_REPOSITORY:DEFAULT_REPOSITORY;
+export const DEFAULT_REPOSITORY='beahead-ab/cda-tkl';
+export const installRepository=(env=process.env)=>/^[\w.-]+\/[\w.-]+$/.test(env.CHARLOTTENDAL_INSTALL_REPOSITORY||'')&&env.CHARLOTTENDAL_INSTALL_REPOSITORY!=='beahead-ab/cda-tkl-install'?env.CHARLOTTENDAL_INSTALL_REPOSITORY:DEFAULT_REPOSITORY;
 export const repositoryUrls=repository=>({url:`https://raw.githubusercontent.com/${repository}/main/package.json`,releasesUrl:`https://raw.githubusercontent.com/${repository}/main/public/releases.json`});
 // Ett privat förråd (Tk-TKL medan det är privat) läses genom GitHubs API med installationens token, samma som
 // installationen och uppdateringstjänsten använder: filen i CHARLOTTENDAL_GITHUB_TOKEN_FILE (/etc/<id>/github-token).

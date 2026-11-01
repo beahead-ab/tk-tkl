@@ -7,11 +7,11 @@ test('versions compare by number, not by text',()=>{
   assert.equal(newer('0.48.0','0.48.0'),false);assert.equal(newer('0.47.9','0.48.0'),false);
 });
 
-test('a newer release in cda-tkl-install is offered; the same or an older one is not',async()=>{
+test('a newer release in cda-tkl is offered; the same or an older one is not',async()=>{
   let version='0.49.0';const urls=[];
   const check=new UpdateCheck({current:'0.48.0',kind:'raspberry-pi',now:()=>1000,fetcher:async url=>{urls.push(url);return new Response(JSON.stringify({version}));}});
-  assert.deepEqual(await check.check(),{kind:'raspberry-pi',repository:'beahead-ab/cda-tkl-install',product:'Charlottendal TKL',current:'0.48.0',latest:'0.49.0',available:true,newReleases:[],checkedAt:1000,error:'',canStart:true,run:null});
-  assert.equal(urls[0],'https://raw.githubusercontent.com/beahead-ab/cda-tkl-install/main/package.json');
+  assert.deepEqual(await check.check(),{kind:'raspberry-pi',repository:'beahead-ab/cda-tkl',product:'Charlottendal TKL',current:'0.48.0',latest:'0.49.0',available:true,newReleases:[],checkedAt:1000,error:'',canStart:true,run:null});
+  assert.equal(urls[0],'https://raw.githubusercontent.com/beahead-ab/cda-tkl/main/package.json');
   version='0.48.0';assert.equal((await check.check()).available,false);
 });
 
@@ -80,9 +80,10 @@ test('on Render the Deploy Hook starts a build, and the next version settles the
 
 test('an installation of another station reads its own repository (Träkvista: beahead-ab/Tk-TKL)',async()=>{
   const {installRepository}=await import('../src/update-check.mjs');
-  assert.equal(installRepository({}),'beahead-ab/cda-tkl-install');
+  assert.equal(installRepository({}),'beahead-ab/cda-tkl');
+  assert.equal(installRepository({CHARLOTTENDAL_INSTALL_REPOSITORY:'beahead-ab/cda-tkl-install'}),'beahead-ab/cda-tkl');
   assert.equal(installRepository({CHARLOTTENDAL_INSTALL_REPOSITORY:'beahead-ab/Tk-TKL'}),'beahead-ab/Tk-TKL');
-  assert.equal(installRepository({CHARLOTTENDAL_INSTALL_REPOSITORY:'../../etc'}),'beahead-ab/cda-tkl-install');
+  assert.equal(installRepository({CHARLOTTENDAL_INSTALL_REPOSITORY:'../../etc'}),'beahead-ab/cda-tkl');
   const urls=[];const check=new UpdateCheck({current:'0.81.0',kind:'raspberry-pi',repository:'beahead-ab/Tk-TKL',product:'Träkvista TKL',fetcher:async url=>{urls.push(url);return new Response('{"version":"0.81.0"}');}});
   const view=await check.check();assert.equal(urls[0],'https://raw.githubusercontent.com/beahead-ab/Tk-TKL/main/package.json');
   assert.equal(view.repository,'beahead-ab/Tk-TKL');assert.equal(view.product,'Träkvista TKL');

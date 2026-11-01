@@ -12,7 +12,9 @@
       "docs/raspberry-pi.md",
       "docs/loconet-anslutning.md",
       "docs/benny-windows-bluetooth-prov.md"
-    ]
+    ],
+    "received": "316f70299da20e77e51833a95dcf071bfef60751",
+    "receivedNote": "tk-tkl till och med #1 (316f702) finns i cda-tkl: #3 genom cda-tkl #109, #5 i cda-tkl 0.86.7 och #1 genom cda-tkl #108. Versionsfilerna skiljer sig med avsikt; tk-tkl använde 0.85.0 och 0.85.1. Se docs/stationer.md."
   },
   "source": "Trakvista.xml",
   "panel": "Träkvista",

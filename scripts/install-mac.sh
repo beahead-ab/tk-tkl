@@ -10,7 +10,7 @@ if [ "$(id -u)" -eq 0 ]; then echo "Kör installationen utan sudo på Mac."; exi
 SOURCE_DIR=$(CDPATH= cd -- "${1:-$(dirname -- "$0")/..}" && pwd)
 [ -f "$SOURCE_DIR/src/server.mjs" ] || { echo "Installationspaketet är ofullständigt."; exit 1; }
 # Identiteten måste läsas före kataloger, autostart och appnamn, så en annan station inte ersätter Charlottendal.
-TKL_ID=cda-tkl TKL_NAME=Charlottendal TKL_STATION=charlottendal TKL_REPOSITORY=beahead-ab/cda-tkl-install
+TKL_ID=cda-tkl TKL_NAME=Charlottendal TKL_STATION=charlottendal TKL_REPOSITORY=beahead-ab/cda-tkl
 [ -f "$SOURCE_DIR/packaging/identity.env" ] && . "$SOURCE_DIR/packaging/identity.env"
 case "$TKL_ID" in *[!a-z0-9-]*|'') echo "Ogiltigt TKL_ID i packaging/identity.env."; exit 1 ;; esac
 APP_NAME="$TKL_NAME TKL"
@@ -54,9 +54,11 @@ if [ ! -f "$APP/app.env" ]; then
   sed -e "s|^CHARLOTTENDAL_STATE_DIR=.*|CHARLOTTENDAL_STATE_DIR=\"$APP/state\"|" -e "s|^CHARLOTTENDAL_INSTALL_KIND=.*|CHARLOTTENDAL_INSTALL_KIND=mac|" "$SOURCE_DIR/packaging/raspberry-pi/app.env" > "$APP/app.env"
 fi
 grep -q '^CHARLOTTENDAL_INSTALL_KIND=' "$APP/app.env" || printf '\nCHARLOTTENDAL_INSTALL_KIND=mac\n' >> "$APP/app.env"
+# Flytta bara den tidigare standardadressen; egna förråd och övriga inställningar bevaras.
+sed -i '' -E 's|^CHARLOTTENDAL_INSTALL_REPOSITORY="?beahead-ab/cda-tkl-install"?$|CHARLOTTENDAL_INSTALL_REPOSITORY=beahead-ab/cda-tkl|' "$APP/app.env"
 # En annan station än Charlottendal: stationen och förrådet för uppdateringar.
 [ "$TKL_STATION" = charlottendal ] || grep -q '^CHARLOTTENDAL_STATION=' "$APP/app.env" || printf 'CHARLOTTENDAL_STATION=%s\n' "$TKL_STATION" >> "$APP/app.env"
-[ "$TKL_REPOSITORY" = beahead-ab/cda-tkl-install ] || grep -q '^CHARLOTTENDAL_INSTALL_REPOSITORY=' "$APP/app.env" || printf 'CHARLOTTENDAL_INSTALL_REPOSITORY=%s\n' "$TKL_REPOSITORY" >> "$APP/app.env"
+[ "$TKL_REPOSITORY" = beahead-ab/cda-tkl ] || grep -q '^CHARLOTTENDAL_INSTALL_REPOSITORY=' "$APP/app.env" || printf 'CHARLOTTENDAL_INSTALL_REPOSITORY=%s\n' "$TKL_REPOSITORY" >> "$APP/app.env"
 # Privat förråd: spara samma token som installationen fick, så att Uppdatering i panelen ser nya versioner.
 # Som på Pi:n (scripts/install-raspberry-pi.sh), fast i installationens egen mapp och bara för den egna användaren.
 if [ -n "${CDA_TKL_TOKEN:-}" ]; then umask 077 && printf '%s\n' "$CDA_TKL_TOKEN" > "$APP/github-token" && umask 022; fi

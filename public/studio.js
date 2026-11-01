@@ -1,3 +1,4 @@
+import {readTheme,THEME_KEY} from './app-theme.js';
 // Studio: Konfigurera (stationsplanen och reglerna med chatten), Data (alla mängder med korsfilter), Genomgång (korten och avvikelserna)
 // och Driftsättning (utkast, prov och aktivering). AI:n nås bara via TKL-servern; ingenting aktiveras härifrån utan utkast.
 import {buildStudioModel,SETS,TABS,relationsFor,rowsFor,columnsFor,cellsFor,walkOrder,parseHash,planGeometry,CHARLOTTENDAL_FRAME,setOf,SHAPE_LABEL,CARD_TYPES,CARD_LABEL,TYPE_CLASS} from './studio-model.js';
@@ -366,4 +367,5 @@ $('#st-search').addEventListener('keydown',e=>{if(e.key!=='Enter'||!model)return
 createHelp({button:$('#st-help-btn'),getState:()=>({tab:state.tab,view:state.view})});
 $('#st-theme').addEventListener('click',e=>{const light=document.documentElement.dataset.theme!=='light';document.documentElement.dataset.theme=light?'light':'';e.currentTarget.textContent=light?'Mörkt':'Ljust';e.currentTarget.setAttribute('aria-pressed',light);try{localStorage.setItem('studio-theme',light?'light':'dark');}catch{}});
 try{if(localStorage.getItem('studio-theme')==='light'){document.documentElement.dataset.theme='light';$('#st-theme').textContent='Mörkt';}}catch{}
+window.addEventListener('storage',e=>{if(e.key!==THEME_KEY&&e.key!==null)return;const light=readTheme()==='light';document.documentElement.dataset.theme=light?'light':'dark';$('#st-theme').textContent=light?'Mörkt':'Ljust';$('#st-theme').setAttribute('aria-pressed',String(light));});
 load().catch(e=>{$('#st-main').innerHTML=`<p class="st-error">Studio kunde inte läsa stationen: ${esc(e.message)}</p>`;});

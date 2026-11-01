@@ -82,6 +82,58 @@ test('an action waits for a poll in flight instead of interleaving with it',asyn
   assert.equal(r.service.view().busy,false);
 });
 
+test('Godkänn, Neka och tågrörelser skickar serverns aktuella träffgeneration',async()=>{
+  for(const action of ['accept','reject','movement']){
+    const r=rig();r.context.meet_generation=7;
+    // Samma generationsvillkor som TrainMeet Servers runtime_command.
+    const fetcher=async(url,options={})=>{
+      const path=new URL(url).pathname;
+      if(options.method==='POST'&&path!=='/v1/pair'){
+        const body=JSON.parse(options.body);
+        if(body.meet_generation!==r.context.meet_generation)return new Response(JSON.stringify({message:'Träffen eller configen har ändrats. Läs in arbetsytan igen innan du fortsätter.'}),{status:409});
+        if(path==='/v1/tkl/clearance')r.context.connection_states[1].state=body.action==='accept'?'reserved':'free';
+        else r.context.movements.m1={revision:1,departure:'positioned',arrival:'none'};
+      }
+      return r.fetcher(url,options);
+    };
+    const service=new TrainMeet({storage:r.storage,origin:'https://trainmeet.example',fetcher,changeFeed:false});
+    await service.pair({...service.view(),stationId:'cda',code:'458982'});
+    assert.equal(service.view().context.meetGeneration,7);
+    const data={...service.view(),meetGeneration:7};
+    const result=action==='movement'?await service.movement({...data,movementId:'m1',departure:'positioned'}):await service.clearance({...data,connectionId:'vag-cda',action});
+    assert.equal(r.posts().at(-1).body.meet_generation,7);
+    if(action==='movement')assert.equal(result.context.movements[0].departure,'positioned');
+    else assert.equal(result.context.lines[1].state,action==='accept'?'reserved':'free');
+    r.context.meet_generation=8;await service.refresh();
+    const count=r.posts().length;
+    await assert.rejects(()=>service.clearance({...service.view(),meetGeneration:7,connectionId:'vag-cda',action:'reject'}),/Träffen har ändrats/);
+    assert.equal(r.posts().length,count,'gammalt knapptryck skickas inte i en ny generation');
+  }
+});
+
+test('en väntande klarering följer inte med en poll till en ny träffgeneration',async()=>{
+  const r=rig();r.context.meet_generation=1;await pair(r);
+  r.context.meet_generation=2;
+  const poll=r.service.refresh();
+  const command=r.service.clearance({...r.service.view(),connectionId:'vag-cda',action:'reject'});
+  await poll;
+  await assert.rejects(()=>command,/Träffen har ändrats/);
+  assert.equal(r.posts().length,0);
+});
+
+test('ogiltig träffgeneration godtas inte; äldre servrar utan generation fungerar',async()=>{
+  for(const generation of ['7',-1,1.5,true]){
+    const r=rig();r.context.meet_generation=generation;
+    await assert.rejects(()=>pair(r),/Ogiltig träffgeneration/);
+    assert.equal(r.posts().length,0);
+  }
+  for(const generation of [undefined,null,0]){
+    const r=rig();r.context.meet_generation=generation;await pair(r);
+    await r.service.clearance({...r.service.view(),connectionId:'vag-cda',action:'reject'});
+    assert.equal(Object.hasOwn(r.posts().at(-1).body,'meet_generation'),generation===0);
+  }
+});
+
 test('line wording follows state and direction; only incoming requests demand attention',()=>{
   const base={neighborName:'Lekby',trainNumber:'3581'};
   assert.equal(lineStatus({...base,state:'free',direction:''}),'Fri');

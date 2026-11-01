@@ -13,13 +13,14 @@ New-Item -ItemType Directory -Force -Path (Join-Path $App 'logs') | Out-Null
 $Log = Join-Path $App 'logs\update.log'
 "== $(Get-Date -Format s) uppdatering startad" | Add-Content -Path $Log
 try {
-  $Repository = 'beahead-ab/cda-tkl-install'
+  $Repository = 'beahead-ab/cda-tkl'
   $EnvFile = Join-Path $App 'app.env'
   if (Test-Path $EnvFile) {
     $Line = Select-String -Path $EnvFile -Pattern '^CHARLOTTENDAL_INSTALL_REPOSITORY=(.*)$' | Select-Object -Last 1
     if ($Line) { $Value = $Line.Matches[0].Groups[1].Value.Trim().Trim('"'); if ($Value -match '^[A-Za-z0-9._-]+/[A-Za-z0-9._-]+$') { $Repository = $Value } }
   }
   $TokenFile = Join-Path $App 'github-token'
+  if ($Repository -eq 'beahead-ab/cda-tkl-install') { $Repository = 'beahead-ab/cda-tkl' }
   $Token = if (Test-Path $TokenFile) { (Get-Content $TokenFile -Raw).Trim() } else { '' }
   $Branch = if ($env:CDA_TKL_BRANCH) { $env:CDA_TKL_BRANCH } else { 'main' }
   $Url = "https://raw.githubusercontent.com/$Repository/$Branch/install.ps1"

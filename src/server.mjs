@@ -20,6 +20,7 @@ import { Configuration } from './configuration.mjs';
 import { TrainInformation } from './train-information.mjs';
 import { TrainTracker } from './train-tracking.mjs';
 import { TrafficTrains } from './traffic-trains.mjs';
+import { TrafficDepartures } from './traffic-departures.mjs';
 import { TrainAutomation } from './train-automation.mjs';
 import { automationCommand } from './automation-command.mjs';
 import { stationTraffic, trafficEdgeInfo } from './station-traffic.mjs';
@@ -52,7 +53,7 @@ const checkStationPending = () => {if(installationStation.pending)throw Object.a
 // Live eller offline (src/connection-mode.mjs): var kärnans LocoNet-klient ansluter, och LocoBufferns gateway i live.
 const connection=new ConnectionMode({storage,root:fileURLToPath(new URL('..',import.meta.url))});
 const connectionInfo=p=>connection.target(p);
-let profile,client,engine,configuration,trainInformation,panelIndications,recorder,tracker,automation;
+let profile,client,engine,configuration,trainInformation,panelIndications,recorder,tracker,automation,trafficDepartures;
 // Panelens geometri, för tågspårningens spårgraf (src/train-tracking.mjs).
 const panelGeometry=stationData('panel.json',station);
 const traffic=stationTraffic(station,baseProfile,panelGeometry);
@@ -115,7 +116,12 @@ function createRuntime(p){
     policy:traffic.explicitConnections?'trainmeet':'legacy',traffic,
     request:(from,to)=>e.request(from,to,'build'),edgeBlock:t.edgeBlock,log:(kind,message)=>e.log(kind,message),
     clearance:data=>trainMeet.clearance(data,{guard:guarded(data)}),movement:data=>trainMeet.movement(data,{guard:guarded(data)})});
-  return {profile:p,client:c,engine:e,
+  const departures=new TrafficDepartures({
+    available:()=>!traffic.explicitConnections&&engine===e&&tracker===t&&connection.mode==='offline'&&e.connected&&!e.storageFault&&!trainMeet.view().stale&&!installationStation.pending&&!installationStation.requireTrainMeetConnect,
+    currentContext:()=>trainMeet.view().context,
+    edgeInfo:()=>edgeInfo(),
+    movement:(data,options)=>trainMeet.movement(data,options),log:(kind,message)=>e.log(kind,message)});
+  return {profile:p,client:c,engine:e,trafficDepartures:departures,
     configuration:new Configuration(p,{storage,canActivate:()=>!e.routes.length&&!e.controls.programming.reserved&&!e.yard.requests.length&&!e.storageFault}),
     trainInformation:new TrainInformation(stationData('train-fields.json',station),p,{storage}),
     // Vägövergångarna ur profilen när en crossing-regel äger dem, annars ur katalogen.
@@ -175,10 +181,15 @@ function playTraffic(){
   if(installationStation.pending||installationStation.requireTrainMeetConnect||!trafficTrains.available||Date.now()-trafficTicked<1000)return;trafficTicked=Date.now();
   const edges=Object.fromEntries(Object.entries(edgeInfo()).map(([edge,info])=>[edge,{...info,block:tracker.edgeBlock[edge]}]));
   const meet=trainMeet.view();
-  trafficTrains.tick({context:meet.context,fresh:!meet.stale,edges,tracks:stationTracks(),blocks:engine.blocks,tracked:tracker.view().trains,expect:(block,number)=>tracker.expect(block,number),forget:number=>tracker.forget(number)})
+  const departed=new Set(trafficDepartures.view().map(r=>r.movementId));
+  const context=meet.context?{...meet.context,movements:meet.context.movements.filter(m=>!departed.has(m.id))}:null;
+  trafficTrains.tick({context,fresh:!meet.stale,edges,tracks:stationTracks(),blocks:engine.blocks,tracked:[...tracker.view().trains,...tracker.view().lines.filter(t=>t.direction==='out')],expect:(block,number)=>tracker.expect(block,number),forget:number=>tracker.forget(number)})
     .catch(error=>engine.log('error','Trafikspelets tåg: '+error.message)).finally(()=>{if(trafficTrains.revision!==trafficRevision){trafficRevision=trafficTrains.revision;dirty=true;}});
 }
 let automated=0,automationRevision=0,automating=false;
+function reportTraffic(){
+  trafficDepartures.tick(trainMeet.view(),tracker.view()).catch(error=>engine.log('error','Avgångsrapport: '+error.message));
+}
 async function automate(){
   if(installationStation.pending||installationStation.requireTrainMeetConnect||automating||!automation?.enabled||Date.now()-automated<250)return;automated=Date.now();automating=true;
   const current=automation;
@@ -190,12 +201,12 @@ let tracked=0,tracking=false;
 // Spårningens journalrader väcker kärnans change-händelse; den läser inte om sig själv under tiden.
 function track(){
   if(!tracker?.enabled||tracking)return;tracked=Date.now();tracking=true;
-  try{if(tracker.observe({blocks:engine.blocks,turnouts:engine.turnouts,routes:engine.routes,connected:engine.connected,book:trainInformation.data.entries,lines:trainMeet.view().context?.lines||[],edgeInfo:edgeInfo()}))dirty=true;}catch(error){engine.log('error','Tågspårningen: '+error.message);}finally{tracking=false;}
+  try{if(tracker.observe({blocks:engine.blocks,turnouts:engine.turnouts,routes:engine.routes,connected:engine.connected,book:trainInformation.data.entries,lines:trainMeet.view().context?.lines||[],edgeInfo:edgeInfo()}))dirty=true;trafficDepartures.observe(trainMeet.view(),tracker.view());}catch(error){engine.log('error','Tågspårningen: '+error.message);}finally{tracking=false;}
 }
 function protect(action) { try { return action(); } catch (e) { engine.log('error', e.message); } }
 function installRuntime(next,start=true){
   if(client){client.removeAllListeners();client.stop();engine.removeAllListeners();recorder.removeAllListeners();}
-  ({profile,client,engine,configuration,trainInformation,panelIndications,recorder,tracker,automation}=next);trace.length=0;protocolTrace.length=0;
+  ({profile,client,engine,configuration,trainInformation,panelIndications,recorder,tracker,automation,trafficDepartures}=next);trace.length=0;protocolTrace.length=0;
   const {client:c,engine:e,trainInformation:book,recorder:recording}=next;
   let recordedRevision=e.revision;
   e.on('change',()=>{
@@ -219,13 +230,13 @@ const streamDeckLayouts=new StreamDeckLayouts(storage,{pluppIds:()=>Object.keys(
 const release=JSON.parse(fs.readFileSync(new URL('../package.json',import.meta.url),'utf8')).version;
 // Installed copies look for a newer release in the public install repository.
 // The web deployment on its own server sets no install kind; its own updater (installed by publish-release)
-// makes it one, so Inställningar → Uppdatering can update it from cda-tkl-install. On Render, deploy/render
+// makes it one, so Inställningar → Uppdatering can update it from cda-tkl. On Render, deploy/render
 // sets the kind and RENDER_DEPLOY_HOOK_URL (a secret set in Render) lets the panel start a new build.
 const installKind=process.env.CHARLOTTENDAL_INSTALL_KIND||(fs.existsSync('/usr/local/sbin/charlottendal-update')?'web':'');
 const updateCheck=installKind?new UpdateCheck({current:release,kind:installKind,repository:installRepository(),product:station.title+' TKL',token:()=>readToken(),command:process.env.CHARLOTTENDAL_UPDATE_COMMAND||'',statusFile:path.join(storage.directory,'update.json'),readFile:file=>fs.readFileSync(file,'utf8'),
   writeFile:(file,text)=>{fs.writeFileSync(file+'.tmp',text,{mode:0o640});fs.renameSync(file+'.tmp',file);},hook:process.env.RENDER_DEPLOY_HOOK_URL}):null;
 updateCheck?.start();
-const snapshot = () => {const state=engine.snapshot();return { ...state,release,update:updateCheck?.view()??null,connectionInfo:connectionInfo(profile),connectionMode:connectionView(),installationStation:installationStation.view(stationRuntime()),destinations:destinations.view(),streamDeck:streamDeckLayouts.view(),bindingVersion:bindings.data.activeVersion,bindingActivation:activationStatus(), recordings:recorder.view(),clock:modelClock.snapshot(),trainMeet:trainMeet.view(),panelIndications:panelIndications.snapshot(state),trace, configurationVersion:configuration.data.activeVersion,trainInformation:trainInformation.snapshot(),trainTracking:tracker.view(),trafficTrains:trafficTrains.view(),automation:automation.view() };};
+const snapshot = () => {const state=engine.snapshot();return { ...state,release,update:updateCheck?.view()??null,connectionInfo:connectionInfo(profile),connectionMode:connectionView(),installationStation:installationStation.view(stationRuntime()),destinations:destinations.view(),streamDeck:streamDeckLayouts.view(),bindingVersion:bindings.data.activeVersion,bindingActivation:activationStatus(), recordings:recorder.view(),clock:modelClock.snapshot(),trainMeet:{...trainMeet.view(),departures:trafficDepartures.view()},panelIndications:panelIndications.snapshot(state),trace, configurationVersion:configuration.data.activeVersion,trainInformation:trainInformation.snapshot(),trainTracking:tracker.view(),trafficTrains:trafficTrains.view(),automation:automation.view() };};
 const server = http.createServer(async (req, res) => {
   let countedCommand=false;
   try {
@@ -351,7 +362,7 @@ const server = http.createServer(async (req, res) => {
     // On a Raspberry Pi the panel can start cda-tkl-update.service (allowed for the cda-tkl
     // user by the installer's polkit rule). It reinstalls and restarts TKL; the panel then
     // offers a reload. Elsewhere the update is started from Terminal or PowerShell.
-    // Uppdatering → Sök efter ny version: ask cda-tkl-install now rather than at the next hourly check.
+    // Uppdatering → Sök efter ny version: ask cda-tkl now rather than at the next hourly check.
     if(url.pathname==='/api/update/check'){
       if(!updateCheck)return json(res,{error:'Den här installationen söker inte efter nya versioner.'},409);
       const view=await updateCheck.check();dirty=true;return json(res,view);
@@ -441,7 +452,7 @@ let tick, publish;
 // CHARLOTTENDAL_LISTEN=0.0.0.0 lets the rangerare's station reach TKL over the layout's network.
 server.listen(port, process.env.CHARLOTTENDAL_LISTEN || '127.0.0.1', () => {
   console.log(`${station.title} TKL: http://127.0.0.1:${port}`); connection.start(); client.start();
-  tick = setInterval(() => {protect(() => engine.tick());if(Date.now()-tracked>300)track();playTraffic();automate();recorder.tick();modelClock.checkpoint();if(!installationStation.pending&&!installationStation.requireTrainMeetConnect)trainMeet.tick();if(Date.now()-clockPublished>1000){dirty=true;clockPublished=Date.now();}}, 100);
+  tick = setInterval(() => {protect(() => engine.tick());if(Date.now()-tracked>300)track();reportTraffic();playTraffic();automate();recorder.tick();modelClock.checkpoint();if(!installationStation.pending&&!installationStation.requireTrainMeetConnect)trainMeet.tick();if(Date.now()-clockPublished>1000){dirty=true;clockPublished=Date.now();}}, 100);
   publish = setInterval(() => {
     if (!dirty) return; dirty = false; const text = `data: ${JSON.stringify(snapshot())}\n\n`;
     for (const res of streams) { if (res.writableLength > 1e6) { res.end(); streams.delete(res); } else res.write(text); }

@@ -7,11 +7,13 @@
 #
 # It fetches the whole package from GitHub and runs the installer for this system.
 # Run it again, or `sudo cda-tkl-update`, to update; settings and operating data stay.
+# Första lyckade installationen på Raspberry Pi startar om Pi:n efter en minut.
+# CDA_TKL_REBOOT=0 väljer bort omstarten. Uppdateringar startar om TKL-programmet.
 # CDA_TKL_TOKEN=<token> reads the package from a private repository instead (forks).
 # CDA_TKL_SOURCE=/path/to/package.tar.gz or a directory installs from there instead (tests).
 set -eu
 
-# Förrådet och namnet för den här installationen. Charlottendal: cda-tkl-install. En annan station har sitt eget
+# Förrådet och namnet för den här installationen. Charlottendal: cda-tkl. En annan station har sitt eget
 # förråd med samma skript (Träkvista: beahead-ab/Tk-TKL); packaging/identity.env i paketet säger resten.
 REPOSITORY="beahead-ab/Tk-TKL"
 NAME="Träkvista TKL"

@@ -3,14 +3,14 @@
 // Raspberry Pi, webbdriften, och sedan 0.84.0 också en Mac eller PC med installationens update-skript.
 // En äldre användarinstallation utan skriptet får i stället raden att köra. Sidan skickar inget förrän den ombeds.
 import {confirmAdmin,createAdminDialog} from './admin-ui.js';
-// Raderna pekar på installationens eget förråd (view.repository); Charlottendals är cda-tkl-install.
-export const updateLines=(repository='beahead-ab/cda-tkl-install')=>({
+// Raderna pekar på installationens eget förråd (view.repository); Charlottendals är cda-tkl.
+export const updateLines=(repository='beahead-ab/cda-tkl')=>({
   mac:{where:'Terminal',line:`curl -fsSL https://raw.githubusercontent.com/${repository}/main/install.sh | sh`},
   windows:{where:'PowerShell',line:`irm https://raw.githubusercontent.com/${repository}/main/install.ps1 | iex`}
 });
 export const UPDATE_LINES=updateLines();
 // Förrådet som Render bygger webbdriften ur: cda-tkl för Charlottendal, stationens eget (Tk-TKL) för en annan station.
-export const buildRepository=view=>view?.repository&&view.repository!=='beahead-ab/cda-tkl-install'?view.repository.split('/')[1]:'cda-tkl';
+export const buildRepository=view=>view?.repository&&view.repository!=='beahead-ab/cda-tkl'?view.repository.split('/')[1]:'cda-tkl';
 // Utan känd senaste version (förrådet gick inte att läsa) kan Pi:n ändå hämta och installera den senaste.
 export const canFetchLatest=view=>!!view?.canStart&&view.kind!=='render'&&!view.latest;
 export function openUpdateNotice(view,{api,message}){
@@ -21,7 +21,7 @@ export function openUpdateNotice(view,{api,message}){
     confirmAdmin({title,button:'Uppdatera nu',
       message:view.kind==='render'
         ?'Webbdriften kör '+view.current+'. Render bygger '+view.latest+' ur '+buildRepository(view)+' och startar om webbdriften när bygget är klart, vanligen inom tio minuter. Panelen är borta en kort stund för alla som är inne. Lagda tågvägar behåller sina lås men måste läggas om för att signalerna ska gå till kör. Inställningar och driftdata ligger kvar på disken; misslyckas bygget fortsätter '+view.current+' att köra.'
-        :(view.kind==='web'?'Webbdriften kör ':view.kind==='mac'?'Den här Macen kör ':view.kind==='windows'?'Den här datorn kör ':'Den här Pi:n kör ')+view.current+'. Uppdateringen hämtar '+to+' från '+(view.repository||'beahead-ab/cda-tkl-install').split('/')[1]+', '+(view.kind==='mac'||view.kind==='windows'?'installerar den bredvid den nuvarande versionen':'tar en säkerhetskopia, installerar')+' och startar om TKL, vilket tar ett par minuter. Panelen är borta en kort stund'+(view.kind==='web'||view.kind==='render'?' för alla som är inne':'')+'. Lagda tågvägar behåller sina lås men måste läggas om för att signalerna ska gå till kör. Inställningar och driftdata ligger kvar, och om den nya versionen inte startar återställs den gamla.',
+        :(view.kind==='web'?'Webbdriften kör ':view.kind==='mac'?'Den här Macen kör ':view.kind==='windows'?'Den här datorn kör ':'Den här Pi:n kör ')+view.current+'. Uppdateringen hämtar '+to+' från '+(view.repository||'beahead-ab/cda-tkl').split('/')[1]+', '+(view.kind==='mac'||view.kind==='windows'?'installerar den bredvid den nuvarande versionen':'tar en säkerhetskopia, installerar')+' och startar om TKL, vilket tar ett par minuter. Panelen är borta en kort stund'+(view.kind==='web'||view.kind==='render'?' för alla som är inne':'')+'. Lagda tågvägar behåller sina lås men måste läggas om för att signalerna ska gå till kör. Inställningar och driftdata ligger kvar, och om den nya versionen inte startar återställs den gamla.',
       action:async()=>{const answer=await api('update/start',{});if(!answer)return false;message('Uppdateringen har startat. Ställverket visar "Ny version · ladda om" när den är klar.',{error:false,duration:8000});}});
     return;
   }

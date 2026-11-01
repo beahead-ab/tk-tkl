@@ -180,8 +180,8 @@ test('Tk-TKL: make-station-repository gives Träkvista its own installation, and
   assert.match(at('packaging/identity.env'),/^TKL_ID=tk-tkl\nTKL_NAME=Träkvista\nTKL_STATION=trakvista\nTKL_REPOSITORY=beahead-ab\/Tk-TKL$/m);
   assert.match(at('install.sh'),/^REPOSITORY="beahead-ab\/Tk-TKL"\nNAME="Träkvista TKL"$/m);
   assert.match(at('install.ps1'),/^\$Repository = 'beahead-ab\/Tk-TKL'$/m);
-  assert.doesNotMatch(at('install.sh')+at('install.ps1'),/githubusercontent\.com\/beahead-ab\/cda-tkl-install/);
-  assert.match(at('install.ps1'),/-ne 'beahead-ab\/cda-tkl-install'/,'the comparison with Charlottendal\'s repository is kept');
+  assert.doesNotMatch(at('install.sh')+at('install.ps1'),/githubusercontent\.com\/beahead-ab\/cda-tkl/);
+  assert.match(at('install.ps1'),/-ne 'beahead-ab\/cda-tkl'/,'the comparison with Charlottendal\'s repository is kept');
   const pkg=JSON.parse(at('package.json')),lock=JSON.parse(at('package-lock.json'));
   assert.equal(pkg.name,'tk-tkl');assert.equal(pkg.scripts.start,'node scripts/start.mjs trakvista');
   assert.equal(pkg.scripts['verify:layout'],undefined,'scripts for files the station repository lacks are left out');assert.equal(pkg.scripts.backend,'node src/server.mjs');
@@ -192,7 +192,7 @@ test('Tk-TKL: make-station-repository gives Träkvista its own installation, and
   assert.match(readme,/Tk-TKL\/main\/install\.sh \| sudo sh/,'Raspberry Pi');
   assert.match(readme,/Tk-TKL\/main\/install\.sh \| sh\n/,'Mac, utan sudo');
   assert.match(readme,/irm https:\/\/raw\.githubusercontent\.com\/beahead-ab\/Tk-TKL\/main\/install\.ps1 \| iex/,'Windows');
-  assert.doesNotMatch(readme,/cda-tkl-install/,'ingen hänvisning till Charlottendals installationsförråd');
+  assert.doesNotMatch(readme,/githubusercontent\.com\/beahead-ab\/cda-tkl\//,'installationsraderna hämtar Träkvistas paket');
   // Webbdriften på Render: Blueprint och Dockerfile med Träkvistas namn, station och förråd.
   assert.match(at('render.yaml'),/^    name: tk-tkl$/m);assert.match(at('render.yaml'),/key: CHARLOTTENDAL_STATION\n        value: trakvista/);
   assert.match(at('render.yaml'),/key: CHARLOTTENDAL_INSTALL_REPOSITORY\n        value: beahead-ab\/Tk-TKL/);assert.doesNotMatch(at('render.yaml'),/__/);

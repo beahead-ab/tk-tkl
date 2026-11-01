@@ -150,6 +150,10 @@ export class TrainMeet extends EventEmitter {
   }
   async read(token=this.data.token,station=this.data.stationId,allowReset=false,reloadTimetable=false) {
     const context=await this.request('/v1/tkl/context?station_id='+encodeURIComponent(station),{token});
+    // TrainMeet knyter driftkommandon till denna generation efter byte av träff/config.
+    // Äldre servrar utelämnar den (eller skickar null); hitta inte på en generation åt dem.
+    const meetGeneration=context?.meet_generation??null;
+    if(meetGeneration!==null&&(!Number.isSafeInteger(meetGeneration)||meetGeneration<0))fail('Ogiltig träffgeneration från TrainMeet.',503);
     // The clock in the answer was read somewhere during the request; the middle is the best guess.
     const asked=this.now(),display=await this.request('/v1/display',{token}),readAt=Math.round((asked+this.now())/2);
     if(context?.protocol_version!==1||display?.protocol_version!==1||!identity(context.publication_id)||context.publication_id!==display.publication_id||!identity(context.active_day)||context.active_day!==display.active_day||context.station?.id!==station||!record(context.movements)||!Array.isArray(context.connection_states)||!Array.isArray(display.trains)||!Number.isSafeInteger(display.revision)||display.revision<0)fail('TrainMeet-svaret följer inte det granskade kontraktet.',503);
@@ -171,7 +175,7 @@ export class TrainMeet extends EventEmitter {
     const cached=!allowReset&&!reloadTimetable&&previous?.timetable&&previous.publicationId===display.publication_id&&previous.day===display.active_day&&previous.station.id===station;
     const timetable=cached?{trains:previous.trains,tracks:previous.tracks,operatingPoints:previous.operatingPoints,timetable:previous.timetable}
       :readTimetable(await this.request('/v1/timetable?station_id='+encodeURIComponent(station),{token}),{stationId:station,publicationId:display.publication_id,day:display.active_day,loadedAt:this.now()});
-    return {stations:stations.map(s=>({id:s.id,name:s.name,code:s.code==null?'':String(s.code)})),publicationId:display.publication_id,revision:display.revision,day:display.active_day,meet:text(display.meet?.name)?display.meet.name:'',station:{id:station,name:text(context.station.name)?context.station.name:station},clock:{time:clock.time,rate:clock.speed,running:clock.running,configured:clock.configured,readAt},...timetable,movements,connections,lines,directions};
+    return {meetGeneration,stations:stations.map(s=>({id:s.id,name:s.name,code:s.code==null?'':String(s.code)})),publicationId:display.publication_id,revision:display.revision,day:display.active_day,meet:text(display.meet?.name)?display.meet.name:'',station:{id:station,name:text(context.station.name)?context.station.name:station},clock:{time:clock.time,rate:clock.speed,running:clock.running,configured:clock.configured,readAt},...timetable,movements,connections,lines,directions};
   }
   // One TrainMeet exchange at a time, so a poll and an action never interleave
   // their writes to the last good context.
@@ -258,9 +262,15 @@ export class TrainMeet extends EventEmitter {
     if(!record(data))fail('Ogiltig TrainMeet-begäran.');
     if(data.sessionId!==this.sessionId||data.revision!==this.revision)fail('TrainMeet-anslutningen har ändrats. Läs in senaste läget.',409);
     if(!this.origin||!this.data.token)fail('Parkoppla med TrainMeet innan stationen manövreras.',409);
+    if(Object.hasOwn(data,'meetGeneration')&&data.meetGeneration!==(this.context?.meetGeneration??null))fail('Träffen har ändrats. Kontrollera senaste läget och välj åtgärden igen.',409);
+    const expected=this.context;
     return this.exclusive(async()=>{
+      // Ett köat knapptryck får inte följa med en poll till en ny träff eller trafikdag.
+      if(data.sessionId!==this.sessionId||data.revision!==this.revision||expected?.meetGeneration!==this.context?.meetGeneration||expected?.publicationId!==this.context?.publicationId||expected?.day!==this.context?.day)
+        fail('Träffen har ändrats. Kontrollera senaste läget och välj åtgärden igen.',409);
       // Validate against the freshest context, after any poll in flight has finished.
       const {path,payload,journal,after}=build(this.context||{});
+      if(this.context?.meetGeneration!=null)payload.meet_generation=this.context.meetGeneration;
       let failure=null;
       try{await this.request(path,{token:this.data.token,payload});}
       catch(e){failure=e.status?e:Object.assign(Error('TrainMeet kunde inte nås. Åtgärden är inte utförd.'),{status:503});}
@@ -315,8 +325,8 @@ export class TrainMeet extends EventEmitter {
       if(!train)fail('Tågrörelsen finns inte på stationen i dag.',409);
       if(this.checkAutomationContext(data,context)){
         if(train.train_number!==data.trainNumber)fail('Automatens tågrörelse gäller inte längre samma tåg.',409);
-        guard?.();
       }
+      guard?.();
       const current=(context.movements||[]).find(m=>m.id===movementId)||{};
       const payload={station_id:this.data.stationId,movement_id:movementId,departure:departure||current.departure||'none',arrival:arrival||current.arrival||'none',event_type:'tkl_'+(departure||arrival||'track_changed')};
       const actualTrack=track.trim()||current.track||train.track_id||'';if(actualTrack)payload.actual_track=actualTrack;

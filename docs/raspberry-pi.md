@@ -5,13 +5,7 @@ dess egen återrapport (för körning utan LocoNet) startar av sig själva, stä
 Stream Deck kopplas upp utan att någon behöver klicka. Själva installationen är en rad i
 terminalen; resten sker automatiskt.
 
-**Publicerad: 0.80.0** (cda-tkl main `a503d09`, #60; `beahead-ab/cda-tkl-install` main `5133be9`, 13 oktober). En
-Pi som redan är installerad tar den med Inställningar → Uppdatering eller genom att köra installationsraden igen
-(avsnitt 9). Sedan 0.80.0 väljs tidtabellens stil under Inställningar → Utseende och ljud (avsnitt 8). Sedan 0.79.0
-är LocoNet ansluten eller ej ansluten och trafiken kommer från trafikspelet på TrainMeet-servern; sedan 0.78.0 ansluts
-LocoNet med en LocoBuffer på USB, och tjänsten ingår i gruppen `dialout` efter uppdateringen. Sedan 0.71.1 är
-användarnamnet e-postadressen när ägaren skapas och när någon bjuds in; lösenordet har 6–128 tecken. Sedan 0.71.0
-ligger allt om anläggningen i Studio (Inställningar → Anläggningen → Studio).
+Den aktuella nybörjarguiden med minneskort, SSH, installation och första start finns i **[README](../README.md#raspberry-pi-5)**. Följ den i första hand. Här finns även nätverksåtkomst, rangerarstation, säkerhetskopiering och andra fördjupningar. Installation och uppdatering hämtar direkt från det publika `beahead-ab/cda-tkl`.
 
 **Innehåll**
 
@@ -19,7 +13,7 @@ ligger allt om anläggningen i Studio (Inställningar → Anläggningen → Stud
 2. [Förbered minneskortet](#2-förbered-minneskortet)
 3. [Första start](#3-första-start)
 4. [Installera TKL](#4-installera-tkl)
-5. [Starta om och kontrollera](#5-starta-om-och-kontrollera)
+5. [Vänta på automatisk omstart och kontrollera](#5-vänta-på-automatisk-omstart-och-kontrollera)
 6. [Koppla till TrainMeet](#6-koppla-till-trainmeet)
 7. [Stream Deck](#7-stream-deck)
 8. [Använda ställverket](#8-använda-ställverket)
@@ -81,26 +75,29 @@ Byt `pi` och `cda-tkl` mot det användarnamn och värdnamn du valde.
 Kör den här raden i terminalen på Pi:n:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/beahead-ab/cda-tkl-install/main/install.sh | sudo sh
+curl -fsSL https://raw.githubusercontent.com/beahead-ab/cda-tkl/main/install.sh | sudo sh
 ```
 
 Ange ditt lösenord när `sudo` frågar. Installationen skriver vad den gör och avslutar med:
 
 ```text
-Charlottendal TKL 0.47.0 är installerad och startar automatiskt.
+Charlottendal TKL X.Y.Z är installerad och startar automatiskt.
 Ställverket:  http://127.0.0.1:8910  (på den här datorn)
 Anläggningssimulatorn:  http://127.0.0.1:8911
-Chromium öppnar ställverket i helskärm efter nästa omstart:  sudo reboot
+Chromium öppnar ställverket i helskärm efter omstart.
 Genvägen 'Charlottendal TKL' finns på skrivbordet. Stream Deck kopplas upp av sig själv.
 Uppdatera senare med:  sudo cda-tkl-update
+Installationen är klar. Pi:n startar om automatiskt om en minut.
+SSH-förbindelsen bryts vid omstarten. Vänta tills Pi:n har startat igen.
+Avbryt den planerade omstarten vid behov med: sudo shutdown -c
 ```
 
 
-## 5. Starta om och kontrollera
+## 5. Vänta på automatisk omstart och kontrollera
 
-```sh
-sudo reboot
-```
+Efter en lyckad förstagångsinstallation startar Pi:n om automatiskt om en minut. SSH-förbindelsen bryts då; det är väntat. Du behöver inte köra `sudo reboot`. Vid installationsfel beställs ingen omstart. Vanliga uppdateringar startar om TKL-programmet.
+
+Vill du installera utan automatisk omstart, använd `sudo CDA_TKL_REBOOT=0 sh /tmp/cda-tkl-install.sh` enligt [README](../README.md#raspberry-pi-5). Då kan du starta om manuellt med `sudo reboot` när det passar.
 
 Efter omstarten loggar Pi:n in på skrivbordet av sig själv och Chromium öppnar ställverket i
 helskärm, med CHARLOTTENDAL överst till vänster. LocoNet är ej ansluten från början: TKL svarar själv genom
@@ -234,7 +231,7 @@ på anläggningens nät.
 3. **På stationens Pi:** installera med stationens adress, starta om och logga in en gång:
 
    ```sh
-   curl -fsSL https://raw.githubusercontent.com/beahead-ab/cda-tkl-install/main/install.sh | sudo CDA_TKL_KIOSK_URL=http://cda-tkl.local:8910/#ranger sh
+   curl -fsSL https://raw.githubusercontent.com/beahead-ab/cda-tkl/main/install.sh | sudo CDA_TKL_KIOSK_URL=http://cda-tkl.local:8910/#ranger sh
    ```
 
    Stationen kör ingen egen TKL. Chromium öppnar rangerarens vy i helskärm och Stream Deck
@@ -327,7 +324,7 @@ Installationen är densamma för varje station; `packaging/identity.env` i paket
 | `TKL_ID`: användare, tjänster, `/opt`, `/etc`, `/var/lib` | `cda-tkl` | `tk-tkl` |
 | `TKL_NAME`: namnet i texter och på genvägen | Charlottendal | Träkvista |
 | `TKL_STATION`: stationen i `stations/` | `charlottendal` | `trakvista` |
-| `TKL_REPOSITORY`: förrådet som installationen och uppdateringen hämtar från | `beahead-ab/cda-tkl-install` | `beahead-ab/Tk-TKL` |
+| `TKL_REPOSITORY`: förrådet som installationen och uppdateringen hämtar från | `beahead-ab/cda-tkl` | `beahead-ab/Tk-TKL` |
 
 Paketfilerna i `packaging/raspberry-pi/` är skrivna för Charlottendal; installationen byter namn, sökvägar och förråd
 när den skriver dem. En Träkvista-Pi får alltså tjänsterna `tk-tkl` och `tk-tkl-simulator`, `sudo tk-tkl-update` och

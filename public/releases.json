@@ -1,10 +1,83 @@
 [
   {
+    "version": "0.86.7",
+    "date": "2026-11-01",
+    "notes": [
+      "Träkvistas rättade XML- och CSV-filer från tk-tkl används med nya LS-adresser och lägesgivare även för växel 21a. Signal 4v följer XML-placeringen vid A7.",
+      "Manuella IT-växlar och interna block utan sensor har ingen LocoNet-trafik och visas utan fysisk adress i Studio. Charlottendal har inga sådana objekt och påverkas inte.",
+      "Träkvistas infartssignal 1/2 ritas som huvudsignal i 85-vyn."
+    ]
+  },
+  {
+    "version": "0.86.6",
+    "date": "2026-10-31",
+    "notes": [
+      "Verifierad avgång i Charlottendals frånkopplade körläge återrapporteras till TrainMeet när rätt utfart och klarering finns. Tidtabell och klarering visar Avgått efter bekräftelse.",
+      "Ett tåg som lämnat ställverket ligger inte kvar som uppställt och försenat. Saknad stationskoppling eller klarering visas tydligt tills avgången kan anmälas."
+    ]
+  },
+  {
+    "version": "0.86.5",
+    "date": "2026-10-30",
+    "notes": [
+      "85-vyn visar motriktade signaler och sidoskydd i vanligt stopp grått. Röd kontur kräver verklig slutpunkt eller låst egen signal utan körbesked.",
+      "Slutpunkten identifieras via stationens exakta NX-bindning. AIS skiljs från en vanlig stopporder; återrapporterat körbesked och okända besked döljs inte."
+    ]
+  },
+  {
+    "version": "0.86.4",
+    "date": "2026-10-30",
+    "notes": [
+      "Ställverket laddar om gränssnittsfilerna för växelnummer och färgtema efter uppdatering, även om webbläsaren har äldre filer sparade."
+    ]
+  },
+  {
+    "version": "0.86.3",
+    "date": "2026-10-30",
+    "notes": [
+      "Växelnummer är släckta som standard i 85-vyn. Tänd eller släck dem under Inställningar → Utseende och ljud → Växelnummer.",
+      "Valet sparas separat per station, ställverksvy och webbläsare. Studio har kvar sitt separata lagerval."
+    ]
+  },
+  {
+    "version": "0.86.2",
+    "date": "2026-10-30",
+    "notes": [
+      "Godkänn och Neka fungerar även efter byte av träff eller config i TrainMeet. Klareringar och tågrörelser skickar med serverns aktuella träffgeneration.",
+      "Ett väntande knapptryck följer inte med till en ny träffgeneration eller trafikdag. Kontrollera det nya läget och välj åtgärden igen."
+    ]
+  },
+  {
+    "version": "0.86.1",
+    "date": "2026-10-30",
+    "notes": [
+      "85-vyn följer nu färgtemat: svart bakgrund i mörkt läge och ljus bakgrund i ljust läge. Färgtemat delas med Studio och väljs under Utseende och ljud.",
+      "Spårfärgerna är rött för belagt, grönt för låst tågväg, blått för lokalt styrt och lila för trafikspärrat. Beläggning visas alltid rött."
+    ]
+  },
+  {
+    "version": "0.86.0",
+    "date": "2026-10-30",
+    "notes": [
+      "Inställningar → Utseende och ljud har två ställverksvyer: Originalpanel och 85-inspirerad skärmvy med trianglar och vinklar för signalerna.",
+      "Valet sparas per webbläsare och station. Samma spårplan, manövrering och driftstatus i båda vyerna; vybytet skickar inga order.",
+      "Ofullständiga eller okända signalbesked markeras med frågetecken. Detaljerade dvärgbesked gissas inte från en tågväg."
+    ]
+  },
+  {
+    "version": "0.85.2",
+    "date": "2026-10-28",
+    "notes": [
+      "Raspberry Pi startar om automatiskt en minut efter en lyckad förstagångsinstallation. Ställverket öppnas efter omstarten på Pi OS med skrivbord.",
+      "Vanliga uppdateringar startar om TKL-programmet. Vid installationsfel beställs ingen omstart av Pi:n."
+    ]
+  },
+  {
     "version": "0.85.1",
     "date": "2026-10-28",
     "notes": [
-      "Träkvistas rättade XML- och CSV-filer används med nya LS-adresser och lägesgivare även för växel 21a. Signal 4v följer XML-placeringen vid A7.",
-      "Manuella IT-växlar och interna block utan sensor har ingen LocoNet-trafik och visas utan fysisk adress i Studio."
+      "CDA-TKL installeras och uppdateras direkt från det publika huvudförrådet. README har fullständiga steg för Raspberry Pi, Mac och Windows.",
+      "Befintliga installationer flyttas genom att köra den nya installationsraden en gång. Inställningar, konton och driftdata behålls."
     ]
   },
   {

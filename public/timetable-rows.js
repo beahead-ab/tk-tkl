@@ -90,11 +90,13 @@ export function groupRows(rows,{minutes=null,routes=[],announced=new Map()}={}){
   for(const r of keyed){
     const arr=r.movement?.arrival||'none',dep=r.movement?.departure||'none',hasData=arr!=='none'||dep!=='none';
     const lastTime=toMinutes(r.departure)??toMinutes(r.arrival);
-    const group=dep==='departed'?'done':(ACTIVE.has(dep)||ACTIVE.has(arr))?'now':(!hasData&&minutes!=null&&lastTime!=null&&lastTime<minutes)?'done':'next';
+    const left=r.departureReport?.status==='pending'&&dep!=='departed';
+    const group=dep==='departed'?'done':left?'now':(ACTIVE.has(dep)||ACTIVE.has(arr))?'now':(!hasData&&minutes!=null&&lastTime!=null&&lastTime<minutes)?'done':'next';
     const row={...r,group,lage:'',la:'',delta:'',fromText:r.from||'—',toText:r.to||(r.arrival?'slutar':'—'),frTill:(r.from?r.from+' ':'')+'→ '+(r.to||'slutar'),noteLine:firstLine(r.note)};
     // The läge as parts, so each style can draw them its own way; lage is the words.
     const parts=[];
-    if(group==='done'){const value=dep==='departed'?'departed':arr==='arrived'?'arrived':'';if(value)parts.push({kind:'status',value,text:statusText(value)});}
+    if(left){parts.push({kind:'status',value:'departed',text:'Lämnat ställverket'},{kind:'report',text:r.departureReport.reason||'Avgång ej anmäld till TrainMeet'});}
+    else if(group==='done'){const value=dep==='departed'?'departed':arr==='arrived'?'arrived':'';if(value)parts.push({kind:'status',value,text:statusText(value)});}
     else if(group==='now'){
       const value=dep!=='none'?dep:arr;if(statusText(value))parts.push({kind:'status',value,text:statusText(value)});
       // Still active after its own time: it sits above the NU line, where its time belongs, and says how late it is.
@@ -108,15 +110,15 @@ export function groupRows(rows,{minutes=null,routes=[],announced=new Map()}={}){
     row.parts=parts;
     const inLine=r.inLine||'',outLine=r.outLine||'';
     // Standing on its track: come in, or set up (uppställt, förare på plats) and not yet gone.
-    row.standing=group!=='done'&&(arr==='arrived'||['positioned','ready','waiting'].includes(dep));
-    row.activity=activityOf({group,arr,dep,inLine,outLine,standing:row.standing});
-    row.inState=r.from?inStateOf({group,arr,inLine}):'';row.outState=r.to?outStateOf({group,dep,outLine}):'';
+    row.standing=!left&&group!=='done'&&(arr==='arrived'||['positioned','ready','waiting'].includes(dep));
+    row.activity=left?'departed':activityOf({group,arr,dep,inLine,outLine,standing:row.standing});
+    row.inState=r.from?inStateOf({group:left?'done':group,arr,inLine}):'';row.outState=r.to?outStateOf({group:left?'done':group,dep,outLine}):'';
     (group==='done'?done:row.late?late:group==='now'?now:next).push(row);
   }
   if(next.length&&minutes!=null){const t=upcomingTime(next[0],minutes);if(t){next[0].countdownMinutes=t.minutes-minutes;next[0].parts.unshift({kind:'countdown',minutes:t.minutes-minutes,text:'om '+(t.minutes-minutes)+' min'});}}
   let nextSummary=null;
-  for(const r of [...now,...next]){const t=upcomingTime(r,minutes);if(t){nextSummary={number:r.number,from:r.from||'',kind:t.kind,time:t.time,minutes:minutes==null?null:t.minutes-minutes};break;}}
-  if(!nextSummary){const r=[...now,...next][0];const t=r&&upcomingTime(r,null);if(t)nextSummary={number:r.number,from:r.from||'',kind:t.kind,time:t.time,minutes:minutes==null?null:Math.max(0,t.minutes-minutes)};}
+  for(const r of [...now.filter(r=>r.departureReport?.status!=='pending'),...next]){const t=upcomingTime(r,minutes);if(t){nextSummary={number:r.number,from:r.from||'',kind:t.kind,time:t.time,minutes:minutes==null?null:t.minutes-minutes};break;}}
+  if(!nextSummary){const r=[...now.filter(r=>r.departureReport?.status!=='pending'),...next][0];const t=r&&upcomingTime(r,null);if(t)nextSummary={number:r.number,from:r.from||'',kind:t.kind,time:t.time,minutes:minutes==null?null:Math.max(0,t.minutes-minutes)};}
   for(const r of [...done,...late,...now,...next]){r.lage=r.parts.map(p=>p.text).join(' · ');r.la=[r.lage,r.noteLine].filter(Boolean).join(' · ');}
   return {done,late,now,next,all:[...done,...late,...now,...next],nextSummary,doneKey:[...done,...late].map(r=>r.id).join('\u0000')};
 }

@@ -4,7 +4,8 @@
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Charlottendal · TKL</title>
   <link rel="stylesheet" href="/fonts/fonts.css"><link rel="stylesheet" href="/tokens.css"><link rel="stylesheet" href="/app.css"><link rel="stylesheet" href="/workspace.css"><link rel="stylesheet" href="/panel-fixed.css"><link rel="stylesheet" href="/admin.css"><link rel="stylesheet" href="/admin-line.css"><link rel="stylesheet" href="/station-workspace.css">
-  <script type="module" src="/app.js"></script>
+  <link rel="stylesheet" href="/panel-style.css?v=0.86.7"><link rel="stylesheet" href="/app-theme.css?v=0.86.7">
+  <script type="module" src="/app.js?v=0.86.7"></script>
 </head>
 <body class="panel-app" data-skin="original" data-page="panel" data-crossing-display="calm">
 <header class="app-header">
@@ -60,6 +61,7 @@
   <section id="appearance-tools" class="tools-section" aria-labelledby="appearance-heading">
     <h2 id="appearance-heading">Utseende och ljud</h2>
     <div class="card appearance-controls"><label>Övergångslampor <select id="crossing-display"><option value="calm">Lugn blinkning</option><option value="steady">Fast rött sken</option></select></label><button id="sound-toggle" aria-pressed="false">Ljud av</button><span id="error-lamp" class="error-lamp" hidden>Fel</span></div>
+    <div id="panel-style-legend" hidden><p><b>85-inspirerad skärmvy:</b> triangel = huvudsignal, vinkel = dvärgsignal, båda = kombinerad signal. Symbolen pekar i rörelseriktningen.</p><p>Grå signal = normalt stopp. Grön huvudsignal = kör återrapporterat. Röd kontur = verklig slutpunkt eller låst signal utan körbesked. Motriktat skydd i vanligt stopp är grått. AIS visas med fylld röd huvudsignal eller gul dvärgsymbol när stopp är återrapporterat. Vitt med ? = okänt eller ofullständigt besked; en dvärgsignals exakta delbesked visas bara när det finns särskild återrapport.</p><p>Rött spår = belagt. Grönt spårband = låst tågväg, även växeltågväg. Blått spår = lokalt styrt. Lila spår = spärrat för trafik. Streckat grönt band = tågvägen förbereds, hålls kvar eller återtas. Beläggning visas alltid rött, även på ett spärrat eller lokalstyrt spår. Befintliga manöverpluppar används i båda vyerna.</p></div>
     <details class="card"><summary>Teckenförklaring</summary><div class="legend"><span><i class="line free"></i> Fritt</span><span><i class="line route"></i> Tågväg</span><span><i class="line occupied"></i> Belagt</span><span><i class="line held"></i> Lås kvar</span><span><i class="line unknown"></i> Okänt / ej inkopplat</span><span id="derived-indications" aria-label="Beräknade panelindikeringar"></span></div><div id="timetable-legend"></div></details>
   </section>
   <section id="journal-tools" class="card journal tools-section" aria-labelledby="journal-heading"><div class="card-heading"><h2 id="journal-heading">Händelser</h2></div><p class="settings-scope">Gäller hela anläggningen · sparas i TKL-servern</p><dl id="journal-summary"></dl><label class="journal-search">Sök i händelserna<input id="journal-filter" type="search" placeholder="Till exempel Vx131, tågväg eller TrainMeet" autocomplete="off"></label><div id="events" aria-live="off"></div><p id="journal-empty" class="muted" hidden></p><p class="settings-footnote">Journalen skriver bara ned vad som har hänt och ändrar ingenting i anläggningen. Återrapporter och protokollrader från banan finns under Banan (LocoNet).</p></section>
@@ -91,5 +93,5 @@
   <section id="advanced-protocol" hidden><div class="admin-workspace-heading"><h1 tabindex="-1">Banan (LocoNet)</h1></div><p class="settings-scope">Gäller TKL-servern på den här datorn · LocoNet ansluts här eller med lägesknappen i statusraden</p><section class="card"><div class="card-heading"><h3>Anslutning till LocoNet</h3></div><div id="connection-mode-settings" class="connection-settings"></div></section><section class="card"><div class="card-heading"><h3>Anslutning</h3></div><dl id="loconet-summary"></dl></section><section class="card"><div class="card-heading"><h3>Protokollinspelning</h3></div><div id="recording-tools"></div></section><details class="card" id="loconet-communication"><summary>Kommunikation och förväntade svar</summary></details><details class="card"><summary>Visa protokolltrafik</summary><pre id="wire"></pre></details><p class="settings-footnote">Anslut till LocoNet och Koppla från ansluter TKL på nytt; inget annat på den här sidan skickar order till banan. Inspelning och protokollvisning lyssnar bara.</p></section>
 </main>
 <dialog id="inspector-host" class="inspector-host" aria-labelledby="inspector-heading"></dialog>
-<footer><span id="footer-station">Charlottendal</span> TKL · version 0.85.1</footer>
+<footer><span id="footer-station">Charlottendal</span> TKL · version 0.86.7</footer>
 </body></html>

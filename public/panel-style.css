@@ -1,0 +1,39 @@
+/* Vybyte ändrar bara samma monterade instruments presentation. */
+/* Täcker vanliga och dubbla korsningsväxlars nummer, även när växeln är låst. */
+body[data-turnout-numbers=false] #track-plan .turnout-number{display:none}
+.modern-signal{display:none;pointer-events:none}
+body[data-panel-style=modern85] .has-modern-signal>image{display:none}
+body[data-panel-style=modern85] .has-modern-signal>.signal-unknown{display:none}
+body[data-panel-style=modern85] .modern-signal{display:inline}
+body[data-panel-style=modern85] .panel-scroll,body[data-panel-style=modern85] #track-plan{background:var(--bg)}
+body.panel-app #track-plan .rail-hollow{stroke:var(--bg)}
+body.panel-app #track-plan .route-flow{stroke:var(--green)}
+body.panel-app #track-plan .route-flow:is(.held,.setting,.cancelling){stroke:var(--green);stroke-dasharray:4 6}
+body[data-panel-style=modern85] #track-plan .lamp{display:none}
+body[data-panel-style=modern85] #track-plan .destination-plate{fill:var(--chip-bg);stroke:var(--chip-border)}
+body[data-panel-style=modern85] #track-plan .destination-arrow{stroke:var(--fg)}
+body[data-panel-style=modern85] #track-plan .signal-target .hit{stroke:transparent;fill:transparent}
+body[data-panel-style=modern85] #track-plan .signal-target:is(:hover,:focus-visible,.signal-chosen,.route-choice-start,.route-choice-end,.signal-preparing) .hit{stroke:var(--fg);fill:transparent}
+/* Samma prioritet i båda vyerna: belagt > spärrat > lokalstyrt > låst väg. */
+body.panel-app #track-plan .rail[data-track-state=local]{stroke:var(--track-local)!important;opacity:1}
+body.panel-app #track-plan .rail[data-track-state=blocked]{stroke:var(--track-blocked)!important;opacity:1}
+body.panel-app #track-plan .rail[data-track-state=occupied]{stroke:var(--red)!important}
+body.panel-app #track-plan .rail[data-track-state=local].branch-off{opacity:.45}
+.modern-signal-back{fill:var(--bg);stroke:none}
+.modern-signal-mark{fill:none;stroke:var(--track-main);stroke-width:2;stroke-linejoin:miter}
+.modern-signal[data-tone=go] .modern-signal-mark{stroke:var(--green)}
+.modern-signal[data-tone=endpoint] .modern-signal-mark{stroke:var(--red)}
+.modern-signal[data-tone=blocked] .modern-signal-main{stroke:var(--red);fill:var(--red)}
+.modern-signal[data-tone=blocked] .modern-signal-dwarf{stroke:var(--yellow)}
+.modern-signal[data-tone=blocked]:has(.modern-signal-main) .modern-signal-dwarf{stroke:var(--track-main)}
+.modern-signal[data-tone=releasing] .modern-signal-mark{stroke:var(--yellow)}
+.modern-signal[data-tone=unknown] .modern-signal-mark{stroke:var(--fg)}
+.modern-signal-question{fill:var(--fg);font:600 11px var(--font-mono)}
+.panel-style-choice{display:grid;gap:10px;margin:0 0 18px;padding:12px;border:1px solid var(--border)}
+.panel-style-choice label{display:flex;flex-direction:row;align-items:flex-start;gap:10px;margin:0;padding:10px;border:1px solid var(--border);border-radius:4px;cursor:pointer}
+.panel-style-choice label:has(input:checked){border-color:var(--green);background:#ffffff06}
+.panel-style-choice input{flex:none;margin-top:3px}
+.panel-style-choice small{display:block;margin-top:4px;color:var(--muted);line-height:1.5}
+.panel-style-choice p{margin:0;line-height:1.5}
+#panel-style-legend{padding:10px 0;color:var(--text);font-size:12px;line-height:1.6}
+#panel-style-legend p{margin:5px 0}

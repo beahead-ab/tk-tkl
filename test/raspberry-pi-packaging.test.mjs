@@ -65,6 +65,10 @@ test('the Windows installer never exits the user\'s PowerShell and starts TKL hi
   assert.match(ps,/GetFolderPath\('Startup'\)/);
   assert.match(ps,/--app=http:\/\/127\.0\.0\.1:8910\/#panel/);
   assert.match(read('packaging/windows/run.ps1'),/scripts\/start\.mjs/);
+  assert.ok(ps.includes(`-File "' + $RunScript + '"'`),'sökvägen till run.ps1 citeras, installationsmappen har blanksteg');
+  assert.match(ps,/-ArgumentList \$RunArgs\b/);
+  assert.doesNotMatch(ps,/\$args\s*=/i,'$args är en automatisk variabel i PowerShell');
+  assert.match(ps,/Get-Content -Path \$TklLog -Tail 25/,'ett startfel visar de senaste loggraderna');
 });
 
 test('installed copies turn on the update notice, and only the Pi service may start its update',()=>{
@@ -134,14 +138,14 @@ test('Mac installerar och uppdaterar varje station för sig och behåller Charlo
     for(const [id,name] of [['cda-tkl','Charlottendal'],['tk-tkl','Träkvista']]){
       const station=id==='cda-tkl'?'charlottendal':'trakvista',app=path.join(home,'Library/Application Support',name+' TKL');
       apps[id]=app;
-      put(path.join(source,'packaging/identity.env'),`TKL_ID=${id}\nTKL_NAME=${name}\nTKL_STATION=${station}\nTKL_REPOSITORY=beahead-ab/${id==='cda-tkl'?'cda-tkl-install':'Tk-TKL'}\n`);
+      put(path.join(source,'packaging/identity.env'),`TKL_ID=${id}\nTKL_NAME=${name}\nTKL_STATION=${station}\nTKL_REPOSITORY=beahead-ab/${id==='cda-tkl'?'cda-tkl':'Tk-TKL'}\n`);
       put(path.join(app,'node/bin/node'),'#!/bin/sh\n[ "$1" != -p ] || echo 22.0.0\nexit 0\n',0o755);
       put(path.join(app,'node/bin/npm'),'#!/bin/sh\nexit 0\n',0o755);
       if(id==='cda-tkl'){
         const previous=path.join(app,'releases/aldre');
         for(const file of ['users.json','settings.json','locks.json'])put(path.join(previous,'var',file),`{"bevarad":"${file}"}\n`);
         fs.symlinkSync(previous,path.join(app,'current'));
-        put(path.join(app,'app.env'),`CHARLOTTENDAL_STATE_DIR=${app}/state\nCHARLOTTENDAL_INSTALL_KIND=mac\nCHARLOTTENDAL_PROFILE=profiles/charlottendal.json\nEGEN_INSTALLNING=bevarad\n`);
+        put(path.join(app,'app.env'),`CHARLOTTENDAL_STATE_DIR=${app}/state\nCHARLOTTENDAL_INSTALL_KIND=mac\nCHARLOTTENDAL_PROFILE=profiles/charlottendal.json\nEGEN_INSTALLNING=bevarad\nCHARLOTTENDAL_INSTALL_REPOSITORY=beahead-ab/cda-tkl-install\n`);
       }
       const run=()=>execFileSync('sh',[path.join(source,'scripts/install-mac.sh'),source],{encoding:'utf8',env:{...process.env,HOME:home,PATH:bin+':'+process.env.PATH,CDA_TKL_HOME:'',CDA_TKL_NO_LAUNCHD:'',TKL_TEST_LOG:log}});
       fs.writeFileSync(log,'');
@@ -156,6 +160,7 @@ test('Mac installerar och uppdaterar varje station för sig och behåller Charlo
       assert.ok(env.includes(`CHARLOTTENDAL_STATE_DIR="${app}/state"`),'driftdata under stationens egen katalog');
       if(id==='cda-tkl'){
         assert.ok(env.includes('CHARLOTTENDAL_PROFILE=profiles/charlottendal.json'),'gammalt profilval behålls');
+        assert.ok(env.includes('CHARLOTTENDAL_INSTALL_REPOSITORY=beahead-ab/cda-tkl\n'),'den gamla standardadressen flyttas');
         for(const file of ['users.json','settings.json','locks.json'])assert.equal(fs.readFileSync(path.join(app,'state',file),'utf8'),`{"bevarad":"${file}"}\n`);
       }else{
         assert.ok(env.includes('CHARLOTTENDAL_STATION=trakvista'));
@@ -191,7 +196,7 @@ test('packaging/identity.env names the installation; Charlottendal\'s package in
   const id=identity(),script=read('scripts/install-raspberry-pi.sh');
   assert.match(id.TKL_ID,/^[a-z0-9-]+$/);assert.ok(id.TKL_NAME&&id.TKL_STATION&&id.TKL_REPOSITORY);
   assert.match(script,/\. "\$SOURCE_DIR\/packaging\/identity\.env"/);
-  assert.match(script,/TKL_ID=cda-tkl TKL_NAME=Charlottendal TKL_STATION=charlottendal TKL_REPOSITORY=beahead-ab\/cda-tkl-install/,'defaults without the file');
+  assert.match(script,/TKL_ID=cda-tkl TKL_NAME=Charlottendal TKL_STATION=charlottendal TKL_REPOSITORY=beahead-ab\/cda-tkl/,'defaults without the file');
   assert.ok(fs.existsSync(new URL('../stations/'+id.TKL_STATION+'/station.json',import.meta.url))||id.TKL_STATION==='charlottendal','the station exists');
 });
 

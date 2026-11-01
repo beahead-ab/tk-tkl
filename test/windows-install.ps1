@@ -8,7 +8,7 @@ New-Item -ItemType Directory -Force (Join-Path $App 'state') | Out-Null
 $Marker = Join-Path $App 'state\provmarkor.txt'
 Set-Content $Marker 'syntetiska befintliga driftdata' -Encoding UTF8
 $Before = (Get-FileHash $Marker).Hash
-Set-Content (Join-Path $App 'app.env') 'CHARLOTTENDAL_TEST_SENTINEL=bevarad' -Encoding UTF8
+Set-Content (Join-Path $App 'app.env') @('CHARLOTTENDAL_TEST_SENTINEL=bevarad', 'CHARLOTTENDAL_INSTALL_REPOSITORY=beahead-ab/cda-tkl-install') -Encoding UTF8
 try {
   & (Join-Path $PWD 'install.ps1')
   $Pointer = Join-Path $App 'current.txt'
@@ -20,6 +20,7 @@ try {
   if (-not (Test-Path (Join-Path $Release 'src\windows-serial.mjs'))) { throw 'Windows-transporten saknas i installationen.' }
   if ((Get-FileHash $Marker).Hash -ne $Before) { throw 'Befintliga driftdata ändrades.' }
   if (-not (Select-String (Join-Path $App 'app.env') -Pattern '^CHARLOTTENDAL_TEST_SENTINEL=bevarad$' -Quiet)) { throw 'Befintlig inställning försvann.' }
+  if (-not (Select-String (Join-Path $App 'app.env') -Pattern '^CHARLOTTENDAL_INSTALL_REPOSITORY=beahead-ab/cda-tkl$' -Quiet)) { throw 'Den gamla standardadressen flyttades inte.' }
   Push-Location $Release
   try {
     & (Join-Path $App 'node\node.exe') --input-type=module -e "import('serialport').then(m => m.SerialPort.list()).then(p => console.log('Native COM-listning OK:', p.length));"

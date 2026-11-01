@@ -1,3 +1,4 @@
+import {observedDepartureStatus} from './clearance-text.js';
 import {createContextDialog} from './context-dialog.js';
 import {clockAt,groupRows,lineStates,routeSides,stationSides,trainClass} from './timetable-rows.js';
 import {STYLE_KEY,labelsHTML,readStyle,rowHTML as styledRow,validStyle} from './timetable-style.js';
@@ -200,10 +201,11 @@ export function createTrainMeetTimetable() {
       const sides=stationSides(panel?.destinations),codes=new Map((c.stations||[]).map(s=>[s.id,s.code]));
       const code=(id,name)=>(id&&codes.get(id))||String(name||'').slice(0,3).toUpperCase();
       rows=c.trains.map(t=>{
+        const report=state.departures?.find(r=>r.movementId===t.id);
         const m=movements.get(t.id),changed=!!m?.track&&m.track!==t.track_id,planned=t.track_id?trackName(t.track_id):(t.track||'—');
         const d=c.directions?.[t.id]||c.directions?.['#'+t.train_number]||{from:'',to:''};
         const way={...routeSides({from:t.arrival_from||'',to:t.departure_to||'',fromId:d.from,toId:d.to},sides),...lineStates(c.lines,t.train_number,d),fromCode:code(d.from,t.arrival_from),toCode:code(d.to,t.departure_to)};
-        return {id:t.id,number:t.train_number,...way,slag:trainClass(t.train_type),station:[c.station.name,points.get(t.operating_point_id)].filter(Boolean).join(' · '),day:t.days||c.day,arrival:t.arrival_time,departure:t.departure_time,sortTime:t.sort_time||'',from:t.arrival_from,to:t.departure_to,track:changed?trackName(m.track):planned,trackLabel:changed?trackLabel(m.track):(trackLabel(t.track_id)||t.track||''),planned,changed,noStop:t.no_stop,note:t.note,movement:m||null,state:[m?.arrival,m?.departure].filter(v=>v&&v!=='none').map(v=>({approaching:'Närmar sig',arrived:'Ankommet',positioned:'Uppställt',ready:'Redo',waiting:'Väntar',departed:'Avgått'})[v]??v).join(' · '),context:points.get(t.operating_point_id)};
+        return {id:t.id,number:t.train_number,...way,slag:trainClass(t.train_type),station:[c.station.name,points.get(t.operating_point_id)].filter(Boolean).join(' · '),day:t.days||c.day,arrival:t.arrival_time,departure:t.departure_time,sortTime:t.sort_time||'',from:t.arrival_from,to:t.departure_to,track:changed?trackName(m.track):planned,trackLabel:changed?trackLabel(m.track):(trackLabel(t.track_id)||t.track||''),planned,changed,noStop:t.no_stop,note:t.note,movement:m||null,departureReport:report,state:report?.status==='pending'&&m?.departure!=='departed'?observedDepartureStatus(report):[m?.arrival,m?.departure].filter(v=>v&&v!=='none').map(v=>({approaching:'Närmar sig',arrived:'Ankommet',positioned:'Uppställt',ready:'Redo',waiting:'Väntar',departed:'Avgått'})[v]??v).join(' · '),context:points.get(t.operating_point_id)};
       });
       // A train announced from a neighbour (its line requested or reserved towards us)
       // is noted with the meet time it was first seen here; TrainMeet sends no timestamp.

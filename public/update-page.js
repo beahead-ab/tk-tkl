@@ -16,8 +16,8 @@ export function createUpdatePage({root,api,message}){
     const ask=e.target.closest('[data-check-update]');
     if(ask){ask.disabled=true;ask.textContent='Söker …';try{const answer=await api('update/check',{});if(answer){view=answer;last='';page.update(answer,args?.[1]);}}finally{ask.disabled=false;ask.textContent='Sök efter ny version';}}
   });
-  // Raderna och förrådet hör till installationen: cda-tkl-install för Charlottendal, Tk-TKL för Träkvista.
-  let repository='beahead-ab/cda-tkl-install';
+  // Raderna och förrådet hör till installationen: cda-tkl för Charlottendal, Tk-TKL för Träkvista.
+  let repository='beahead-ab/cda-tkl';
   const line=(kind)=>{const how=updateLines(repository)[kind];return `<p>Öppna ${esc(how.where)} på ${kind==='mac'?'Macen':'datorn'} och kör:</p><pre class="update-line"><code>${esc(how.line)}</code></pre><button type="button" data-copy-line="${esc(how.line)}">Kopiera raden</button>`;};
   // Label · value · consequence, as in the other sections of Inställningar.
   const rows=list=>`<dl class="settings-rows">${list.map(([label,value,note])=>`<div><dt>${esc(label)}</dt><dd>${value}</dd><dd class="settings-consequence">${esc(note)}</dd></div>`).join('')}</dl>`;
@@ -39,7 +39,7 @@ export function createUpdatePage({root,api,message}){
     if(!update){
       html=`<section class="card"><h2>Webbdriften</h2>${rows([['Installerad',esc(release||'okänd'),'Den här TKL är webbdriften.'],['Uppdateras','genom publicering','Från utvecklingsdatorn, inte härifrån.']])}</section>`;
     }else{
-      repository=update.repository||'beahead-ab/cda-tkl-install';
+      repository=update.repository||'beahead-ab/cda-tkl';
       const where=KIND_TEXT[update.kind]||update.kind;
       const state=update.available?[pill('warn','Ny version finns'),`${update.latest} kan installeras. Inget ändras förrän du uppdaterar.`]
         :update.latest?[pill('ok','Senaste versionen'),'Inget att göra.']

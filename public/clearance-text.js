@@ -16,7 +16,9 @@ export function lineStatus(line){
 }
 export const needsAttention=line=>line.state==='requested'&&line.direction==='in';
 // One train at the station: its arrival and departure declarations, TMBox order.
-export function movementStatus(m,train){
+export const observedDepartureStatus=report=>'Lämnat ställverket · '+(report.reason||'Avgången är ännu inte anmäld till TrainMeet.');
+export function movementStatus(m,train,report){
+  if(report?.status==='pending'&&m?.departure!=='departed')return observedDepartureStatus(report);
   const dep=m?.departure||'none',arr=m?.arrival||'none',parts=[];
   if(train.arrival_time)parts.push(arr==='arrived'?'Ankommit':arr==='approaching'?'Närmar sig':'Väntas');
   if(train.departure_time)parts.push(dep==='departed'?'Avgått':dep==='ready'?'Redo · begär klarering på sträckan':dep==='positioned'?'Uppställt · väntar på förare':'Ej uppställt');
@@ -25,7 +27,8 @@ export function movementStatus(m,train){
 // seen: the train is on its way here on a line (cleared or departed). A train
 // the system does not see coming can be moved here at once: TrainMeet then
 // counts the sender's part as done and frees the line (issue #115).
-export function movementActions(m,train,seen=false){
+export function movementActions(m,train,seen=false,report){
+  if(report?.status==='pending')return [];
   const dep=m?.departure||'none',arr=m?.arrival||'none',out=[];
   if(train.arrival_time&&arr!=='arrived'){
     out.push(arr==='approaching'?{field:'arrival',value:'arrived',label:'Ankommit',primary:true}:{field:'arrival',value:'approaching',label:'Närmar sig',primary:false});
